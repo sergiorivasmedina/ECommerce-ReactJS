@@ -7,7 +7,6 @@ import FairComponent from '../../components/AgroferiaCliente/FairComponent';
 class Fairs extends React.Component {
     render() {
         return (
-
         <section className="ftco-section">
           <div className="container">
             <div className="row justify-content-center mb-3 pb-3">
