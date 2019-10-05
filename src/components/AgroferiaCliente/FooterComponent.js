@@ -1,10 +1,9 @@
 import React from 'react';
 
-class Footer extends React.Component {
+class FooterComponent extends React.Component {
   render() {
     return (
-      <section className="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-        <footer className="ftco-footer ftco-section">
+      <footer className="ftco-footer ftco-section bg-light">
         <div className="container">
           <div className="row">
             <div className="mouse">
@@ -53,7 +52,6 @@ class Footer extends React.Component {
 
         </div>
       </footer>
-      </section>
 
       
     );
@@ -61,4 +59,4 @@ class Footer extends React.Component {
 
 }
 
-export default Footer;
+export default FooterComponent;

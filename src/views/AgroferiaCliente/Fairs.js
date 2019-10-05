@@ -1,6 +1,6 @@
 import React from 'react';
-import Menu from '../../components/AgroferiaCliente/Menu';
 import FairComponent from '../../components/AgroferiaCliente/FairComponent';
+import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 
 
 
@@ -30,7 +30,10 @@ class Fairs extends React.Component {
 
             </div>
           </div>
+          <br></br>
+          <FooterComponent />
         </section>
+        
         );
     }
 
