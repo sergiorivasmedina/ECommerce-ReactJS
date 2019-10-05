@@ -22,6 +22,7 @@ class Menu extends React.Component {
                         <ul className="navbar-nav ml-auto">
 
                             <li className="nav-item" ><label className="nav-link"><Link to="/Ferias" ><span className="white">FERIAS</span></Link></label></li>
+
                             <li className="nav-item"><label className="nav-link"><Link to="/Tiendas"><span className="white">TIENDAS</span></Link></label></li>
                             <li className="nav-item"><label className="nav-link"><Link to="/Productos"><span className="white">PRODUCTOS</span></Link></label></li>
 
