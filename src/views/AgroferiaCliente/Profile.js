@@ -3,10 +3,10 @@ import Menu from '../../components/AgroferiaCliente/Menu';
 
 
 
-class Canasta extends React.Component {
+class Profile extends React.Component {
     render() {
         return (
-            <div className="Canasta">
+            <div className="Profile">
                 <Menu/>
                 
             </div>
@@ -15,4 +15,4 @@ class Canasta extends React.Component {
 
 }
 
-export default Canasta;
+export default Profile;

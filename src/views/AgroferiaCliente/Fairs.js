@@ -3,11 +3,10 @@ import Menu from '../../components/AgroferiaCliente/Menu';
 
 
 
-class Productos extends React.Component {
+class Fairs extends React.Component {
     render() {
         return (
-            <div className="Productos">
-                <Menu/>
+            <div className="Fairs">
                 
             </div>
         );
@@ -15,4 +14,4 @@ class Productos extends React.Component {
 
 }
 
-export default Productos;
+export default Fairs;
