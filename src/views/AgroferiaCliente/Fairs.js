@@ -42,7 +42,8 @@ class Fairs extends React.Component {
         </div>
         <div className="container">
           <div className="row">
-
+            {this.state.fairs.map(fairs => <FairComponent name={fairs.nombre} imageUrl={fairs.logo} url="https://www.google.com"/>)}
+{/* 
             <FairComponent name="Magdalena" imageUrl="images/product-1.jpg" />
 
             <FairComponent name="Callao" imageUrl="images/product-2.jpg" />
@@ -50,7 +51,7 @@ class Fairs extends React.Component {
             <FairComponent name="Jesús María" imageUrl="images/product-3.jpg" />
 
 
-              <FairComponent name="San Borja" imageUrl="images/product-4.jpg" /> 
+              <FairComponent name="San Borja" imageUrl="images/product-4.jpg" />  */}
 
           </div>
         </div>
