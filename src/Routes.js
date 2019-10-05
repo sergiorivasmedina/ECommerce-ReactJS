@@ -11,6 +11,7 @@ import Checkout from './views/Vegefoods/Checkout';
 import NotFound from './views/Vegefoods/NotFound';
 
 import Template from './views/AgroferiaCliente/Template';
+import FairList from './views/AgroferiaCliente/FairList';
 
 
 const routing = (
@@ -19,6 +20,7 @@ const routing = (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/home" component={Home} />
+      <Route path="/listarFerias" component={FairList} />
       <Route path="/shop" component={Shop} />
       <Route path="/wishlist" component={Wishlist} />
       <Route path="/singleproduct" component={SingleProduct} />
