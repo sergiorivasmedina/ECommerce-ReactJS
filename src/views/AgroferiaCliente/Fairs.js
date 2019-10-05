@@ -33,7 +33,7 @@ class Fairs extends React.Component {
             <FairComponent name="Jesús María" imageUrl="images/product-3.jpg" />
 
 
-              <FairComponent name="San Borja" imageUrl="images/product-4.jpg" /> */}
+              <FairComponent name="San Borja" imageUrl="images/product-4.jpg" /> 
 
           </div>
         </div>
