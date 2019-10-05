@@ -15,9 +15,9 @@ class ShopDescription extends React.Component {
                 <td className="product-name">
                     <h3>{this.props.Shopname}</h3>
                     <p>{this.props.Shopdetail}</p>
-                    <p><a href="">Ver productos</a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="">Conoce a tu casero</a></p>
+                    
                 </td>
-                {this.props.like==true ? <td className="icon-heart width20" onClick={this.props.handleClick}></td> : <td className="icon width20" onClick={this.handleClick}></td>}
+                {this.props.like==true ? <td className="icon-heart width10 custom-heart" onClick={this.props.handleClick}></td> : <td className="icon-heart width10 custom-heart" onClick={this.handleClick}></td>}
             </tr>
         </tbody>
     </table>

@@ -8,8 +8,16 @@
     color:#4267B2;
 }
 
+.custom-heart {
+    font-size: 25px !important;
+}
+
 .returnButton {
     font-size: 20px;
+}
+
+.width10 {
+    width: 10%;
 }
 
 .width20 {
