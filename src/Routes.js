@@ -10,8 +10,16 @@ import Cart from './views/Vegefoods/Cart';
 import Checkout from './views/Vegefoods/Checkout';
 import NotFound from './views/Vegefoods/NotFound';
 
+
 import Template from './views/AgroferiaCliente/Template';
 import Store from './views/AgroferiaCliente/Store';
+
+import FairList from './views/AgroferiaCliente/FairList';
+import Ferias from './views/AgroferiaCliente/Ferias';
+import Tiendas from './views/AgroferiaCliente/Tiendas';
+import Productos from './views/AgroferiaCliente/Productos';
+import Canasta from './views/AgroferiaCliente/Canasta';
+import Perfil from './views/AgroferiaCliente/Perfil';
 
 
 const routing = (
@@ -20,13 +28,21 @@ const routing = (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/home" component={Home} />
+      <Route path="/listarFerias" component={FairList} />
       <Route path="/shop" component={Shop} />
       <Route path="/wishlist" component={Wishlist} />
       <Route path="/singleproduct" component={SingleProduct} />
       <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
+
       <Route path="/template" component={Template} />
       <Route path="/store" component={Store} />
+      <Route path="/ferias" component={Ferias} />
+      <Route path="/tiendas" component={Tiendas} />
+      <Route path="/productos" component={Productos} />
+      <Route path="/canasta" component={Canasta} />
+      <Route path="/perfil" component={Perfil} />
+
       <Route component={NotFound}/>
     </Switch>
     </div>

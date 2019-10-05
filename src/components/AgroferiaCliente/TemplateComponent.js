@@ -11,7 +11,7 @@ export default class TemplateComponent extends Component {
                     <span className={this.props.icon}></span>
                   </div>
                   <div className="media-body">
-                    <h3 className="heading">{this.props.title}</h3>
+                    <h3 className="heading">{this.props.name}</h3>
                     <span>{this.props.description}</span>
                   </div>
                 </div>
