@@ -5,7 +5,9 @@ import Product from '../../components/Vegefoods/Product';
 import Footer from '../../components/Vegefoods/Footer';
 import Subscribe from '../../components/Vegefoods/Subscribe';
 import Heading from '../../components/Vegefoods/Heading';
+
 import TemplateComponent from '../../components/AgroferiaCliente/TemplateComponent';
+
 
 
 class Template extends React.Component {
