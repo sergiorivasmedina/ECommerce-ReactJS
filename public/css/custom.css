@@ -1,0 +1,16 @@
+.custom-inline {
+    display: inline-block;
+}
+
+.custom-facebook {
+    font-size: 25px !important;
+    color:#4267B2;
+}
+
+.returnButton {
+    font-size: 20px;
+}
+
+.width20 {
+    width: 20%;
+}
