@@ -112,7 +112,7 @@ h1, h2, h3, h4, h5,
 	}
 
 	.navbar-brand {
-		color: $primary;
+		color: #fff;
 		&:hover, &:focus{
 			color: $black;
 		}
@@ -127,13 +127,13 @@ h1, h2, h3, h4, h5,
 		}
 		> .nav-item {
 			> .nav-link {
-				font-size: 11px;
+				font-size: 15px;
 				padding-top: 1.5rem;
 				padding-bottom: 1.5rem;
 				padding-left: 20px;
 				padding-right: 20px;
 				font-weight: 400;
-				color: $black;
+				color: #fff;
 				text-transform: uppercase;
 				letter-spacing: 2px;
 				&:hover {
@@ -199,7 +199,7 @@ h1, h2, h3, h4, h5,
 					}
 					@include media-breakpoint-down(md){
 						color: $white;
-						background: $primary;
+						background: $white;
 					}
 				}
 			}
@@ -238,13 +238,13 @@ h1, h2, h3, h4, h5,
 		.nav-item {
 			&.active {
 				> a {
-					color: $primary!important;
+					color: $white !important;
 				}
 			}
 			&.cta {
 				> a {
 					color: $white !important;
-					background: $primary;
+					background: $white;
 					border: none !important;
 					 
 					span {
@@ -254,7 +254,7 @@ h1, h2, h3, h4, h5,
 				}
 				&.cta-colored {
 					span {
-						border-color: $primary;
+						border-color: $white;
 					}
 				}
 			}
@@ -293,7 +293,7 @@ h1, h2, h3, h4, h5,
 			padding-bottom: .9rem!important;
 			color: $black!important;
 			&.active {
-				color: $primary!important;
+				color: $white!important;
 			}
 		}
 		&.awake {
@@ -309,6 +309,8 @@ h1, h2, h3, h4, h5,
 		}
 	}
 }
+
+
 
 .navbar-brand {
 	font-weight: 800;
@@ -637,7 +639,9 @@ h1, h2, h3, h4, h5,
 .bg-light {
 	background: #f7f6f2!important;
 }
-
+.bg-pink {
+	background: #FC14AC !important;
+}
 .bg-primary{
 	background: $primary;
 }
@@ -2491,4 +2495,6 @@ textarea.form-control {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px;
   }
+  
+
 }
