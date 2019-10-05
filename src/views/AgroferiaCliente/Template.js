@@ -1,12 +1,9 @@
 import React from 'react';
-import Navigator from '../../components/Vegefoods/Navigator';
 import Menu from '../../components/AgroferiaCliente/Menu';
-import Product from '../../components/Vegefoods/Product';
-import Footer from '../../components/Vegefoods/Footer';
-import Subscribe from '../../components/Vegefoods/Subscribe';
 import Heading from '../../components/Vegefoods/Heading';
 
 import TemplateComponent from '../../components/AgroferiaCliente/TemplateComponent';
+import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 
 
 
@@ -26,8 +23,7 @@ class Template extends React.Component {
                         </div>
                     </div>
                 </section>
-                <Subscribe />
-                <Footer />
+                <FooterComponent />
             </div>
         );
     }
