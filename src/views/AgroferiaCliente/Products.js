@@ -3,10 +3,10 @@ import Menu from '../../components/AgroferiaCliente/Menu';
 
 
 
-class Perfil extends React.Component {
+class Products extends React.Component {
     render() {
         return (
-            <div className="Perfil">
+            <div className="Products">
                 <Menu/>
                 
             </div>
@@ -15,4 +15,4 @@ class Perfil extends React.Component {
 
 }
 
-export default Perfil;
+export default Products;

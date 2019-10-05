@@ -5,10 +5,10 @@ import Heading from '../../components/Vegefoods/Heading';
 import StoreList from '../../components/AgroferiaCliente/StoreList';
 
 
-class Tiendas extends React.Component {
+class Stores extends React.Component {
     render() {
         return (
-            <div className="Tiendas">
+            <div className="Stores">
                 <Menu/>
                 <Heading title="Tiendas" imageUrl="images/agroferia_tienda1.jpg"/>
                 <section>
@@ -25,4 +25,4 @@ class Tiendas extends React.Component {
 
 }
 
-export default Tiendas;
+export default Stores;

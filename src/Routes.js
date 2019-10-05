@@ -15,11 +15,11 @@ import Template from './views/AgroferiaCliente/Template';
 import Store from './views/AgroferiaCliente/Store';
 
 import FairList from './views/AgroferiaCliente/FairList';
-import Ferias from './views/AgroferiaCliente/Ferias';
-import Tiendas from './views/AgroferiaCliente/Tiendas';
-import Productos from './views/AgroferiaCliente/Productos';
-import Canasta from './views/AgroferiaCliente/Canasta';
-import Perfil from './views/AgroferiaCliente/Perfil';
+import Ferias from './views/AgroferiaCliente/Fairs';
+import Tiendas from './views/AgroferiaCliente/Stores';
+import Productos from './views/AgroferiaCliente/Products';
+import Canasta from './views/AgroferiaCliente/Basket';
+import Perfil from './views/AgroferiaCliente/Profile';
 
 
 const routing = (

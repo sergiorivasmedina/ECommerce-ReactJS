@@ -4,7 +4,7 @@ import FairComponent from '../../components/AgroferiaCliente/FairComponent';
 
 
 
-class Ferias extends React.Component {
+class Fairs extends React.Component {
     render() {
         return (
         <section className="ftco-section">
@@ -36,4 +36,4 @@ class Ferias extends React.Component {
 
 }
 
-export default Ferias;
+export default Fairs;
