@@ -12,6 +12,7 @@ import NotFound from './views/Vegefoods/NotFound';
 
 
 import Template from './views/AgroferiaCliente/Template';
+import Store from './views/AgroferiaCliente/Store';
 
 import FairList from './views/AgroferiaCliente/FairList';
 import Ferias from './views/AgroferiaCliente/Fairs';
@@ -19,6 +20,7 @@ import Tiendas from './views/AgroferiaCliente/Stores';
 import Productos from './views/AgroferiaCliente/Products';
 import Canasta from './views/AgroferiaCliente/Basket';
 import Perfil from './views/AgroferiaCliente/Profile';
+import DetalleTienda from './views/AgroferiaCliente/StoreDetail';
 
 
 const routing = (
@@ -35,11 +37,13 @@ const routing = (
       <Route path="/checkout" component={Checkout} />
 
       <Route path="/template" component={Template} />
+      <Route path="/store" component={Store} />
       <Route path="/ferias" component={Ferias} />
       <Route path="/tiendas" component={Tiendas} />
       <Route path="/productos" component={Productos} />
       <Route path="/canasta" component={Canasta} />
       <Route path="/perfil" component={Perfil} />
+      <Route path="/detalleTienda" component={DetalleTienda} />
 
       <Route component={NotFound}/>
     </Switch>

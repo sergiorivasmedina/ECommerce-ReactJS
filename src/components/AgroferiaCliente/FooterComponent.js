@@ -13,7 +13,7 @@ class FooterComponent extends React.Component {
             </div>
           </div>
           <div className="row mb-5">
-            <div className="col-md">
+            <div className="col-md">  
               <div className="ftco-footer-widget mb-4">
                 <h2 className="ftco-heading-2">Agroferias Campesinas</h2>
                 <p>Fueron diseñadas para revalorar la agricultura familiar, sus productores y la biodiversidad del Perú. La feria empezó como proyecto en el 2012 y fue desarrollada por la Sociedad Peruana de Gastronomía – APEGA y financiado por el BID FOMIN.</p>
