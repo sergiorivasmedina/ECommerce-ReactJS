@@ -2,6 +2,23 @@ import React from 'react';
 import ShopDescription from './ShopDescription';
 
 export default class StoreList extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state ={
+            Stores:[{id:"1",name:"Papa y camote", detail:"vendemos...", image:"./images/tienda_1.jpg", like:false },
+            {id:"2",name:"Papa y camote", detail:"vendemos...", image:"./images/tienda_1.jpg" ,like:true},
+            {id:"3",name:"Papa y camote", detail:"vendemos...", image:"./images/tienda_1.jpg" ,like:false}]
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+
+    handleClick() {
+        
+        console.log('Click happened');
+    }
+
     render(){
         return(
             <div>
@@ -11,13 +28,11 @@ export default class StoreList extends React.Component{
                     <span className={this.props.icon}></span>
                   </div>
                   <div className="media-body">
-                    <h3 className="heading">{this.props.name}</h3>
                     <span>{this.props.description}</span>
                   </div>
                 </div>
               </div>
-              <ShopDescription shopName="Papa y camote" shopDetail="Vendemos tubérculos como camote, yuca, y más de 20 variedades de papa." imageUrl="./images/tienda_1.jpg"></ShopDescription>
-              <ShopDescription shopName="Papa y camote" shopDetail="Vendemos tubérculos como camote, yuca, y más de 20 variedades de papa." imageUrl="./images/tienda_1.jpg"></ShopDescription>
+              {this.state.Stores.map(store => <ShopDescription id={store.id} Shopname={store.name} Shopdetail={store.detail} urlimage={store.image} like={store.like} handleClick={this.handleClick}/>)}
             </div>    
         )
     }

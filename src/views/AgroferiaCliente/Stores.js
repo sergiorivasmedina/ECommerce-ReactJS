@@ -11,11 +11,11 @@ class Stores extends React.Component {
             <div className="Stores">
                 <Menu/>
                 <Heading title="Tiendas" imageUrl="images/agroferia_tienda1.jpg"/>
-                <section>
+                <section className="pt-5">
                     <div className="container">
-                        
-                            <StoreList name="Lista de Tiendas"/>
-                        
+                        <h4 className="heading">Lista de Tiendas</h4>
+                        <h4>Buscador</h4>
+                        <StoreList name="Lista de Tiendas"/>
                     </div>
                 </section>
                 
