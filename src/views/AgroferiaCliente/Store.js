@@ -1,28 +1,34 @@
 import React from 'react';
-import Menu from '../../components/AgroferiaCliente/Menu';
 import Navigator from '../../components/Vegefoods/Navigator';
 import Heading from '../../components/Vegefoods/Heading';
 import StoreList from '../../components/AgroferiaCliente/StoreList';
 
+class Store extends React.Component {
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+          store: []
+        };
+      }
 
-class Stores extends React.Component {
     render() {
-        return (
-            <div className="Stores">
-                <Menu/>
+        return(
+            <div>
+                <Navigator/>
                 <Heading title="Tiendas" imageUrl="images/agroferia_tienda1.jpg"/>
-                <section className="pt-5">
+                <section>
                     <div className="container">
-                        <h4 className="heading">Lista de Tiendas</h4>
-                        <h4>Buscador</h4>
-                        <StoreList name="Lista de Tiendas"/>
+                        <div className="row no-gutters ftco-services">
+                            <StoreList name="Lista de Tiendas"/>
+                        </div>
                     </div>
                 </section>
-                
+
             </div>
-        );
+        )        
     }
 
 }
 
-export default Stores;
+export default Store;

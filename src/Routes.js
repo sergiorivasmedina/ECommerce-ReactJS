@@ -12,6 +12,7 @@ import NotFound from './views/Vegefoods/NotFound';
 
 
 import Template from './views/AgroferiaCliente/Template';
+import Store from './views/AgroferiaCliente/Store';
 
 import FairList from './views/AgroferiaCliente/FairList';
 import Ferias from './views/AgroferiaCliente/Fairs';
@@ -36,6 +37,7 @@ const routing = (
       <Route path="/checkout" component={Checkout} />
 
       <Route path="/template" component={Template} />
+      <Route path="/store" component={Store} />
       <Route path="/ferias" component={Ferias} />
       <Route path="/tiendas" component={Tiendas} />
       <Route path="/productos" component={Productos} />
