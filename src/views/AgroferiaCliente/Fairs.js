@@ -2,10 +2,27 @@ import React from 'react';
 import FairComponent from '../../components/AgroferiaCliente/FairComponent';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import MenuFairComponent from '../../components/AgroferiaCliente/MenuFairsComponent';
-
+import APIFerias from '../../services/FairsService'
 
 
 class Fairs extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      fairs: [] //comentario
+    }
+  }
+
+  componentDidMount(){
+
+    APIFerias.get('/Despliegue/api/ferias')
+      .then(res=> {
+        const fairs = res.data;
+        this.setState({ fairs:fairs })
+        console.log(fairs);
+      })
+  }
+
   render() {
     return (
       <div className="Fairs">
