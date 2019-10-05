@@ -11,6 +11,7 @@ import Checkout from './views/Vegefoods/Checkout';
 import NotFound from './views/Vegefoods/NotFound';
 
 import Template from './views/AgroferiaCliente/Template';
+import Store from './views/AgroferiaCliente/Store';
 
 
 const routing = (
@@ -25,6 +26,7 @@ const routing = (
       <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/template" component={Template} />
+      <Route path="/store" component={Store} />
       <Route component={NotFound}/>
     </Switch>
     </div>
