@@ -7,8 +7,8 @@ export default class StoreList extends React.Component{
         super(props);
         this.state ={
             Stores:[{id:"1",name:"Papa y camote", detail:"vendemos...", image:"./images/tienda_1.jpg", like:false },
-            {id:"2",name:"Papa y camote", detail:"vendemos...", image:"./images/tienda_1.jpg" ,like:true},
-            {id:"3",name:"Papa y camote", detail:"vendemos...", image:"./images/tienda_1.jpg" ,like:false}]
+            {id:"2",name:"Aji y Limones", detail:"vendemos...", image:"./images/tienda_1.jpg" ,like:true},
+            {id:"3",name:"Pachamama", detail:"vendemos...", image:"./images/tienda_1.jpg" ,like:false}]
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -19,7 +19,14 @@ export default class StoreList extends React.Component{
         console.log('Click happened');
     }
 
+
+
     render(){
+      let filterStore = this.state.Stores.filter(
+        (store) =>{
+          return store.name.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1;
+        }
+      );
         return(
             <div>
             <div className="col-md-3 text-center d-flex align-self-stretch ">
@@ -32,7 +39,8 @@ export default class StoreList extends React.Component{
                   </div>
                 </div>
               </div>
-              {this.state.Stores.map(store => <ShopDescription id={store.id} Shopname={store.name} Shopdetail={store.detail} urlimage={store.image} like={store.like} handleClick={this.handleClick}/>)}
+              {filterStore.map(store => <ShopDescription id={store.id} Shopname={store.name} Shopdetail={store.detail} 
+              urlimage={store.image} like={store.like} handleClick={this.handleClick}/>)}
             </div>    
         )
     }

@@ -7,7 +7,19 @@ import SearchBar from '../../components/AgroferiaCliente/SearchBar';
 
 
 class Stores extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            search:''
+        }
+    }
 
+    updateSearch (event){
+        this.setState({
+            search:event
+        })
+        console.log(event);
+    }
 
     render() {
         return (
@@ -21,10 +33,10 @@ class Stores extends React.Component {
                             <h4 className="heading">Lista de Tiendas</h4>
                         </div>
                         <div class="col-md-6">
-                            <SearchBar></SearchBar>
+                            <SearchBar search={this.state.search} updateSearch={this.updateSearch.bind(this)}></SearchBar>
                         </div>
                         </div>
-                        <StoreList name="Lista de Tiendas" />
+                        <StoreList name="Lista de Tiendas" search={this.state.search}/>
                     </div>
                     
                 </section>
