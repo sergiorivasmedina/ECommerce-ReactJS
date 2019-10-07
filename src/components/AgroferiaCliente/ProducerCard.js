@@ -1,11 +1,28 @@
 import React from 'react';
+import ModalProducer from './ModalProducer';
+
 
 class ProducerCard extends React.Component {
+    
+    constructor(props){
+        super(props);
+        this.state ={
+            status:false
+        };
+    }
+
+    openModal(){
+        this.setState({
+            status:true
+        });
+    }
+
+    closeModal = () =>{
+        this.setState({
+            status:false
+        });
+    }
     render() {
-        let status;
-
-
-
         return (
             <div className="col-lg-3 col-6">
                 <div className="product p-3 pl-5 pr-5">
@@ -13,7 +30,9 @@ class ProducerCard extends React.Component {
                         <div className="overlay"></div>
                     </a>
                     <div className="text pt-3 text-center">
-                        <h3><a href="#">{this.props.producerName}</a></h3>
+                        <h3><a href="#" onClick={this.openModal.bind(this)}>{this.props.producerName}</a>
+                        <ModalProducer image={this.props.imageUrl} name={this.props.producerName} status={this.state.status} closeModal={this.closeModal.bind(this)}></ModalProducer>
+                        </h3>
                     </div>
                     <div className="text text-center">
                         <p>{this.props.producerDescription}</p>

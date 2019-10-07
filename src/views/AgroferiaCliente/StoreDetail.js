@@ -19,7 +19,7 @@ export default class StoreDetail extends Component {
               <ShopProfile
                 shopName="Papa y camote"
                 shopDescription="La tienda es un tipo de establecimiento comercial en el cual la gente compra bienes o servicios a cambio del desembolso de una determinada cantidad de dinero, es decir, del valor monetario con el cual el producto o servicio ha sido asignado."
-                imageUrl="./images/bg_1.jpg"
+                imageUrl="./images/tienda_1.jpg"
                 phoneNumber="999888777"
                 email="papaycamote@gmail.com"></ShopProfile>
                 <h4>Conoce a nuestros caseros</h4>
