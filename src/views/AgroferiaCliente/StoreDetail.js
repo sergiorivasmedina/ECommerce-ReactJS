@@ -25,6 +25,7 @@ export default class StoreDetail extends Component {
     const {id} = this.props.match.params;
     console.log(id);
 
+  
     APIFerias.get('Despliegue/api/tienda/perfil/' + id)
       .then(res=> {
         const profile = res.data;
@@ -36,6 +37,14 @@ export default class StoreDetail extends Component {
           photo: profile.foto
          })
       })
+
+      console.log(this.state.photo);
+      if (this.state.photo == null || this.state.photo == "") {
+        this.setState({ 
+            photo: "../images/bg_1.jpg"
+        })
+      } 
+
       APIFerias.get('Despliegue/api/productos/tienda/' + id)
       .then(res=> {
         const products = res.data;
@@ -43,6 +52,8 @@ export default class StoreDetail extends Component {
         this.setState({ products:products })
         console.log(products);
       })
+
+      
   }
 
  
@@ -60,7 +71,7 @@ export default class StoreDetail extends Component {
                 imageUrl={this.state.photo}
                 phoneNumber={this.state.phone}
                 email={this.state.email}></ShopProfile>
-                <h4>Conoce a nuestros caseros</h4>
+                <h4>Conoce a nuestros productores</h4>
         
               
               <div className="row">
@@ -68,22 +79,22 @@ export default class StoreDetail extends Component {
                 <ProducerCard
                   producerName="Carla Cachis"
                   producerDescription="Vendedora"
-                  imageUrl="../images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/producer_1.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Luis Arana"
                   producerDescription="Vendedor"
-                  imageUrl="../images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/producer_2.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Sergio Rivas"
                   producerDescription="Productor"
-                  imageUrl="../images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/producer_3.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Johana Gamboa"
                   producerDescription="Agricultora"
-                  imageUrl="../images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/producer_4.jpg"></ProducerCard>
               </div>
               <h4>Descubre nuestros productos</h4>
               <div className="row">

@@ -26,7 +26,7 @@ class ShopDescription extends React.Component {
 
     render() {
     let status;
-
+    var url = "/detalleTienda/" + this.props.index;
     return (
         <table className="table">
         <tbody>
@@ -34,7 +34,7 @@ class ShopDescription extends React.Component {
                 <td className="width20 image-prod"><img className="img-fluid" src={this.state.photo}
                     alt="Colorlib Template"></img></td>
                 <td className="product-name">
-                    <Link to={"/detalleTienda/" + 1}>{this.props.shopname}</Link>
+                    <Link to={url}>{this.props.shopname}</Link>
                     <p>{this.props.shopdetail}</p>
                     
                 </td>

@@ -28,7 +28,7 @@ class Stores extends React.Component {
         return (
             <div className="Stores">
                 <Menu />
-                <Heading title="Tiendas" imageUrl="images/agroferia_tienda1.jpg" />
+                <Heading title="Tiendas" imageUrl="../images/agroferia_tienda1.jpg" />
                 <section className="pt-5">
                     <div className="container">
                         <div className="row">
