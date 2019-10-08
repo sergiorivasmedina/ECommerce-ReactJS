@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class ShopDescription extends React.Component {
     
@@ -13,7 +14,7 @@ class ShopDescription extends React.Component {
                 <td className="width20 image-prod"><img className="img-fluid" src={this.props.urlimage}
                     alt="Colorlib Template"></img></td>
                 <td className="product-name">
-                    <h3>{this.props.Shopname}</h3>
+                    <Link to={"/detalleTienda/" + 2}>{this.props.Shopname}</Link>
                     <p>{this.props.Shopdetail}</p>
                     
                 </td>

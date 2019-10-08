@@ -29,10 +29,10 @@ class Stores extends React.Component {
                 <section className="pt-5">
                     <div className="container">
                         <div className="row">
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                             <h4 className="heading">Lista de Tiendas</h4>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                             <SearchBar search={this.state.search} updateSearch={this.updateSearch.bind(this)}></SearchBar>
                         </div>
                         </div>

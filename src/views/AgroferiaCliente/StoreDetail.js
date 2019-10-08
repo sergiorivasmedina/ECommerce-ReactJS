@@ -9,7 +9,13 @@ import ProducerCarousel from '../../components/AgroferiaCliente/ProducerCarousel
 
 
 export default class StoreDetail extends Component {
+  componentDidMount () {
+    const {id} = this.props.match.params;
+    console.log(id);
+  }
+ 
   render() {
+  
     return (
       <div>
         <Menu />
@@ -19,7 +25,7 @@ export default class StoreDetail extends Component {
               <ShopProfile
                 shopName="Papa y camote"
                 shopDescription="La tienda es un tipo de establecimiento comercial en el cual la gente compra bienes o servicios a cambio del desembolso de una determinada cantidad de dinero, es decir, del valor monetario con el cual el producto o servicio ha sido asignado."
-                imageUrl="./images/tienda_1.jpg"
+                imageUrl="../images/tienda_1.jpg"
                 phoneNumber="999888777"
                 email="papaycamote@gmail.com"></ShopProfile>
                 <h4>Conoce a nuestros caseros</h4>
@@ -30,29 +36,29 @@ export default class StoreDetail extends Component {
                 <ProducerCard
                   producerName="Carla Cachis"
                   producerDescription="Vendedora"
-                  imageUrl="./images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/bg_1.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Luis Arana"
                   producerDescription="Esclavo"
-                  imageUrl="./images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/bg_1.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Sergio Rivas"
                   producerDescription="Productor"
-                  imageUrl="./images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/bg_1.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Johana Gamboa"
                   producerDescription="Agricultora"
-                  imageUrl="./images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/bg_1.jpg"></ProducerCard>
               </div>
               <h4>Descubre nuestros productos</h4>
               <div className="row">
-                <ProductCard productName="Mandarina" price="10" discount="0" imageUrl="./images/bg_1.jpg"></ProductCard>
-                <ProductCard productName="Pera" price="10" discount="0" imageUrl="./images/bg_1.jpg"></ProductCard>
-                <ProductCard productName="Fresa" price="10" discount="0" imageUrl="./images/bg_1.jpg"></ProductCard>
-                <ProductCard productName="Uva" price="10" discount="0" imageUrl="./images/bg_1.jpg"></ProductCard>
+                <ProductCard productName="Mandarina" price="10" discount="0" imageUrl="../images/bg_1.jpg"></ProductCard>
+                <ProductCard productName="Pera" price="10" discount="0" imageUrl="../images/bg_1.jpg"></ProductCard>
+                <ProductCard productName="Fresa" price="10" discount="0" imageUrl="../images/bg_1.jpg"></ProductCard>
+                <ProductCard productName="Uva" price="10" discount="0" imageUrl="../images/bg_1.jpg"></ProductCard>
               </div>
             </div>
       </div >

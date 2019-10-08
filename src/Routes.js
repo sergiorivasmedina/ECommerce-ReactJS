@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router,Switch  } from 'react-router-dom'
+import { Route, Link, BrowserRouter as Router,Switch  } from 'react-router-dom';
+
 
 /*Vistas*/
 import Home from './views/Vegefoods/Home';
@@ -27,7 +28,7 @@ const routing = (
   <Router>
     <div>
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={Ferias} />
       <Route path="/home" component={Home} />
       <Route path="/listarFerias" component={FairList} />
       <Route path="/shop" component={Shop} />
@@ -43,7 +44,7 @@ const routing = (
       <Route path="/productos" component={Productos} />
       <Route path="/canasta" component={Canasta} />
       <Route path="/perfil" component={Perfil} />
-      <Route path="/detalleTienda" component={DetalleTienda} />
+      <Route path="/detalleTienda/:id" component={DetalleTienda} />
 
       <Route component={NotFound}/>
     </Switch>
