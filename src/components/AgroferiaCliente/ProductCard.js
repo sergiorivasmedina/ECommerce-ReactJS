@@ -1,6 +1,26 @@
 import React from 'react';
 
 class ProductCard extends React.Component {
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            photo: ""
+        }
+    }
+
+    componentDidMount(){
+        if (this.props.imageUrl == null) {
+            this.setState({ 
+                photo: "../images/bg_1.jpg"
+            })
+        } else {
+            this.setState({ 
+                photo: this.props.imageUrl
+            })
+        }
+    }
+
     render() {
         let status;
         let pricing;

@@ -14,7 +14,7 @@ class Menu extends React.Component {
             <nav className="navbar navbar-expand-lg  bg-pink ftco-navbar-light" id="ftco-navbar">
                 <div className="container">
 
-                    <img className="img-fluid" src="images/AgroferiaCliente/logoap.png" alt="Colorlib Template" />    
+                    <img className="img-fluid" src="../images/AgroferiaCliente/logoap.png" alt="Colorlib Template" />    
             
                     <h5 className="white"> {this.state.value}</h5>
 

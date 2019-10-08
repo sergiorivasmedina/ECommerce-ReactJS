@@ -5,14 +5,17 @@ import Heading from '../../components/Vegefoods/Heading';
 import StoreList from '../../components/AgroferiaCliente/StoreList';
 import SearchBar from '../../components/AgroferiaCliente/SearchBar';
 
-
 class Stores extends React.Component {
     constructor(){
         super();
         this.state = {
-            search:''
+            id: 1,
+            search:'',
+            stores: []
         }
+        
     }
+
 
     updateSearch (event){
         this.setState({
@@ -36,7 +39,7 @@ class Stores extends React.Component {
                             <SearchBar search={this.state.search} updateSearch={this.updateSearch.bind(this)}></SearchBar>
                         </div>
                         </div>
-                        <StoreList name="Lista de Tiendas" search={this.state.search}/>
+                        <StoreList fairId={this.state.id} name="Lista de Tiendas" search={this.state.search}/>
                     </div>
                     
                 </section>
