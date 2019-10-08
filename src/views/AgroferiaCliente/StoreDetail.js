@@ -7,6 +7,7 @@ import ReturnButton from '../../components/AgroferiaCliente/ReturnButton';
 import TestimonyCarousel from '../../components/Vegefoods/TestimonyCarousel';
 import ProducerCarousel from '../../components/AgroferiaCliente/ProducerCarousel';
 import APIFerias from '../../services/FairsService'
+import {Link} from 'react-router-dom';
 
 export default class StoreDetail extends Component {
   constructor(props){
@@ -58,12 +59,12 @@ export default class StoreDetail extends Component {
 
  
   render() {
-  
     return (
       <div>
         <Menu />
           <div className="container">
-              <ReturnButton previousPage="Tiendas" reference="/Tiendas"></ReturnButton>
+          <Link to={"/tiendas/" + localStorage.getItem('idFeria')}>
+              <ReturnButton previousPage="Tiendas"></ReturnButton></Link>
               
                 <ShopProfile
                 shopName={this.state.name}

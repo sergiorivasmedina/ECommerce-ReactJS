@@ -40,7 +40,7 @@ const routing = (
       <Route path="/template" component={Template} />
       <Route path="/store" component={Store} />
       <Route path="/ferias" component={Ferias} />
-      <Route path="/tiendas" component={Tiendas} />
+      <Route path="/tiendas/:id" component={Tiendas} />
       <Route path="/productos" component={Productos} />
       <Route path="/canasta" component={Canasta} />
       <Route path="/perfil" component={Perfil} />

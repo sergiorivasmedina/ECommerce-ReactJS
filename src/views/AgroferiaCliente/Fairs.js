@@ -19,11 +19,14 @@ class Fairs extends React.Component {
       .then(res=> {
         const fairs = res.data;
         this.setState({ fairs:fairs })
-        console.log(fairs);
+        console.log(this.state.fairs);
       })
+
+      
   }
 
   render() {
+    var urlIn = "/tiendas/" + localStorage.getItem("idFeria");
     return (
       <div className="Fairs">
         <MenuFairComponent />
@@ -42,7 +45,7 @@ class Fairs extends React.Component {
         </div>
         <div className="container">
           <div className="row">
-            {this.state.fairs.map(fairs => <FairComponent id={fairs.idFeria} name={fairs.nombre} imageUrl={fairs.logo} url="https://www.google.com"/>)}
+            {this.state.fairs.map(fair => <FairComponent idFeria={fair.idFeria} name={fair.nombre} key={fair.idFeria} imageUrl={fair.logo} url={urlIn} />)}
 {/* 
             <FairComponent name="Magdalena" imageUrl="images/product-1.jpg" />
 

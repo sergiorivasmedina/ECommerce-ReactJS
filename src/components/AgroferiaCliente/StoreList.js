@@ -15,7 +15,7 @@ export default class StoreList extends React.Component {
   
 
   componentDidMount() {
-    console.log(this.props.fairId);
+    console.log(this.props.fairId); 
     APIFerias.get('/Despliegue/api/tiendas/feria/' + this.props.fairId)
       .then(res => {
         const stores = res.data;

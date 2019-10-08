@@ -2,6 +2,14 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 class FairComponent extends React.Component {
+
+  componentDidMount() {
+    console.log(this.props.idFeria);
+    console.log("FairComponentJS", this.props.idFeria);
+    
+    localStorage.setItem('nombreFeria', this.props.name);
+  }
+
   render() {
     let status;
 
@@ -15,7 +23,7 @@ class FairComponent extends React.Component {
           </a>
           <div className="text py-3 pb-4 px-3 text-center">
           
-            <h3><Link to={"/tiendas/" + this.props.id}>{this.props.name}</Link></h3>
+            <h3><Link to={"/tiendas/" + this.props.idFeria}>{this.props.name}</Link></h3>
           </div>
         </div>
       </div>
