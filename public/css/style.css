@@ -9932,7 +9932,14 @@ textarea.form-control {
       margin-bottom: 10px; }
       .sidebar-box-2 ul li a {
         color: #000000; }
-
+.login {   
+  background-image: url(../images/agroferia_tienda1.jpg); 
+  
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 #ftco-loader {
   position: fixed;
   width: 96px;
