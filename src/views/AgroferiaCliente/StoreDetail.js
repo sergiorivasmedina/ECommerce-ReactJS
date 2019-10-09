@@ -6,29 +6,73 @@ import Menu from '../../components/AgroferiaCliente/Menu';
 import ReturnButton from '../../components/AgroferiaCliente/ReturnButton';
 import TestimonyCarousel from '../../components/Vegefoods/TestimonyCarousel';
 import ProducerCarousel from '../../components/AgroferiaCliente/ProducerCarousel';
-
+import APIFerias from '../../services/FairsService'
+import {Link} from 'react-router-dom';
 
 export default class StoreDetail extends Component {
-  componentDidMount () {
+  constructor(props){
+    super(props)
+    this.state = {
+      name: "",
+      description: "",
+      phone: "",
+      email: "",
+      products: [],
+      photo: ""
+    }
+  }
+
+  componentDidMount(){
     const {id} = this.props.match.params;
     console.log(id);
+
+  
+    APIFerias.get('Despliegue/api/tienda/perfil/' + id)
+      .then(res=> {
+        const profile = res.data;
+        this.setState({ 
+          name: profile.empresa.nombreComercial,
+          description: profile.descripcion,
+          phone: profile.empresa.celular,
+          email: profile.empresa.email,
+          photo: profile.foto
+         })
+      })
+
+      console.log(this.state.photo);
+      if (this.state.photo == null || this.state.photo == "") {
+        this.setState({ 
+            photo: "../images/bg_1.jpg"
+        })
+      } 
+
+      APIFerias.get('Despliegue/api/productos/tienda/' + id)
+      .then(res=> {
+        const products = res.data;
+        console.log(products);
+        this.setState({ products:products })
+        console.log(products);
+      })
+
+      
   }
+
  
   render() {
-  
     return (
       <div>
         <Menu />
           <div className="container">
-              <ReturnButton previousPage="Tiendas" reference="/Tiendas"></ReturnButton>
+          <Link to={"/tiendas/" + localStorage.getItem('idFeria')}>
+              <ReturnButton previousPage="Tiendas"></ReturnButton></Link>
               
-              <ShopProfile
-                shopName="Papa y camote"
-                shopDescription="La tienda es un tipo de establecimiento comercial en el cual la gente compra bienes o servicios a cambio del desembolso de una determinada cantidad de dinero, es decir, del valor monetario con el cual el producto o servicio ha sido asignado."
-                imageUrl="../images/tienda_1.jpg"
-                phoneNumber="999888777"
-                email="papaycamote@gmail.com"></ShopProfile>
-                <h4>Conoce a nuestros caseros</h4>
+                <ShopProfile
+                shopName={this.state.name}
+                shopDescription={this.state.description}
+                imageUrl={this.state.photo}
+                phoneNumber={this.state.phone}
+                email={this.state.email}></ShopProfile>
+                <h4>Conoce a nuestros productores</h4>
         
               
               <div className="row">
@@ -36,29 +80,26 @@ export default class StoreDetail extends Component {
                 <ProducerCard
                   producerName="Carla Cachis"
                   producerDescription="Vendedora"
-                  imageUrl="../images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/producer_1.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Luis Arana"
-                  producerDescription="Esclavo"
-                  imageUrl="../images/bg_1.jpg"></ProducerCard>
+                  producerDescription="Vendedor"
+                  imageUrl="../images/producer_2.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Sergio Rivas"
                   producerDescription="Productor"
-                  imageUrl="../images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/producer_3.jpg"></ProducerCard>
 
                 <ProducerCard
                   producerName="Johana Gamboa"
                   producerDescription="Agricultora"
-                  imageUrl="../images/bg_1.jpg"></ProducerCard>
+                  imageUrl="../images/producer_4.jpg"></ProducerCard>
               </div>
               <h4>Descubre nuestros productos</h4>
               <div className="row">
-                <ProductCard productName="Mandarina" price="10" discount="0" imageUrl="../images/bg_1.jpg"></ProductCard>
-                <ProductCard productName="Pera" price="10" discount="0" imageUrl="../images/bg_1.jpg"></ProductCard>
-                <ProductCard productName="Fresa" price="10" discount="0" imageUrl="../images/bg_1.jpg"></ProductCard>
-                <ProductCard productName="Uva" price="10" discount="0" imageUrl="../images/bg_1.jpg"></ProductCard>
+              {this.state.products.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0" store="" imageUrl={product.solicitudProducto.imagen}/>)}
               </div>
             </div>
       </div >

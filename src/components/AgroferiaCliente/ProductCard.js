@@ -1,6 +1,29 @@
 import React from 'react';
 
 class ProductCard extends React.Component {
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            photo: null
+        }
+    }
+
+    componentDidMount(){
+        if (this.props.imageUrl == null || this.props.imageUrl == "") {
+            console.log("DA");
+            this.setState({ 
+                photo: "../images/bg_1.jpg"
+            })
+            console.log(this.state);
+        } else {
+            this.setState({ 
+                photo: this.props.imageUrl
+            })
+        }
+        
+    }
+
     render() {
         let status;
         let pricing;
@@ -27,7 +50,7 @@ class ProductCard extends React.Component {
         return (
             <div className="col-lg-3 col-6">
                 <div className="product">
-                    <a href="#" className="img-prod"><img className="img-fluid" src={this.props.imageUrl} alt="Colorlib Template" />
+                    <a href="#" className="img-prod"><img className="img-fluid" src={this.state.photo} alt="Colorlib Template" />
                         {status}
                         <div className="overlay"></div>
                     </a>

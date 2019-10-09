@@ -5,13 +5,22 @@ import Heading from '../../components/Vegefoods/Heading';
 import StoreList from '../../components/AgroferiaCliente/StoreList';
 import SearchBar from '../../components/AgroferiaCliente/SearchBar';
 
-
 class Stores extends React.Component {
     constructor(){
         super();
         this.state = {
-            search:''
+            id: 1,
+            search:'',
+            stores: []
         }
+        
+    }
+
+    componentWillMount() {
+        
+        const {id} = this.props.match.params;
+        localStorage.setItem('idFeria', id);
+        console.log("probando",localStorage.getItem('idFeria'));
     }
 
     updateSearch (event){
@@ -25,7 +34,7 @@ class Stores extends React.Component {
         return (
             <div className="Stores">
                 <Menu />
-                <Heading title="Tiendas" imageUrl="images/agroferia_tienda1.jpg" />
+                <Heading title="Tiendas" imageUrl="../images/agroferia_tienda1.jpg" />
                 <section className="pt-5">
                     <div className="container">
                         <div className="row">
@@ -36,7 +45,7 @@ class Stores extends React.Component {
                             <SearchBar search={this.state.search} updateSearch={this.updateSearch.bind(this)}></SearchBar>
                         </div>
                         </div>
-                        <StoreList name="Lista de Tiendas" search={this.state.search}/>
+                        <StoreList fairId={localStorage.getItem('idFeria')} name="Lista de Tiendas" search={this.state.search}/>
                     </div>
                     
                 </section>
