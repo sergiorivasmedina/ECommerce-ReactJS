@@ -16,10 +16,10 @@ class Menu extends React.Component {
         return (
             <nav className="navbar navbar-expand-lg  bg-pink ftco-navbar-light" id="ftco-navbar">
                 <div className="container pt-3">
+                <img className="img-fluid" src="../images/AgroferiaCliente/logoap.png" alt="Colorlib Template" />    
+            
+                <h5 className="white"> {this.state.value}</h5>
                     <Row>
-                        <Col md={1} xs={6}><img className="img-fluid" src="images/AgroferiaCliente/logoap.png" alt="Colorlib Template" /></Col>
-                        <Col md={2} xs={6}><h5 className="white"> {this.state.value}</h5></Col>
-                        
                         <Col md={4} >
                         <SearchBarMenu ></SearchBarMenu>
                         </Col>

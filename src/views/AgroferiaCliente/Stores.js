@@ -16,7 +16,7 @@ class Stores extends React.Component {
         
     }
 
-    componentDidMount() {
+    componentWillMount() {
         
         const {id} = this.props.match.params;
         localStorage.setItem('idFeria', id);
