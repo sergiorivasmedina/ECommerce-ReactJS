@@ -23,6 +23,7 @@ import Canasta from './views/AgroferiaCliente/Basket';
 import Perfil from './views/AgroferiaCliente/Profile';
 import DetalleTienda from './views/AgroferiaCliente/StoreDetail';
 import Login from './views/AgroferiaCliente/Login';
+import Registro from './views/AgroferiaCliente/Register';
 
 
 const routing = (
@@ -47,6 +48,7 @@ const routing = (
       <Route path="/perfil" component={Perfil} />
       <Route path="/detalleTienda/:id" component={DetalleTienda} />
       <Route path="/login" component={Login}/>
+      <Route path="/registro" component={Registro}/>
 
       <Route component={NotFound}/>
     </Switch>
