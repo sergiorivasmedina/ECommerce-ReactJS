@@ -18,7 +18,8 @@ export default class StoreDetail extends Component {
       phone: "",
       email: "",
       products: [],
-      photo: ""
+      photo: "",
+      producers:[]
     }
   }
 
@@ -30,6 +31,7 @@ export default class StoreDetail extends Component {
     APIFerias.get('Despliegue/api/tienda/perfil/' + id)
       .then(res=> {
         const profile = res.data;
+        console.log(profile);
         this.setState({ 
           name: profile.empresa.nombreComercial,
           description: profile.descripcion,
@@ -37,12 +39,17 @@ export default class StoreDetail extends Component {
           email: profile.empresa.email,
           photo: profile.foto
          })
+         APIFerias.get('Despliegue/api/usuario/productor/empresa/listar/' + profile.empresa.idEmpresa)
+         .then(res=>{
+           console.log(res.data);
+           this.setState({producers:res.data})
+         })
       })
 
       console.log(this.state.photo);
       if (this.state.photo == null || this.state.photo == "") {
         this.setState({ 
-            photo: "../images/bg_1.jpg"
+            photo: "../images/tienda_1.jpg"
         })
       } 
 
@@ -76,26 +83,8 @@ export default class StoreDetail extends Component {
         
               
               <div className="row">
-                
-                <ProducerCard
-                  producerName="Carla Cachis"
-                  producerDescription="Vendedora"
-                  imageUrl="../images/producer_1.jpg"></ProducerCard>
-
-                <ProducerCard
-                  producerName="Luis Arana"
-                  producerDescription="Vendedor"
-                  imageUrl="../images/producer_2.jpg"></ProducerCard>
-
-                <ProducerCard
-                  producerName="Sergio Rivas"
-                  producerDescription="Productor"
-                  imageUrl="../images/producer_3.jpg"></ProducerCard>
-
-                <ProducerCard
-                  producerName="Johana Gamboa"
-                  producerDescription="Agricultora"
-                  imageUrl="../images/producer_4.jpg"></ProducerCard>
+              {this.state.producers.map(producer =><ProducerCard producerName={producer.nombres + " " + producer.apellidoPaterno}
+              producerDescription={"@"+ producer.username} imageUrl="../images/producer_logo.jpg" producer={producer} coment={producer.observaciones}></ProducerCard> )}
               </div>
               <h4>Descubre nuestros productos</h4>
               <div className="row">
