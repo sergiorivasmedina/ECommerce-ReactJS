@@ -31,6 +31,7 @@ class Stores extends React.Component {
     }
 
     render() {
+        console.log(this.state.stores);
         return (
             <div className="Stores">
                 <Menu />
