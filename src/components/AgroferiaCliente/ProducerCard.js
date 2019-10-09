@@ -31,7 +31,7 @@ class ProducerCard extends React.Component {
                     </a>
                     <div className="text pt-3 text-center">
                         <h3><a href="#" onClick={this.openModal.bind(this)}>{this.props.producerName}</a>
-                        <ModalProducer image={this.props.imageUrl} name={this.props.producerName} status={this.state.status} closeModal={this.closeModal.bind(this)}></ModalProducer>
+                        <ModalProducer coment={this.props.coment} image={this.props.imageUrl} name={this.props.producerName} status={this.state.status} closeModal={this.closeModal.bind(this)}></ModalProducer>
                         </h3>
                     </div>
                     <div className="text text-center">
