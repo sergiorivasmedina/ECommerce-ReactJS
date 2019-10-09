@@ -13,7 +13,7 @@ class ShopDescription extends React.Component {
     componentDidMount(){
         if (this.props.urlimage == null) {
             this.setState({ 
-                photo: "../images/bg_1.jpg"
+                photo: "../images/tienda_1.jpg"
             })
         } else {
             this.setState({ 
@@ -26,6 +26,7 @@ class ShopDescription extends React.Component {
 
     render() {
     let status;
+    console.log("envia:" , this.props.like)
     var url = "/detalleTienda/" + this.props.index;
     return (
         <table className="table">
@@ -38,7 +39,7 @@ class ShopDescription extends React.Component {
                     <p>{this.props.shopdetail}</p>
                     
                 </td>
-                {this.props.like==true ? <td className="ion-ios-heart width10" onClick={()=>this.props.handleClick(this.props.index)}></td> : <td className="ion-ios-heart-empty width10 custom-heart" onClick={()=>this.props.handleClick(this.props.index)}></td>}
+                {this.props.like==true? <td className="ion-ios-heart width10" onClick={()=>this.props.handleClick(this.props.index)}></td> : <td className="ion-ios-heart-empty width10 custom-heart" onClick={()=>this.props.handleClick(this.props.index)}></td>}
             </tr>
         </tbody>
     </table>

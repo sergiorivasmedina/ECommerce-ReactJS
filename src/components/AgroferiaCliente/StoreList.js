@@ -9,36 +9,47 @@ export default class StoreList extends React.Component {
     this.state = {
       stores: []
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this); 
   }
-
-  
 
   componentDidMount() {
     console.log(this.props.fairId); 
     APIFerias.get('/Despliegue/api/tiendas/feria/' + this.props.fairId)
       .then(res => {
         const stores = res.data;
-        this.setState({ stores: stores })
+        this.setState({ stores: stores})
         console.log(stores);
+        /*BORRAR DESPUES DE PRESENTACION DEL JUEVES */
+        let list=[];
+        for(var i=0;i<stores.length;i++){
+          let item = stores[i];
+          item["heart"] = false;
+          list.push(item);
+        }
       });
   }
-
+  
+  
   handleClick = s => {
-    const index = this.state.Stores.findIndex((store) => { return store.name == s.name });
-    const store = Object.assign({}, this.state.Stores[index]);
-    store.like = !s.like;
-    const stores = Object.assign([], this.state.Stores);
+    console.log("Selecciono:",s);
+    console.log(this.state.stores);
+    /*MODIFICAR DESPUES DEL JUEVES */
+    const index = this.state.stores.findIndex((store) => { return store.idTienda == s });
+    const store = Object.assign({}, this.state.stores[index]);
+    store.heart = !store.heart;
+    const stores = Object.assign([], this.state.stores);
     stores[index] = store;
     this.setState({
       stores: stores
     });
   }
 
-
-
   render() {
-
+    let filterStore = this.state.stores.filter(
+      (store) =>{
+        return store.empresa.nombreComercial.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1;
+      }
+    );
     return (
       <div>
         <div className="col-md-3 text-center d-flex align-self-stretch ">
@@ -51,8 +62,8 @@ export default class StoreList extends React.Component {
             </div>
           </div>
         </div>
-        {this.state.stores.map(store => <ShopDescription index={store.idTienda} shopname={store.empresa.nombreComercial} shopdetail={store.descripcion}
-          urlimage={store.foto} like="false" handleClick={this.handleClick} />)}
+        {filterStore.map(store => <ShopDescription index={store.idTienda} shopname={store.empresa.nombreComercial} shopdetail={store.descripcion}
+          urlimage={store.foto} like={store.heart} handleClick={this.handleClick} />)}
 
       </div>
     )
