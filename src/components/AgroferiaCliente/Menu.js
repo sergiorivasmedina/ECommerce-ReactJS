@@ -34,7 +34,7 @@ class Menu extends React.Component {
                             <li className="nav-item"><label className="nav-link"><Link to="/Calendar">CALENDARIO</Link></label></li> */}
                             
                             <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Canasta"><span className="icons icon-shopping_basket"></span><span className="white">[0]</span></Link></label></li>
-                            <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Perfil"><span className="icons icon-person"></span></Link></label></li>
+                            <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Login"><span className="icons icon-person"></span></Link></label></li>
 
                         </ul>
                     </div>
