@@ -7,8 +7,16 @@ class FairComponent extends React.Component {
     console.log(this.props.idFeria);
     console.log("FairComponentJS", this.props.idFeria);
     
-    localStorage.setItem('nombreFeria', this.props.name);
+    
   }
+
+  handleClick = (event, nombre) => {
+    //localStorage.setItem('nombreFeria', this.props.name);
+    console.log("nombre de la feria: ", nombre);
+    console.log("hola carla cachis");
+  }
+
+
 
   render() {
     let status;

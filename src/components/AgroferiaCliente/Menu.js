@@ -3,13 +3,10 @@ import { Link } from 'react-router-dom';
 import {Row,Col} from 'react-bootstrap';
 import SearchBarMenu from '../../components/AgroferiaCliente/SearchBarMenu';
 
-
-
-
 class Menu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { value: 'Agroferia del Back' };
+        this.state = { value: 'AGROFERIAS CAMPESINAS' };
     }
 
     render() {
