@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductCard from '../../components/AgroferiaCliente/ProductCard';
+import APIFerias from '../../services/FairsService';
 
 export default class ProductList extends React.Component {
 
@@ -13,141 +14,13 @@ export default class ProductList extends React.Component {
   
 
   componentDidMount() {
-      this.setState({products: [
-        {
-        idProducto: 1,
-        subCategoria: {
-        idSubcategoria: 1,
-        categoria: {
-        idCategoria: 1,
-        nombre: "Lácteos",
-        descripcion: null,
-        activo: 1
-        },
-        nombre: "Leche",
-        descripcion: null,
-        activo: 1
-        },
-        unidadMedida: {
-        idUnidadMedida: 1,
-        nombre: "Litros",
-        simbolo: "LT",
-        activo: 1
-        },
-        solicitudProducto: {
-        idSolicitudProducto: 1,
-        subCategoria: {
-        idSubcategoria: 1,
-        categoria: {
-        idCategoria: 1,
-        nombre: "Lácteos",
-        descripcion: null,
-        activo: 1
-        },
-        nombre: "Leche",
-        descripcion: null,
-        activo: 1
-        },
-        unidadMedida: {
-        idUnidadMedida: 1,
-        nombre: "Litros",
-        simbolo: "LT",
-        activo: 1
-        },
-        idSolicitudTienda: 1,
-        idSolicitudEmpresa: 1,
-        idTienda: 1,
-        nombre: "Leche de Soya",
-        precio: 8.61,
-        imagen: null,
-        descripcion: "Leche de pura soya",
-        valorNutricional: "15 de hierro",
-        razon: "Embasado",
-        idUsuarioRegistro: null,
-        idUsuarioRespuesta: null,
-        estado: null,
-        fechaRegistro: null,
-        fechaRespuesta: null,
-        activo: 1
-        },
-        idTienda: 1,
-        nombre: "Leche de Soya",
-        codProducto: "AAABBB",
-        precio: 8.99,
-        stock: 78,
-        descripcion: "Leche de Soya",
-        valorNutricional: "17 Calorias",
-        activo: 1
-        },
-        {
-            idProducto: 2,
-            subCategoria: {
-            idSubcategoria: 1,
-            categoria: {
-            idCategoria: 1,
-            nombre: "Tubérculos",
-            descripcion: null,
-            activo: 1
-            },
-            nombre: "Tubérculos",
-            descripcion: null,
-            activo: 1
-            },
-            unidadMedida: {
-            idUnidadMedida: 1,
-            nombre: "Litros",
-            simbolo: "LT",
-            activo: 1
-            },
-            solicitudProducto: {
-            idSolicitudProducto: 1,
-            subCategoria: {
-            idSubcategoria: 1,
-            categoria: {
-            idCategoria: 1,
-            nombre: "Tubérculos",
-            descripcion: null,
-            activo: 1
-            },
-            nombre: "Leche",
-            descripcion: null,
-            activo: 1
-            },
-            unidadMedida: {
-            idUnidadMedida: 1,
-            nombre: "Litros",
-            simbolo: "LT",
-            activo: 1
-            },
-            idSolicitudTienda: 1,
-            idSolicitudEmpresa: 1,
-            idTienda: 1,
-            nombre: "Leche de Soya",
-            precio: 8.61,
-            imagen: null,
-            descripcion: "Leche de pura soya",
-            valorNutricional: "15 de hierro",
-            razon: "Embasado",
-            idUsuarioRegistro: null,
-            idUsuarioRespuesta: null,
-            estado: null,
-            fechaRegistro: null,
-            fechaRespuesta: null,
-            activo: 1
-            },
-            idTienda: 1,
-            nombre: "Papas",
-            codProducto: "AAABBB",
-            precio: 8.99,
-            stock: 78,
-            descripcion: "Papas",
-            valorNutricional: "17 Calorias",
-            activo: 1
-            }
-            
-        ]},
-        
-        );
+
+    APIFerias.get('Despliegue/api/productos/feria/' + localStorage.getItem('idFeria'))
+      .then(res=> {
+        const products = res.data;
+        this.setState({ products:products })
+      })
+
   }
 
 
@@ -169,7 +42,7 @@ export default class ProductList extends React.Component {
         </div>
         <div className="row">
         {this.state.products.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0"
-          store={product.store} unit={product.unidadMedida.simbolo}/>)}
+          store={product.store} unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
 </div>
       </div>
     )
