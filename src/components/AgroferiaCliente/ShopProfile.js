@@ -4,33 +4,20 @@ class ShopProfile extends React.Component {
 
     constructor(props){
         super(props);
+        console.log(this.props.imageUrl);
         this.state = {
-            photo: null
+            photo: this.props.imageUrl
         }
     }
 
-    componentDidMount(){
-        if (this.props.imageUrl == null || this.props.imageUrl == "") {
-            console.log("DA");
-            this.setState({ 
-                photo: "../images/bg_1.jpg"
-            })
-            console.log(this.state);
-        } else {
-            this.setState({ 
-                photo: this.props.imageUrl
-            })
-        }
-        
-    }
-   
+
     render() {
         let status;
 
         return (
             <div className="row pt-5 pb-5">
                 <div className="col-lg-3 col-md-4">
-                    <img className="img-fluid" src={this.state.photo}
+                    <img className="img-fluid" src={this.props.imageUrl}
                         alt="Colorlib Template"></img>
                 </div>
                 <div className="col-lg-9 col-md-8 text-left">

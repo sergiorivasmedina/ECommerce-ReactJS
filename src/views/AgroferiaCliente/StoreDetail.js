@@ -23,7 +23,7 @@ export default class StoreDetail extends Component {
     }
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const {id} = this.props.match.params;
     console.log(id);
 
@@ -39,6 +39,7 @@ export default class StoreDetail extends Component {
           email: profile.empresa.email,
           photo: profile.foto
          })
+         console.log(this.state.photo);
          APIFerias.get('Despliegue/api/usuario/productor/empresa/listar/' + profile.empresa.idEmpresa)
          .then(res=>{
            console.log(res.data);
@@ -46,7 +47,7 @@ export default class StoreDetail extends Component {
          })
       })
 
-      console.log(this.state.photo);
+      
       if (this.state.photo == null || this.state.photo == "") {
         this.setState({ 
             photo: "../images/tienda_1.jpg"
@@ -88,7 +89,7 @@ export default class StoreDetail extends Component {
               </div>
               <h4>Descubre nuestros productos</h4>
               <div className="row">
-              {this.state.products.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0" store="" imageUrl={product.solicitudProducto.imagen}/>)}
+              {this.state.products.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0" store="" imageUrl={product.imagen}/>)}
               </div>
             </div>
       </div >

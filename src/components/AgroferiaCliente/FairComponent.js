@@ -25,7 +25,7 @@ class FairComponent extends React.Component {
       <div className="col-md-6 col-lg-3 ">
         
           <div className="product">
-          <a href={this.props.url} className="img-prod"><img className="img-fluid" src={this.props.imageUrl} alt="Colorlib Template" />
+          <a href={this.props.url} className="img-prod"><img className="img-fluid customImage" src={this.props.imageUrl} alt="Colorlib Template" />
             {status}
             <div className="overlay"></div>
           </a>

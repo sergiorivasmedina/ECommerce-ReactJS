@@ -32,7 +32,7 @@ class ShopDescription extends React.Component {
         <table className="table">
         <tbody>
             <tr className="text-center">
-                <td className="width20 image-prod"><img className="img-fluid" src={this.state.photo}
+                <td className="width20 image-prod"><img className="img-fluid customImage" src={this.state.photo}
                     alt="Colorlib Template"></img></td>
                 <td className="product-name">
                     <Link to={url}>{this.props.shopname}</Link>
