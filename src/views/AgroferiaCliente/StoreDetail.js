@@ -8,6 +8,7 @@ import TestimonyCarousel from '../../components/Vegefoods/TestimonyCarousel';
 import ProducerCarousel from '../../components/AgroferiaCliente/ProducerCarousel';
 import APIFerias from '../../services/FairsService'
 import {Link} from 'react-router-dom';
+import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 
 export default class StoreDetail extends Component {
   constructor(props){
@@ -92,6 +93,7 @@ export default class StoreDetail extends Component {
               {this.state.products.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0" store="" unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
               </div>
             </div>
+            <FooterComponent />
       </div >
     )
   }

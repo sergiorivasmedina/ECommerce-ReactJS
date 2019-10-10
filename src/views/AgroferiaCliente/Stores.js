@@ -4,6 +4,7 @@ import Navigator from '../../components/Vegefoods/Navigator';
 import Heading from '../../components/Vegefoods/Heading';
 import StoreList from '../../components/AgroferiaCliente/StoreList';
 import SearchBar from '../../components/AgroferiaCliente/SearchBar';
+import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 
 class Stores extends React.Component {
     constructor(){
@@ -49,7 +50,7 @@ class Stores extends React.Component {
                     </div>
                     
                 </section>
-
+                <FooterComponent />
             </div>
         );
     }
