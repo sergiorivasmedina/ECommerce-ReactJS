@@ -29,13 +29,13 @@ class ProductCard extends React.Component {
 
         if (this.props.discount == "0") {
 
-            pricing = <p className="price"><span>S/.{this.props.price}</span></p>;
+            pricing = <p className="price"><span>S/.{this.props.price} x {this.props.unit}</span></p>;
         }
         else {
             var discountPrice = (100 - parseFloat(this.props.discount)) * parseFloat(this.props.price) / 100;
             discountPrice = discountPrice.toString();
             status = <span className="status">{this.props.discount}%</span>;
-            pricing = <p className="price"><span className="mr-2 price-dc">S/.{this.props.price}</span><span className="price-sale">S/.{discountPrice}</span></p>;
+            pricing = <p className="price"><span className="mr-2 price-dc">S/.{this.props.price}</span><span className="price-sale">S/.{discountPrice} x {this.props.unit}</span></p>;
         }
 
         if (this.props.store != "") {

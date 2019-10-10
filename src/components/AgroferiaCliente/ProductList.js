@@ -169,7 +169,7 @@ export default class ProductList extends React.Component {
         </div>
         <div className="row">
         {this.state.products.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0"
-          store={product.store}/>)}
+          store={product.store} unit={product.unidadMedida.simbolo}/>)}
 </div>
       </div>
     )
