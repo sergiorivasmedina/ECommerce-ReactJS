@@ -9,23 +9,23 @@ class ProductCard extends React.Component {
         }
     }
 
+
     componentDidMount(){
-        if (this.props.imageUrl == null || this.props.imageUrl == "") {
-            this.setState({ 
-                photo: "../images/bg_1.jpg"
-            })
-            console.log(this.state);
-        } else {
-            this.setState({ 
-                photo: this.props.imageUrl
-            })
-        }
+        
         
     }
 
     render() {
         let status;
         let pricing;
+        let image;
+
+        if (this.props.imageUrl == null || this.props.imageUrl == "") {
+        
+                image = "../images/bg_1.jpg";
+        } else {
+            image = this.props.imageUrl;
+        }
 
         if (this.props.discount == "0") {
 
@@ -49,7 +49,7 @@ class ProductCard extends React.Component {
         return (
             <div className="col-lg-3 col-6">
                 <div className="product">
-                    <a href="#" className="img-prod"><img className="img-fluid customImage" src={this.state.photo} alt="Colorlib Template" />
+                    <a href="#" className="img-prod"><img className="img-fluid customImage" src={image} alt="Colorlib Template" />
                         {status}
                         <div className="overlay"></div>
                     </a>

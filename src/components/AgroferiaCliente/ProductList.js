@@ -7,27 +7,36 @@ export default class ProductList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: []
+      products: [],
+      activeProducts:[]
     };
   }
 
-  
+  componentWillReceiveProps(props) {
+    if (props.filter != "Todos") {
+      var activeProducts = this.state.products.filter(function(p){
+        return p.subCategoria.categoria.idCategoria === props.filter; 
+      });
+      this.setState({ activeProducts:activeProducts });
+    } else {
+      this.setState({ activeProducts: this.state.products });
+    }
+  }
 
   componentDidMount() {
-
     APIFerias.get('Despliegue/api/productos/feria/' + localStorage.getItem('idFeria'))
       .then(res=> {
         const products = res.data;
-        this.setState({ products:products })
-      })
+        this.setState({ products:products });
+ 
+          this.setState({ activeProducts: this.state.products });
+        
+      });
 
+      
   }
 
-
-
-
   render() {
-
     return (
       <div>
         <div className="col-md-3 text-center d-flex align-self-stretch ">
@@ -41,7 +50,7 @@ export default class ProductList extends React.Component {
           </div>
         </div>
         <div className="row">
-        {this.state.products.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0"
+        {this.state.activeProducts.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0"
           store={product.store} unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
 </div>
       </div>
