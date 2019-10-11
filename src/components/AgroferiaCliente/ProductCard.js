@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class ProductCard extends React.Component {
     
@@ -45,6 +46,7 @@ class ProductCard extends React.Component {
             </div>;
         }
 
+        var url = "detalleProducto/" + this.props.id;
 
         return (
             <div className="col-lg-3 col-6">
@@ -54,7 +56,7 @@ class ProductCard extends React.Component {
                         <div className="overlay"></div>
                     </a>
                     <div className="text py-3 pb-4 px-3 text-center">
-                        <h3><a href="#">{this.props.productName}</a></h3>
+                        <h3><Link to={url}>{this.props.productName}</Link></h3>
                         {tienda}
                         <div className="d-flex">
                             <div className="pricing">
