@@ -10,17 +10,23 @@ export default class ProductList extends React.Component {
       products: [],
       activeProducts:[]
     };
+    this.filter = this.filter.bind(this);
   }
 
-  componentWillReceiveProps(props) {
-    if (props.filter != "Todos") {
+  componentReceiveProps(props) {
+    this.filter(props.filter);
+  }
+
+  filter(filterValue) {
+    if (filterValue != "Todos") {
       var activeProducts = this.state.products.filter(function(p){
-        return p.subCategoria.categoria.idCategoria === props.filter; 
+        return p.subCategoria.categoria.idCategoria === filterValue; 
       });
       this.setState({ activeProducts:activeProducts });
     } else {
       this.setState({ activeProducts: this.state.products });
     }
+   
   }
 
   componentDidMount() {
@@ -28,11 +34,9 @@ export default class ProductList extends React.Component {
       .then(res=> {
         const products = res.data;
         this.setState({ products:products });
- 
-          this.setState({ activeProducts: this.state.products });
+        this.filter(this.props.filter);
         
       });
-
       
   }
 

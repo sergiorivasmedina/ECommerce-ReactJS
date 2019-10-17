@@ -51,14 +51,14 @@ class Stores extends React.Component {
                     <div className="container">
                         
                         <div className="row">
-                        <div className="col-md-12 mb-5 text-center">
+                        <div className="col-md-12 mb-5 text-center" id="productList">
                             <ul className="product-category">
-                                <li><a href="#" id="Todos" className="active" onClick={() => this.filterCategory("Todos")}>Todos</a></li>
-                                {this.state.categories.map(category => <li><a href="#" id={category.idCategoria} onClick={() => this.filterCategory(category.idCategoria)}>{category.nombre}</a></li>)}
+                                <li><a href="#productList" id="Todos" className="active" onClick={() => this.filterCategory("Todos")}>Todos</a></li>
+                                {this.state.categories.map(category => <li><a href="#productList" id={category.idCategoria} onClick={() => this.filterCategory(category.idCategoria)}>{category.nombre}</a></li>)}
                        
                             </ul>
                         </div>
-                            <div className="col-md-6">
+                            <div className="col-md-6" >
                                 <h4 className="heading">Lista de Productos</h4>
                             </div>
                         </div>
