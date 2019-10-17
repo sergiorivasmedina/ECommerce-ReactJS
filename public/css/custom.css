@@ -9,6 +9,12 @@
     object-fit: cover;
 }
 
+.basketImage {
+    height: 120px;
+    width: 150px;
+    object-fit: cover;
+}
+
 .customImageFair {
     height: 240px;
     width: 100%;

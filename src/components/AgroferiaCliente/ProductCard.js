@@ -11,11 +11,6 @@ class ProductCard extends React.Component {
     }
 
 
-    componentDidMount(){
-        
-        
-    }
-
     render() {
         let status;
         let pricing;

@@ -46,7 +46,6 @@ export default class ProductDetail extends Component {
 
 
   render() {
-    let quantity;
     return (
       <div>
         <Menu />
@@ -59,7 +58,9 @@ export default class ProductDetail extends Component {
             </div>
             <div className="col-md-8">
               <div className="row">
+                <div className="col-md-12">
                 <h4>{this.state.product.nombre}</h4>
+                </div>
                 <div className="col-md-8">
                   <p>De: Tienda</p>
                   <p>Descripción: {this.state.product.descripcion}</p>
@@ -69,6 +70,10 @@ export default class ProductDetail extends Component {
                   <p>S/. {this.state.product.precio} por {this.state.simbolo}</p>
                   <label>Cantidad: </label><input className="quantityInput" value={this.state.quantity} onChange={this.updateQuantity}></input>
                   <p className="pt-2">Total: {this.state.total} </p>
+                </div>
+                <div className="col-md-12">
+                <Link to="/canasta"><button href="checkout.html" class="btn btn-primary py-3 px-4 mr-2">Comprar ya</button></Link>
+                <button href="checkout.html" class="btn btn-primary py-3 px-4">Añadir a la canasta</button>
                 </div>
                 </div>
               </div>
