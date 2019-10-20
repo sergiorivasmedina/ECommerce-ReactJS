@@ -34,14 +34,36 @@ class Login extends React.Component {
 
 
 
-    handleRegistro = (event) => {
-        console.log(this.state);
-        console.log("hola");
-        // if (event.target.value !== this.state.formBasicPassword2) {
-        //     console.log('errdeeor');
-        //     this.setState({ confirmPassword: event.target.value })
-        // }
+    handleLogin = (event) => {
+
+        this.authenticateLogin(this.state.user, this.state.password)
+
     };
+
+    authenticateLogin =  (user, password) => {
+		// this.setState({ loginLoading: true });
+		// authService.authenticateUser(user, password).then( (response) => {
+		// 	//console.log(response);
+		// 	//if (response.mensaje == null) {
+		// 		await AsyncStorage.setItem('userLogged', JSON.stringify(response));
+		// 		await AsyncStorage.setItem('userSignedIn', '1');
+		// 		this.props.navigation.navigate('MainNavBar');
+		// 		this.setState({ user: '', password: '', loading: false, loginLoading: false });
+		// 	//} else {
+			
+		// 	//}
+		// }).catch(async (response) => {
+		// 	console.log(response);
+		// 	this.setState({ loginLoading: false });
+		// 	await AsyncStorage.setItem('userSignedIn', '0');
+		// 	Alert.alert(
+		// 		'Error',
+		// 		'Usuario o contraseña incorrectos',
+		// 		[ { text: 'OK', onPress: () => console.log('OK Pressed') } ],
+		// 		{ cancelable: false }
+		// 	);
+		// });
+	};
 
 
     render() {
@@ -65,12 +87,14 @@ class Login extends React.Component {
                                 <Col sm="10"><Form.Control required type="password" onChange={this.handlePassword} /></Col>
                             </Form.Group>
 
-
+                            <div className="text-center">
+                                <Button href = "/registro" variant="primary" onClick={this.handleLogin}>Ingresar</Button>
+                            </div>
                             <Form.Group className="text-center"><h1>.....</h1></Form.Group>
 
                             <Form.Group className="text-center"><h4>¿Eres un nuevo casero?</h4></Form.Group>
                             <div className="text-center">
-                                <Button href = "/registro" variant="primary">Regístrate</Button>
+                                <Button href = "/registro" variant="primary" >Regístrate</Button>
                             </div>
                         </Form>
                     </div>
