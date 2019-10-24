@@ -5,7 +5,7 @@ import APIFerias from '../../services/FairsService';
 import { Link } from 'react-router-dom';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import ProductProfile from '../../components/AgroferiaCliente/ProductProfile';
-import ProductList from '../../components/AgroferiaCliente/ProductList';
+import SimilarProducts from '../../components/AgroferiaCliente/SimilarProducts';
 
 export default class ProductDetail extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class ProductDetail extends Component {
     this.state = {
       product: [],
       simbolo: null,
-      quantity: null,
+      quantity: 0,
       categoria: null,
       total: 0
     }
@@ -72,15 +72,15 @@ export default class ProductDetail extends Component {
                   <p className="pt-2">Total: {this.state.total} </p>
                 </div>
                 <div className="col-md-12">
-                <Link to="/canasta"><button href="checkout.html" class="btn btn-primary py-3 px-4 mr-2">Comprar ya</button></Link>
-                <button href="checkout.html" class="btn btn-primary py-3 px-4">Añadir a la canasta</button>
+                <Link to="/canasta"><button href="checkout.html" className="btn btn-primary py-3 px-4 mr-2">Comprar ya</button></Link>
+                <button href="checkout.html" className="btn btn-primary py-3 px-4">Añadir a la canasta</button>
                 </div>
                 </div>
               </div>
             </div>
             <div className="row pt-5">
               <h4>Productos relacionados</h4>
-              <ProductList filter={this.state.categoria}></ProductList>
+              <SimilarProducts filter={this.state.categoria}></SimilarProducts>
             </div>
             <div className="row pt-5">
               <h4>Opiniones de clientes</h4>
