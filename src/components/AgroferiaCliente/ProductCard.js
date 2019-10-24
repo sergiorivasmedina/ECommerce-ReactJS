@@ -64,9 +64,9 @@ class ProductCard extends React.Component {
                                 <a href="#" className="buy-now d-flex justify-content-center align-items-center mx-1">
                                     <span><i className="icon-shopping_basket"></i></span>
                                 </a>
-                                <a href="#" className="heart d-flex justify-content-center align-items-center ">
+                                {/* <a href="#" className="heart d-flex justify-content-center align-items-center ">
                                     <span><i className="icon-heart"></i></span>
-                                </a>
+                                </a> */}
                             </div>
                         </div>
                     </div>
