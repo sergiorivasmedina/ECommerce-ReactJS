@@ -48,7 +48,14 @@ class Login extends React.Component {
                         type: 'success',
                         title: '¡Enhorabuena!',
                         text: '¡Inicio de sesión exitoso!',
-                      })
+                    });
+
+                    sessionStorage.setItem("idUsuario", response.data.idUsuario);
+                    sessionStorage.setItem("idRol", response.data.idRol);
+
+                    //para llamar el sessionStorage hacer lo siguiente:
+                    //sessionStorage.getItem(idUsuario);
+                    //sessionStorage.getItem(idRol);
                 }).catch( error => {
                     console.log("mala" , error.response.data.mensaje);
                     console.log(this.state.user,this.state.password);
