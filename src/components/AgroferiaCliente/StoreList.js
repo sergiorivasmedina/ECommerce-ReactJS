@@ -20,6 +20,7 @@ export default class StoreList extends React.Component {
         this.setState({ stores: stores})
         console.log(stores);
         /*BORRAR DESPUES DE PRESENTACION DEL JUEVES */
+        /**Se debe leer la lista tiendas favoritas del usuario y pintar el corazon*/
         let list=[];
         for(var i=0;i<stores.length;i++){
           let item = stores[i];
@@ -49,7 +50,15 @@ export default class StoreList extends React.Component {
       (store) =>{
         return store.empresa.nombreComercial.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1;
       }
-    );
+    ).sort(function(a,b){
+      if (a.heart > b.heart){
+        return -1;
+      }
+      if(a.heart < b.heart){
+        return 1;
+      }
+      return 0;
+    });
     return (
       <div>
         <div className="col-md-3 text-center d-flex align-self-stretch ">
