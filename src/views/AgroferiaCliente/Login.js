@@ -50,8 +50,12 @@ class Login extends React.Component {
                         text: '¡Inicio de sesión exitoso!',
                     });
 
-                    sessionStorage.setItem("idUsuario", response.data.idUsuario);
+
+
+                    sessionStorage.setItem("idUsuario", response.data.idCliente);
                     sessionStorage.setItem("idRol", response.data.idRol);
+                    console.log("hola"+response.data.idCliente)
+
 
                     //para llamar el sessionStorage hacer lo siguiente:
                     //sessionStorage.getItem(idUsuario);
@@ -59,6 +63,7 @@ class Login extends React.Component {
                 }).catch( error => {
                     console.log("mala" , error.response.data.mensaje);
                     console.log(this.state.user,this.state.password);
+                    sessionStorage.clear();
 
                     Swal.fire({
                         type: 'error',

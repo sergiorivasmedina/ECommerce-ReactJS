@@ -2,12 +2,32 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {Row,Col} from 'react-bootstrap';
 import SearchBarMenu from '../../components/AgroferiaCliente/SearchBarMenu';
+import APIFerias from '../../services/FairsService'
 
 class Menu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { value: 'AGROFERIAS CAMPESINAS' };
+        this.state = { 
+            value: 'AGROFERIAS CAMPESINAS',
+            client: null };
+
     }
+
+    componentDidMount(){
+
+        if (sessionStorage.getItem("idUsuario")) {
+            var idUSer = sessionStorage.getItem("idUsuario");
+          
+
+        APIFerias.get('/Despliegue/api/usuario/cliente/'+ idUSer)
+      .then(res=> {
+        const client = res.data;
+        this.setState({ client:client, nombre:client.nombres })
+        console.log(this.state.client);
+      })}
+
+    
+      }
 
     render() {
         return (
@@ -15,7 +35,7 @@ class Menu extends React.Component {
                 <div className="container pt-3">
                 <img className="img-fluid" src="../images/AgroferiaCliente/logoap.png" alt="Colorlib Template" />    
             
-                <h5 className="white"> {this.state.value}</h5>
+                <Link to="/" ><h5 className="white"> {this.state.value}</h5></Link>
                     <Row>
                         <Col md={4} >
                         <SearchBarMenu ></SearchBarMenu>
@@ -35,6 +55,7 @@ class Menu extends React.Component {
                             
                             <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Canasta"><span className="icons icon-shopping_basket"></span><span className="white">[0]</span></Link></label></li>
                             <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Login"><span className="icons icon-person"></span></Link></label></li>
+                            <Link to="/perfil" ><h8 className="white"> {this.state.nombre}</h8></Link>
 
                         </ul>
                     </div>

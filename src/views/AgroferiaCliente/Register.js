@@ -220,6 +220,10 @@ class Register extends React.Component {
                         title: 'Bienvenido ' + names,
                         text: 'Usuario creado correctamente',
                       })
+
+                      sessionStorage.setItem("idUsuario", response.data.idUsuario);
+                        sessionStorage.setItem("idRol", response.data.idRol);
+
                 }).catch( error => {
                     console.log(dataAPI);
                     Swal.fire({
