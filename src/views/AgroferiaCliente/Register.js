@@ -223,6 +223,7 @@ class Register extends React.Component {
 
                       sessionStorage.setItem("idUsuario", response.data.idUsuario);
                         sessionStorage.setItem("idRol", response.data.idRol);
+                        
 
                 }).catch( error => {
                     console.log(dataAPI);
