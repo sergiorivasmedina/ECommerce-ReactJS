@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class ProductCard extends React.Component {
     
@@ -9,23 +10,18 @@ class ProductCard extends React.Component {
         }
     }
 
-    componentDidMount(){
-        if (this.props.imageUrl == null || this.props.imageUrl == "") {
-            this.setState({ 
-                photo: "../images/bg_1.jpg"
-            })
-            console.log(this.state);
-        } else {
-            this.setState({ 
-                photo: this.props.imageUrl
-            })
-        }
-        
-    }
 
     render() {
         let status;
         let pricing;
+        let image;
+
+        if (this.props.imageUrl == null || this.props.imageUrl == "") {
+        
+                image = "../images/bg_1.jpg";
+        } else {
+            image = this.props.imageUrl;
+        }
 
         if (this.props.discount == "0") {
 
@@ -45,16 +41,17 @@ class ProductCard extends React.Component {
             </div>;
         }
 
+        var url = "detalleProducto/" + this.props.id;
 
         return (
             <div className="col-lg-3 col-6">
                 <div className="product">
-                    <a href="#" className="img-prod"><img className="img-fluid customImage" src={this.state.photo} alt="Colorlib Template" />
+                    <a href="#" className="img-prod"><img className="img-fluid customImage" src={image} alt="Colorlib Template" />
                         {status}
                         <div className="overlay"></div>
                     </a>
                     <div className="text py-3 pb-4 px-3 text-center">
-                        <h3><a href="#">{this.props.productName}</a></h3>
+                        <h3><Link to={url}>{this.props.productName}</Link></h3>
                         {tienda}
                         <div className="d-flex">
                             <div className="pricing">
@@ -67,9 +64,9 @@ class ProductCard extends React.Component {
                                 <a href="#" className="buy-now d-flex justify-content-center align-items-center mx-1">
                                     <span><i className="icon-shopping_basket"></i></span>
                                 </a>
-                                <a href="#" className="heart d-flex justify-content-center align-items-center ">
+                                {/* <a href="#" className="heart d-flex justify-content-center align-items-center ">
                                     <span><i className="icon-heart"></i></span>
-                                </a>
+                                </a> */}
                             </div>
                         </div>
                     </div>

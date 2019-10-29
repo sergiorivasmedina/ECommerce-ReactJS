@@ -1,6 +1,17 @@
+.quantityInput {
+    width: 40%;
+    margin-left: 8px;
+}
+
 .customImage {
     height: 200px;
     width: 100%;
+    object-fit: cover;
+}
+
+.basketImage {
+    height: 120px;
+    width: 150px;
     object-fit: cover;
 }
 

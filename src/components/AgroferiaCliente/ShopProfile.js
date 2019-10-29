@@ -30,6 +30,7 @@ class ShopProfile extends React.Component {
                     <div className="col-1 text-right custom-inline">
                         <a href=""><span className="icon-facebook-official custom-facebook"></span>&nbsp;&nbsp;</a>
                     </div>
+                    
                     </div>
                 </div>
             </div>
