@@ -39,7 +39,7 @@ class ShopDescription extends React.Component {
                     <p>{this.props.shopdetail}</p>
                     
                 </td>
-                {this.props.like==true? <td className="ion-ios-heart width10" onClick={()=>this.props.handleClick(this.props.index)}></td> : <td className="ion-ios-heart-empty width10 custom-heart" onClick={()=>this.props.handleClick(this.props.index)}></td>}
+                {sessionStorage.getItem("idCliente")==null?<td className="width10"></td>:this.props.like==true? <td className="ion-ios-heart width10" onClick={()=>this.props.handleClick(this.props.index)}></td> : <td className="ion-ios-heart-empty width10 custom-heart" onClick={()=>this.props.handleClick(this.props.index)}></td>}
             </tr>
         </tbody>
     </table>

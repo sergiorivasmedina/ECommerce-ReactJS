@@ -1,6 +1,7 @@
 import React from 'react';
 import ShopDescription from './ShopDescription';
 import APIFerias from '../../services/FairsService';
+import Swal from 'sweetalert2';
 
 export default class StoreList extends React.Component {
 
@@ -13,19 +14,29 @@ export default class StoreList extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.fairId); 
+    console.log(this.props.fairId);
+    console.log("Id cliente:",sessionStorage.getItem("idCliente"));
     APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + this.props.fairId)
       .then(res => {
         const stores = res.data;
         this.setState({ stores: stores})
         console.log(stores);
-        /*BORRAR DESPUES DE PRESENTACION DEL JUEVES */
-        /**Se debe leer la lista tiendas favoritas del usuario y pintar el corazon*/
-        let list=[];
-        for(var i=0;i<stores.length;i++){
-          let item = stores[i];
-          item["heart"] = false;
-          list.push(item);
+        if(sessionStorage.getItem("idCliente")!=null){
+          APIFerias.get('/Despliegue/api/usuario/tiendasFavoritas/cliente/'+ sessionStorage.getItem("idCliente"))
+          .then(res=>{
+            const favStores = res.data;
+            console.log("Tiendas favoritas:",favStores);
+            let list=[];
+            for(var i=0;i<stores.length;i++){
+              let item = stores[i];
+              console.log("Es favorita?:",favStores.map((element)=>{return element.idTienda === item.idTienda}));
+              favStores.map((element)=>{
+                return element.idTienda === item.idTienda?item["heart"]=true:item["heart"]=false})
+              list.push(item);
+            }
+            console.log("lista nueva:",list);
+            this.setState({ stores: list})
+          })
         }
       });
   }
@@ -33,16 +44,61 @@ export default class StoreList extends React.Component {
   
   handleClick = s => {
     console.log("Selecciono:",s);
-    console.log(this.state.stores);
     /*MODIFICAR DESPUES DEL JUEVES */
     const index = this.state.stores.findIndex((store) => { return store.idTienda == s });
     const store = Object.assign({}, this.state.stores[index]);
-    store.heart = !store.heart;
+    
+    if(store.heart==true)/**Eliminación logica */{
+      console.log("TIENDA SELECCIONADA:",store);
+      var storeselect={
+        idCliente:sessionStorage.getItem("idCliente"),
+        idTienda:store.idTienda
+      }
+      APIFerias.delete('/Despliegue/api/usuario/tiendasFavoritas/', storeselect)
+      .then(response => {
+        console.log("buena", response);
+        Swal.fire({
+            type: 'success',
+            title: '¡Enhorabuena!',
+            text: '¡Elimino una tienda favorita!',
+        });
+      }).catch(error => {
+        console.log("error",error);
+        Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: '¡No se pudo eliminar la tienda favorita!',
+        })
+      })
+    }
+    else{/**Agregar tienda favorita */
+      var storeselect = {
+        idCliente:sessionStorage.getItem("idCliente"),
+        idTienda:store.idTienda,
+        nombreTienda:store.empresa.nombreComercial
+      };
+      APIFerias.post('/Despliegue/api/usuario/tiendasFavoritas/agregar', storeselect)
+      .then(response => {
+        console.log("buena", response);
+        Swal.fire({
+            type: 'success',
+            title: '¡Enhorabuena!',
+            text: '¡Añadio una tienda favorita!',
+        });
+      }).catch(error => {
+        Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: '¡No se pudo añadir la tienda favorita!',
+        })
+      })
+    }
+    /*store.heart = !store.heart;
     const stores = Object.assign([], this.state.stores);
     stores[index] = store;
     this.setState({
       stores: stores
-    });
+    });*/
   }
 
   render() {
