@@ -219,6 +219,7 @@ class Profile extends React.Component {
                         type: 'success',
                         title: 'Enhorabuena ' + names,
                         text: 'Usuario modificado correctamente',
+                        onClose: window.location='/'
                       })
                 }).catch( error => {
                     console.log(dataAPI);

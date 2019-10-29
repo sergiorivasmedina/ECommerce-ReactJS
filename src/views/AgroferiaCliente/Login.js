@@ -72,8 +72,9 @@ class Login extends React.Component {
         this.setState({ password: event.target.value });
     };
 
-    componentDidMount(){
-    sessionStorage.clear()
+    componentWillMount(){
+        sessionStorage.clear();
+    
     }
 
 
@@ -119,6 +120,8 @@ class Login extends React.Component {
         //aca login
 
     };
+
+   
 
 
 

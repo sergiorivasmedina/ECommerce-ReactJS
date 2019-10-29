@@ -10,10 +10,12 @@ class Menu extends React.Component {
         this.state = { 
             value: 'AGROFERIAS CAMPESINAS',
             client: null };
+            
 
     }
 
     componentDidMount(){
+        
 
         if (sessionStorage.getItem("idUsuario")) {
             var idUSer = sessionStorage.getItem("idUsuario");
