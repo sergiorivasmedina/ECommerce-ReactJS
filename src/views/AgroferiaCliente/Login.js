@@ -91,6 +91,8 @@ class Login extends React.Component {
                     type: 'success',
                     title: '¡Enhorabuena!',
                     text: '¡Inicio de sesión exitoso!',
+                    onClose: window.location='/'
+
                 });
 
 

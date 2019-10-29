@@ -1,13 +1,15 @@
 import React from 'react';
 import { Form, Row, Container, Col, Button, Image, Tabs, Tab } from 'react-bootstrap';
 import MenuFairComponent from '../../components/AgroferiaCliente/MenuFairsComponent';
-import DatePicker from "react-datepicker";
 import APIFerias from '../../services/FairsService'
 import Swal from 'sweetalert2';
+import { useHistory } from "react-router-dom";
+
 
 
 
 import "react-datepicker/dist/react-datepicker.css";
+
 
 
 class Register extends React.Component {
@@ -201,11 +203,13 @@ class Register extends React.Component {
             //metemos todo en una variable que luego pasará al post
             var dataAPI = {
                 idCliente: '',
+                idPersona: '',
                 nombres: names,
                 apellidoPaterno: lastname1,
                 apellidoMaterno: lastname2,
                 telefono: phone,
                 correo: mail,
+                idUsuario: '',
                 idRol: '4',
                 username: user,
                 password: password,
@@ -215,24 +219,30 @@ class Register extends React.Component {
             APIFerias.post('/Despliegue/api/usuario/cliente/registro', dataAPI)
                 .then(response => {
                     console.log("buena", response);
+
+                    
+                    sessionStorage.setItem("idUsuario", response.data.idUsuario);
+                    sessionStorage.setItem("idRol", response.data.idRol);
+
+
                     Swal.fire({
                         type: 'success',
                         title: 'Bienvenido ' + names,
                         text: 'Usuario creado correctamente',
+                        onClose: window.location='/login'
                       })
 
-                      sessionStorage.setItem("idUsuario", response.data.idUsuario);
-                        sessionStorage.setItem("idRol", response.data.idRol);
-                        
-
+                    
+                    
                 }).catch( error => {
                     console.log(dataAPI);
+                    console.log("mala" , error.response.data.mensaje);
+
                     Swal.fire({
                         type: 'error',
                         title: 'Oops...',
                         text: error.response.data.mensaje,
                       })
-                    console.log("mala" , error.response.data.mensaje);
                 } )
             
 
