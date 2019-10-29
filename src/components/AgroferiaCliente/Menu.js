@@ -24,7 +24,7 @@ class Menu extends React.Component {
         APIFerias.get('/Despliegue/api/usuario/cliente/'+ idUSer)
       .then(res=> {
         const client = res.data;
-        this.setState({ client:client, nombre:client.nombres })
+        this.setState({ client:client, nombre:client.nombres, cierre:"Salir" })
         console.log(this.state.client);
       })}
 
@@ -57,7 +57,9 @@ class Menu extends React.Component {
                             
                             <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Canasta"><span className="icons icon-shopping_basket"></span><span className="white">[0]</span></Link></label></li>
                             <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Login"><span className="icons icon-person"></span></Link></label></li>
-                            <Link to="/perfil" ><h8 className="white"> {this.state.nombre}</h8></Link>
+                            <label className="nav-link"><Link to="/perfil" ><h8 className="white"> {this.state.nombre}</h8></Link></label>
+                            <label className="nav-link"><Link to="/login" ><h8 className="white"> {this.state.cierre}</h8></Link></label>
+
 
                         </ul>
                     </div>
