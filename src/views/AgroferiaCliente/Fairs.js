@@ -9,7 +9,9 @@ class Fairs extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      fairs: [] //comentario
+      fairs: [], //comentario,
+      client:null,
+      nombre:""
     }
   }
 
@@ -21,6 +23,17 @@ class Fairs extends React.Component {
         this.setState({ fairs:fairs })
         console.log(this.state.fairs);
       })
+
+      if (sessionStorage.getItem("idUsuario")) {
+        var idUSer = sessionStorage.getItem("idUsuario");
+      
+
+    APIFerias.get('/Despliegue/api/usuario/cliente/'+ idUSer)
+  .then(res=> {
+    const client = res.data;
+    this.setState({ client:client, nombre:client.nombres })
+    console.log(this.state.client);
+  })}
 
       
   }
@@ -38,7 +51,7 @@ class Fairs extends React.Component {
           <div className="row justify-content-center mb-3 pb-3">
             <div className="col-md-12 heading-section text-center ">
               <span className="subheading">Nuestras Ferias</span>
-              <h2 className="mb-4">Hola Casero</h2>
+              <h2 className="mb-4">Hola Casero {this.state.nombre}</h2>
               <p>¿ En qué feria desea comprar?</p>
             </div>
           </div>

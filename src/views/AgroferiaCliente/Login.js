@@ -4,6 +4,8 @@ import MenuFairComponent from '../../components/AgroferiaCliente/MenuFairsCompon
 import DatePicker from "react-datepicker";
 import Swal from 'sweetalert2';
 import APIFerias from '../../services/FairsService'
+import { Link } from 'react-router-dom';
+
 
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,6 +23,7 @@ class Login extends React.Component {
 
         this.handleUser = this.handleUser.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
+        this.handleRecovery = this.handleRecovery.bind(this);
 
 
     };
@@ -29,36 +32,88 @@ class Login extends React.Component {
         this.setState({ user: event.target.value });
     };
 
+    handleRecovery = (event) => {
+
+
+        const { value: email } = Swal.fire({
+            title: 'Olvidé mi contraseña',
+            text: 'Para recuperar su contrasena tiene que ingresar un correo electrónico válido donde enviar un nueva contraseña.',
+            input: 'email',
+            inputPlaceholder: 'Ingrese su correo elecrónico',
+            validationMessage: 'Ingrese un correo válido'
+
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Correo enviado a ' + result.value,
+                    type:'success'}
+                )
+                console.log(result.value)
+
+                var mailrec = { correo: result.value}
+                APIFerias.post('/Despliegue/api/usuario/cliente/recuperar', mailrec)
+                .then(response => {
+                    return response;
+                })
+            }
+
+
+        })
+
+
+
+
+
+
+
+    }
+
     handlePassword(event) {
         this.setState({ password: event.target.value });
     };
 
+    componentDidMount(){
+    sessionStorage.clear()
+    }
 
 
 
     handleLogin = (event) => {
         var datauser = {
-            username : this.state.user, 
-            password : this.state.password
+            username: this.state.user,
+            password: this.state.password
         }
-        APIFerias.post('/Despliegue/api/usuario/cliente/autenticacion', datauser)
-                .then(response => {
-                    console.log("buena", response);
-                    Swal.fire({
-                        type: 'success',
-                        title: '¡Enhorabuena!',
-                        text: '¡Inicio de sesión exitoso!',
-                      })
-                }).catch( error => {
-                    console.log("mala" , error.response.data.mensaje);
-                    console.log(this.state.user,this.state.password);
 
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: '¡Usuario o Contraseña inválidos!',
-                      })
-                } )
+        APIFerias.post('/Despliegue/api/usuario/cliente/autenticacion', datauser)
+            .then(response => {
+                console.log("buena", response);
+                Swal.fire({
+                    type: 'success',
+                    title: '¡Enhorabuena!',
+                    text: '¡Inicio de sesión exitoso!',
+                });
+
+
+
+                sessionStorage.setItem("idUsuario", response.data.idCliente);
+                sessionStorage.setItem("idRol", response.data.idRol);
+                console.log("hola" + response.data.idCliente)
+
+
+                //para llamar el sessionStorage hacer lo siguiente:
+                //sessionStorage.getItem(idUsuario);
+                //sessionStorage.getItem(idRol);
+            }).catch(error => {
+                console.log("mala", error.response.data.mensaje);
+                console.log(this.state.user, this.state.password);
+                sessionStorage.clear();
+
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: '¡Usuario o Contraseña inválidos!',
+                })
+            })
         //aca login
 
     };
@@ -85,7 +140,10 @@ class Login extends React.Component {
                                 <Form.Label column sm="2">Contraseña</Form.Label>
                                 <Col sm="10"><Form.Control required type="password" onChange={this.handlePassword} /></Col>
                             </Form.Group>
-
+                            <div className="text-center">
+                                <Link onClick={this.handleRecovery}>Olvidé mi contraseña</Link>
+                            </div>
+                            <div> . </div>
                             <div className="text-center">
                                 <Button variant="primary" onClick={this.handleLogin}>Ingresar</Button>
                             </div>
@@ -93,7 +151,7 @@ class Login extends React.Component {
 
                             <Form.Group className="text-center"><h4>¿Eres un nuevo casero?</h4></Form.Group>
                             <div className="text-center">
-                                <Button href = "/registro" variant="primary" >Regístrate</Button>
+                                <Button href="/registro" variant="primary" >Regístrate</Button>
                             </div>
                         </Form>
                     </div>
