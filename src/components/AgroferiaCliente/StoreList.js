@@ -24,19 +24,23 @@ export default class StoreList extends React.Component {
           APIFerias.get('/Despliegue/api/usuario/tiendasFavoritas/cliente/'+ sessionStorage.getItem("idCliente"))
             .then(res=>{
               favstores = res.data;
-          })
-          let list=[];
+              console.log("Tiendas favoritas:",favstores);
+              let list=[];
           for(var i=0;i<stores.length;i++){
             let item = stores[i];
-            if(favstores.map((element)=>{return element.idTienda==item.idTienda})){
+            console.log("Esta en favoritos:",favstores.findIndex((element)=>{return element.idTienda==item.idTienda?true:false}))
+            favstores.findIndex((element)=>{return element.idTienda==item.idTienda?item["heart"]=true:item["heart"]=false})
+            /*if(favstores.map((element)=>{return element.idTienda==item.idTienda?true:false})){
               item["heart"] = true;
             }else{
               item["heart"] = false;
-            }
+            }*/
             list.push(item);
           }
           console.log("lista nueva:", list);
           this.setState({stores:list});
+          })
+          
         }
     });  
   }
