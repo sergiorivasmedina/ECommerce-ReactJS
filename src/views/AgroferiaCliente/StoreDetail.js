@@ -41,7 +41,7 @@ export default class StoreDetail extends Component {
           photo: profile.foto
          })
          console.log(this.state.photo);
-         APIFerias.get('Despliegue/api/usuario/productor/empresa/listar/' + profile.empresa.idEmpresa)
+         APIFerias.get('Despliegue/api/usuario/productor/empresa/' + profile.empresa.idEmpresa)
          .then(res=>{
            console.log(res.data);
            this.setState({producers:res.data})
