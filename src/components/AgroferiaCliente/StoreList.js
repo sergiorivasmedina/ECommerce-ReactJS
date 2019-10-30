@@ -8,45 +8,54 @@ export default class StoreList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      stores: [],
-      favStore:[]
+      stores: []
     };
-    this.handleClick = this.handleClick.bind(this); 
+    /*this.handleClick = this.handleClick.bind(this); */
   }
 
   componentDidMount() {
-    console.log(this.props.fairId);
-    console.log("Id cliente:",sessionStorage.getItem("idCliente"));
     APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + this.props.fairId)
       .then(res => {
-        const stores = res.data;
+        var stores = res.data;
         this.setState({ stores: stores})
         console.log(stores);
-        APIFerias.get('/Despliegue/api/usuario/tiendasFavoritas/cliente/'+ sessionStorage.getItem("idCliente"))
-          .then(res=>{
-            const stores = res.data;
-            this.setState({ favstore: stores})
-            console.log("Tiendas favoritas:",stores);
-        })
+        if(sessionStorage.getItem("idCliente")!=null){
+          var favstores=[];
+          APIFerias.get('/Despliegue/api/usuario/tiendasFavoritas/cliente/'+ sessionStorage.getItem("idCliente"))
+            .then(res=>{
+              favstores = res.data;
+          })
+          let list=[];
+          for(var i=0;i<stores.length;i++){
+            let item = stores[i];
+            if(favstores.map((element)=>{return element.idTienda==item.idTienda})){
+              item["heart"] = true;
+            }else{
+              item["heart"] = false;
+            }
+            list.push(item);
+          }
+          console.log("lista nueva:", list);
+          this.setState({stores:list});
+        }
     });  
   }
 
   handleClick = s => {
+        
     console.log("Selecciono:",s);
-    const indexFav = this.state.favStore.findIndex((store) => {return parseInt(store.idTienda,10) == parseInt(s,10)});
-    console.log("Es favorita?",indexFav);
+    /*console.log("Tiendas favoritas:",this.props.favstores);
+    const indexFav = this.props.favstores.findIndex((store) => {return parseInt(store.idTienda,10) == parseInt(s,10)});
+    console.log("Es favorita?",indexFav);*/
     const index = this.state.stores.findIndex((store) => { return store.idTienda == s });
     const store = Object.assign({}, this.state.stores[index]);
     console.log("Tienda seleccionada:",store);
-    
-    /*
-    if(heart){
-      console.log("TIENDA SELECCIONADA:",store);
+    if(store.heart){
       var storeselect={
         idCliente:parseInt(sessionStorage.getItem("idCliente"),10),
         idTienda:store.idTienda
       }
-      APIFerias.delete('/Despliegue/api/usuario/tiendasFavoritas/', storeselect)
+      APIFerias.delete('/Despliegue/api/usuario/tiendasFavoritas/eliminar', storeselect)
       .then(response => {
         console.log("buena", response);
         Swal.fire({
@@ -84,15 +93,8 @@ export default class StoreList extends React.Component {
             text: '¡No se pudo añadir la tienda favorita!',
         })
       })
-    }*/
-    /*store.heart = !store.heart;
-    const stores = Object.assign([], this.state.stores);
-    stores[index] = store;
-    this.setState({
-      stores: stores
-    });*/
+    }
   }
-
   render() {
     let filterStore = this.state.stores.filter(
       (store) =>{
@@ -121,9 +123,7 @@ export default class StoreList extends React.Component {
         </div>
         {filterStore.map(store => <ShopDescription index={store.idTienda} shopname={store.empresa.nombreComercial} shopdetail={store.descripcion}
           urlimage={store.foto} 
-          like={
-            this.state.favStore.map((element)=>{return element.idTienda === store.idTienda?true:false})
-          } 
+          like={store.heart} 
           handleClick={this.handleClick} />)}
 
       </div>
