@@ -8,7 +8,8 @@ export default class StoreList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      stores: []
+      stores: [],
+      favStore:[]
     };
     this.handleClick = this.handleClick.bind(this); 
   }
@@ -21,37 +22,28 @@ export default class StoreList extends React.Component {
         const stores = res.data;
         this.setState({ stores: stores})
         console.log(stores);
-        if(sessionStorage.getItem("idCliente")!=null){
-          APIFerias.get('/Despliegue/api/usuario/tiendasFavoritas/cliente/'+ sessionStorage.getItem("idCliente"))
+        APIFerias.get('/Despliegue/api/usuario/tiendasFavoritas/cliente/'+ sessionStorage.getItem("idCliente"))
           .then(res=>{
-            const favStores = res.data;
-            console.log("Tiendas favoritas:",favStores);
-            let list=[];
-            for(var i=0;i<stores.length;i++){
-              let item = stores[i];
-              console.log("Es favorita?:",favStores.map((element)=>{return element.idTienda === item.idTienda}));
-              favStores.map((element)=>{
-                return element.idTienda === item.idTienda?item["heart"]=true:item["heart"]=false})
-              list.push(item);
-            }
-            console.log("lista nueva:",list);
-            this.setState({ stores: list})
-          })
-        }
-      });
+            const stores = res.data;
+            this.setState({ favstore: stores})
+            console.log("Tiendas favoritas:",stores);
+        })
+    });  
   }
-  
-  
+
   handleClick = s => {
     console.log("Selecciono:",s);
-    /*MODIFICAR DESPUES DEL JUEVES */
+    const indexFav = this.state.favStore.findIndex((store) => {return parseInt(store.idTienda,10) == parseInt(s,10)});
+    console.log("Es favorita?",indexFav);
     const index = this.state.stores.findIndex((store) => { return store.idTienda == s });
     const store = Object.assign({}, this.state.stores[index]);
+    console.log("Tienda seleccionada:",store);
     
-    if(store.heart==true)/**Eliminación logica */{
+    /*
+    if(heart){
       console.log("TIENDA SELECCIONADA:",store);
       var storeselect={
-        idCliente:sessionStorage.getItem("idCliente"),
+        idCliente:parseInt(sessionStorage.getItem("idCliente"),10),
         idTienda:store.idTienda
       }
       APIFerias.delete('/Despliegue/api/usuario/tiendasFavoritas/', storeselect)
@@ -71,9 +63,9 @@ export default class StoreList extends React.Component {
         })
       })
     }
-    else{/**Agregar tienda favorita */
+    else{
       var storeselect = {
-        idCliente:sessionStorage.getItem("idCliente"),
+        idCliente:parseInt(sessionStorage.getItem("idCliente"),10),
         idTienda:store.idTienda,
         nombreTienda:store.empresa.nombreComercial
       };
@@ -92,7 +84,7 @@ export default class StoreList extends React.Component {
             text: '¡No se pudo añadir la tienda favorita!',
         })
       })
-    }
+    }*/
     /*store.heart = !store.heart;
     const stores = Object.assign([], this.state.stores);
     stores[index] = store;
@@ -128,7 +120,11 @@ export default class StoreList extends React.Component {
           </div>
         </div>
         {filterStore.map(store => <ShopDescription index={store.idTienda} shopname={store.empresa.nombreComercial} shopdetail={store.descripcion}
-          urlimage={store.foto} like={store.heart} handleClick={this.handleClick} />)}
+          urlimage={store.foto} 
+          like={
+            this.state.favStore.map((element)=>{return element.idTienda === store.idTienda?true:false})
+          } 
+          handleClick={this.handleClick} />)}
 
       </div>
     )

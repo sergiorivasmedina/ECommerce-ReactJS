@@ -3,27 +3,6 @@ import {Link} from 'react-router-dom';
 
 class ShopDescription extends React.Component {
     
-    constructor(props){
-        super(props);
-        this.state = {
-            photo: ""
-        }
-    }
-
-    /*componentDidMount(){
-        if (this.props.urlimage == null) {
-            this.setState({ 
-                photo: "../images/tienda_1.jpg"
-            })
-        } else {
-            this.setState({ 
-                photo: this.props.urlimage
-            })
-        }
-
-        console.log("foto",this.state.photo);
-    }*/
-
     render() {
     let status;
     console.log("envia:" , this.props.like)
@@ -32,7 +11,7 @@ class ShopDescription extends React.Component {
         <table className="table">
         <tbody>
             <tr className="text-center">
-                <td className="width20 image-prod"><img className="img-fluid customImage" src={this.props.urlimage}
+                <td className="width20 image-prod"><img className="img-fluid customImage" src={this.props.urlimage==null?"../images/noimage.png":this.props.urlimage}
                     alt="Colorlib Template"></img></td>
                 <td className="product-name">
                     <Link to={url}>{this.props.shopname}</Link>
