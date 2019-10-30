@@ -13,21 +13,39 @@ class Basket extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
+            idUsuario: null
         };
     }
 
 
 
 
+
+
     componentDidMount() {
-        APIFerias.get('Despliegue/api/productos/feria/' + localStorage.getItem('idFeria'))
+
+
+        if (sessionStorage.getItem("idUsuario")) {
+            var idUSer = sessionStorage.getItem("idUsuario");
+        }
+
+
+        APIFerias.get('/Despliegue/api/usuario/cliente/' + idUSer)
+            .then(res => {
+                const client = res.data;
+                this.setState({ idUsuario: client.idCliente }) /* Ojo, se jala id del cliente para registrar la canasta */
+            })
+            console.log(this.state.idUsuario)
+
+
+        APIFerias.get('Despliegue/api/pedidos/perfil/' + this.state.idUsuario + '/detalle')
             .then(res => {
                 const products = res.data;
                 this.setState({ products: products });
-
-            });
-
+                console.log(this.state.products)
+            })
+ 
     }
 
 
@@ -59,10 +77,10 @@ class Basket extends React.Component {
                                     </tbody>
                                 </table>
                             </div>
-                            
+
                         </div>
                         <div className="row">
-                        <div className="col-md-9">
+                            <div className="col-md-9">
                                 <p>Entrega (recojo en tienda): Gratis</p>
                                 <p>Fecha de recojo: Domingo 29/09/2019</p>
                             </div>
@@ -73,13 +91,13 @@ class Basket extends React.Component {
                                 <p>Total: S/.118</p>
                             </div>
                             <div className="col-md-12 mb-5">
-                            <button href="checkout.html" class="btn btn-primary py-3 px-4 pl-2 pr-2">Continuar <i></i></button>
+                                <button href="checkout.html" class="btn btn-primary py-3 px-4 pl-2 pr-2">Continuar <i></i></button>
                             </div>
-                            </div>
+                        </div>
                     </div>
 
                 </section>
-                
+
                 <FooterComponent />
             </div>
         );

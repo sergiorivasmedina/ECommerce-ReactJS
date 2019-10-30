@@ -15,10 +15,14 @@ export default class ProductDetail extends Component {
       simbolo: null,
       quantity: 0,
       categoria: null,
-      total: 0
+      total: 0,
+      idUsuario: null
     }
     this.updateQuantity = this.updateQuantity.bind(this);
+    this.addproduct = this.addproduct.bind(this);
+
   }
+
 
 
   updateQuantity(evt) {
@@ -29,8 +33,52 @@ export default class ProductDetail extends Component {
     console.log(this.state.quantity);
   }
 
+  addproduct = (event) => {
+    const { id } = this.props.match.params;
+    var prod = {
+      idPedido: "",
+      idTipoMedioPago: 1,
+      idCupon: 1,
+      idCliente: this.state.idUsuario,
+      fecha: "2019-10-25",
+      subtotal: this.state.total,
+      igv: 0.18,
+      total: this.state.total / (1.18),
+      estado: -1,
+      idProducto: id,
+      cantidad: this.state.quantity,
+      monto: this.state.product.precio
+    }
+    console.log(prod)
+    APIFerias.post('/Despliegue/api/pedido/producto', prod)
+      .then(response => {
+        console.log("Producto añadido")
+        return response;
+
+      })
+
+  }
+
+  componentDidMount() {
+
+    if (sessionStorage.getItem("idUsuario")) {
+      var idUSer = sessionStorage.getItem("idUsuario");
+
+
+      APIFerias.get('/Despliegue/api/usuario/cliente/' + idUSer)
+        .then(res => {
+          const client = res.data;
+          this.setState({ idUsuario: client.idCliente }) /* Ojo, se jala id del cliente para registrar la canasta */
+        })
+    }
+
+
+  }
+
+
   componentWillMount() {
     const { id } = this.props.match.params;
+
 
     APIFerias.get('Despliegue/api/producto/' + id)
       .then(res => {
@@ -59,7 +107,7 @@ export default class ProductDetail extends Component {
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-12">
-                <h4>{this.state.product.nombre}</h4>
+                  <h4>{this.state.product.nombre}</h4>
                 </div>
                 <div className="col-md-8">
                   <p>De: Tienda</p>
@@ -72,22 +120,22 @@ export default class ProductDetail extends Component {
                   <p className="pt-2">Total: {this.state.total} </p>
                 </div>
                 <div className="col-md-12">
-                <Link to="/canasta"><button href="checkout.html" className="btn btn-primary py-3 px-4 mr-2">Comprar ya</button></Link>
-                <button href="checkout.html" className="btn btn-primary py-3 px-4">Añadir a la canasta</button>
-                </div>
+                  <Link to="/canasta"><button className="btn btn-primary py-3 px-4 mr-2" onClick={this.addproduct}>Comprar ya</button></Link>
+                  <button className="btn btn-primary py-3 px-4" onClick={this.addproduct}>Añadir a la canasta</button>
                 </div>
               </div>
             </div>
-            <div className="row pt-5">
-              <h4>Productos relacionados</h4>
-              <SimilarProducts filter={this.state.categoria}></SimilarProducts>
-            </div>
-            <div className="row pt-5">
-              <h4>Opiniones de clientes</h4>
-            </div>
           </div>
-          <FooterComponent />
-        </div >
-        )
-      }
-    }
+          <div className="row pt-5">
+            <h4>Productos relacionados</h4>
+            <SimilarProducts filter={this.state.categoria}></SimilarProducts>
+          </div>
+          <div className="row pt-5">
+            <h4>Opiniones de clientes</h4>
+          </div>
+        </div>
+        <FooterComponent />
+      </div >
+    )
+  }
+}
