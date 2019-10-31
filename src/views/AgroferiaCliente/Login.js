@@ -101,6 +101,7 @@ class Login extends React.Component {
                 sessionStorage.setItem("idUsuario", response.data.idUsuario);
                 sessionStorage.setItem("idCliente", response.data.idCliente);
                 sessionStorage.setItem("idRol", response.data.idRol);
+                sessionStorage.setItem("idCliente", response.data.idCliente);
                 console.log("hola" + response.data.idCliente)
 
 
