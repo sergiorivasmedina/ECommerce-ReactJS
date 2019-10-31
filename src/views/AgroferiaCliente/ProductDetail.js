@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import ProductProfile from '../../components/AgroferiaCliente/ProductProfile';
 import SimilarProducts from '../../components/AgroferiaCliente/SimilarProducts';
+import Swal from 'sweetalert2';
 
 export default class ProductDetail extends Component {
   constructor(props) {
@@ -53,6 +54,12 @@ export default class ProductDetail extends Component {
     APIFerias.post('/Despliegue/api/pedido/producto', prod)
       .then(response => {
         console.log("Producto añadido")
+
+        Swal.fire({
+          title: 'Prodcuto añadido a la canasta',
+          type:'success'}
+        )
+
         return response;
 
       })

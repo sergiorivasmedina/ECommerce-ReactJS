@@ -36,10 +36,14 @@ class ProductBasket extends React.Component {
         console.log(this.state.quantity);
       }
 
+      removeProduct(evt) {
+          console.log("se removió producto")
+      }
+
     render() {
         return(
         <tr className="text-center">
-            <td className="product-remove"><a href="#"><span className="ion-ios-close"></span></a></td>
+            <td className="product-remove" onClick={this.removeProduct}><a href="#"><span className="ion-ios-close"></span></a></td>
 
             <td className="image-prod"><div className="" > <img className="img-fluid basketImage" src={this.state.imagenProducto} alt="Colorlib Template" /></div></td>
 
