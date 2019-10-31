@@ -14,7 +14,10 @@ class Basket extends React.Component {
         super(props);
         this.state = {
             products: [],
-            idUsuario: null
+            idUsuario: null,
+            idCliente: null,
+            idPedido: null,
+            detalles:[]
         };
     }
 
@@ -26,26 +29,29 @@ class Basket extends React.Component {
     componentDidMount() {
 
 
-        if (sessionStorage.getItem("idUsuario")) {
-            var idUSer = sessionStorage.getItem("idUsuario");
+        if (sessionStorage.getItem("idCliente")) {
+            this.state.idCliente = sessionStorage.getItem("idCliente");
+            console.log("idCliente: ",this.state.idCliente);
+
+            //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
+            APIFerias.get('Despliegue/api/pedido/' + this.state.idCliente)
+                .then(res=> {
+                    console.log("dentro de primer GET",res.data);
+                    //traer el detallePedido del idPedido, el cual es el actual
+                    APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
+                        .then(response => {
+                            console.log("dentro del segundo GET", response.data);
+                            const detalless = response.data;
+                            console.log(detalless);
+                            this.setState({ detalles:detalless })
+
+                            //recorrer la lista de detallePedido
+                            
+                            });
+                });
+
         }
 
-
-        APIFerias.get('/Despliegue/api/usuario/cliente/' + idUSer)
-            .then(res => {
-                const client = res.data;
-                this.setState({ idUsuario: client.idCliente }) /* Ojo, se jala id del cliente para registrar la canasta */
-            })
-            console.log(this.state.idUsuario)
-
-
-        APIFerias.get('Despliegue/api/pedidos/perfil/' + this.state.idUsuario + '/detalle')
-            .then(res => {
-                const products = res.data;
-                this.setState({ products: products });
-                console.log(this.state.products)
-            })
- 
     }
 
 
@@ -73,7 +79,8 @@ class Basket extends React.Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.products.map(product => <ProductBasket product={product} imageUrl={product.imagen} />)}
+
+                                    {this.state.detalles.map(detalle => <ProductBasket idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto}/>)}
                                     </tbody>
                                 </table>
                             </div>

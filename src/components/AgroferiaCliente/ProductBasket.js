@@ -13,6 +13,10 @@ class ProductBasket extends React.Component {
     this.updateQuantity = this.updateQuantity.bind(this);
     }
 
+    componentDidMount() {
+        
+    }
+
     updateQuantity(evt) {
         this.setState({
           quantity: evt.target.value,
@@ -26,14 +30,14 @@ class ProductBasket extends React.Component {
         <tr className="text-center">
             <td className="product-remove"><a href="#"><span className="ion-ios-close"></span></a></td>
 
-            <td className="image-prod"><div className="" > <img className="img-fluid basketImage" src={this.props.product.imagen} alt="Colorlib Template" /></div></td>
+            {/* <td className="image-prod"><div className="" > <img className="img-fluid basketImage" src={this.props.product.imagen} alt="Colorlib Template" /></div></td> */}
 
             <td className="product-name">
-                <h3>{this.props.product.nombre}</h3>
+                <h3>{this.props.product.idProducto}</h3>
                 <p>De: Papas y camotes</p>
             </td>
 
-            <td className="price">S/.{this.props.product.precio}</td>
+            <td className="price">S/.{this.props.monto}</td>
 
             <td className="quantity">
                 <div className="input-group mb-3">

@@ -61,15 +61,9 @@ export default class ProductDetail extends Component {
 
   componentDidMount() {
 
-    if (sessionStorage.getItem("idUsuario")) {
-      var idUSer = sessionStorage.getItem("idUsuario");
+    if (sessionStorage.getItem("idCliente")) {
+      this.state.idUsuario = sessionStorage.getItem("idCliente");
 
-
-      APIFerias.get('/Despliegue/api/usuario/cliente/' + idUSer)
-        .then(res => {
-          const client = res.data;
-          this.setState({ idUsuario: client.idCliente }) /* Ojo, se jala id del cliente para registrar la canasta */
-        })
     }
 
 
