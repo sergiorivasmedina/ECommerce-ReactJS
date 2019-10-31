@@ -34,7 +34,6 @@ class ProductBasket extends React.Component {
 
             <td className="product-name">
                 <h3>{this.props.product.idProducto}</h3>
-                <p>De: Papas y camotes</p>
             </td>
 
             <td className="price">S/.{this.props.monto}</td>
