@@ -44,8 +44,6 @@ class Basket extends React.Component {
                             const detalless = response.data;
                             console.log(detalless);
                             this.setState({ detalles:detalless })
-
-                            //recorrer la lista de detallePedido
                             
                             });
                 });
@@ -89,7 +87,7 @@ class Basket extends React.Component {
                         <div className="row">
                             <div className="col-md-9">
                                 <p>Entrega (recojo en tienda): Gratis</p>
-                                <p>Fecha de recojo: Domingo 29/09/2019</p>
+                                <p>Fecha de recojo: Domingo 2/11/2019</p>
                             </div>
                             <div className="col-md-3 text-right">
                                 <p>Subtotal: S/.100</p>

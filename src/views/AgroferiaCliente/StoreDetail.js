@@ -90,7 +90,7 @@ export default class StoreDetail extends Component {
               </div>
               <h4>Descubre nuestros productos</h4>
               <div className="row">
-              {this.state.products.map(product => <ProductCard productName={product.nombre} price={product.precio} discount="0" store="" unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
+              {this.state.products.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount="0" store={product.store} unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
               </div>
             </div>
             <FooterComponent />
