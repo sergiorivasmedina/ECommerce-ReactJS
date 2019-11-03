@@ -25,7 +25,7 @@ class ShopProfile extends React.Component {
                     <p>{this.props.shopDescription}</p>
                     <div className="row">
                     <div className="col-11 text-left custom-inline">
-                        <p>Contacto: &nbsp;<a href="">{this.props.phoneNumber}</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="">{this.props.email}</a></p>
+                        <p>Contacto y compras al por mayor: &nbsp;<a href="">{this.props.phoneNumber}</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="">{this.props.email}</a></p>
                     </div>
                     <div className="col-1 text-right custom-inline">
                         <a href=""><span className="icon-facebook-official custom-facebook"></span>&nbsp;&nbsp;</a>
