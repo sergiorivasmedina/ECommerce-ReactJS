@@ -96,10 +96,13 @@ class Profile extends React.Component {
 
 
 
-    handleRegistro = (event) => {
+    handleModif = (event) => {
         console.log(this.state);
 
-        const { names,
+        const { idCliente,
+        idPersona,
+        idUsuario,
+        names,
         namescorrect,
         lastname1,
         lastname1correct,
@@ -176,13 +179,6 @@ class Profile extends React.Component {
             allcorrect=false;
         }
 
-        if (password != confirmedpassword){
-            this.setState({
-                isPaswordCorrect: false
-            });
-            allcorrect=false;
-
-        }
 
 
 
@@ -202,25 +198,28 @@ class Profile extends React.Component {
 
             //metemos todo en una variable que luego pasará al post
             var dataAPI = {
-                idCliente: '',
+                idCliente: idCliente,
+                idPersona: idPersona,
                 nombres: names,
                 apellidoPaterno: lastname1,
                 apellidoMaterno: lastname2,
                 telefono: phone,
                 correo: mail,
+                idUsuario: idUsuario,
                 idRol: '4',
                 username: user,
                 password: password,
                 fechaRegistro: '2019-10-03',
                 dni: dni            };
             //llamamos el metodo post del api
-            APIFerias.post('/Despliegue/api/usuario/cliente/registro', dataAPI)
+            APIFerias.post('/Despliegue/api/usuario/cliente/modificar', dataAPI)
                 .then(response => {
                     console.log("buena", response);
                     Swal.fire({
                         type: 'success',
-                        title: 'Bienvenido ' + names,
-                        text: 'Usuario creado correctamente',
+                        title: 'Enhorabuena ' + names,
+                        text: 'Usuario modificado correctamente',
+                        onClose: window.location='/'
                       })
                 }).catch( error => {
                     console.log(dataAPI);
@@ -260,7 +259,10 @@ class Profile extends React.Component {
                         mail:client.correo,
                         user:client.username,
                         password: client.password,
-                        dni: client.dni })
+                        dni: client.dni,
+                        idCliente: client.idCliente,
+                        idPersona: client.idPersona,
+                        idUsuario: client.idUsuario })
       })}
 
     
@@ -342,7 +344,7 @@ class Profile extends React.Component {
 
                             <div className="text-center">
 
-                                <Button variant="primary"  onClick={this.handleRegistro}>Actualizar Información</Button>
+                                <Button variant="primary"  onClick={this.handleModif}>Actualizar Información</Button>
                             </div>
                         </Form>
                     </div>

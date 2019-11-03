@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import ProductProfile from '../../components/AgroferiaCliente/ProductProfile';
 import SimilarProducts from '../../components/AgroferiaCliente/SimilarProducts';
+import Swal from 'sweetalert2';
 
 export default class ProductDetail extends Component {
   constructor(props) {
@@ -15,10 +16,14 @@ export default class ProductDetail extends Component {
       simbolo: null,
       quantity: 0,
       categoria: null,
-      total: 0
+      total: 0,
+      idUsuario: null
     }
     this.updateQuantity = this.updateQuantity.bind(this);
+    this.addproduct = this.addproduct.bind(this);
+
   }
+
 
 
   updateQuantity(evt) {
@@ -29,8 +34,53 @@ export default class ProductDetail extends Component {
     console.log(this.state.quantity);
   }
 
+  addproduct = (event) => {
+    const { id } = this.props.match.params;
+    var prod = {
+      idPedido: "",
+      idTipoMedioPago: 1,
+      idCupon: 1,
+      idCliente: parseInt(this.state.idUsuario),
+      fecha: "2019-10-25",
+      subtotal: this.state.total,
+      igv: 0.18,
+      total: this.state.total / (1.18),
+      estado: -1,
+      idProducto: parseInt(id),
+      cantidad: parseFloat(this.state.quantity),
+      monto: parseFloat(this.state.product.precio),
+      idTienda: this.state.product.idTienda
+    }
+    console.log(prod)
+    APIFerias.post('/Despliegue/api/pedido/producto', prod)
+      .then(response => {
+        console.log("Producto añadido")
+
+        Swal.fire({
+          title: 'Producto añadido a la canasta',
+          type:'success'}
+        )
+
+        return response;
+
+      })
+
+  }
+
+  componentDidMount() {
+
+    if (sessionStorage.getItem("idCliente")) {
+      this.state.idUsuario = sessionStorage.getItem("idCliente");
+
+    }
+
+
+  }
+
+
   componentWillMount() {
     const { id } = this.props.match.params;
+
 
     APIFerias.get('Despliegue/api/producto/' + id)
       .then(res => {
@@ -59,7 +109,7 @@ export default class ProductDetail extends Component {
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-12">
-                <h4>{this.state.product.nombre}</h4>
+                  <h4>{this.state.product.nombre}</h4>
                 </div>
                 <div className="col-md-8">
                   <p>De: Tienda</p>
@@ -72,22 +122,22 @@ export default class ProductDetail extends Component {
                   <p className="pt-2">Total: {this.state.total} </p>
                 </div>
                 <div className="col-md-12">
-                <Link to="/canasta"><button href="checkout.html" className="btn btn-primary py-3 px-4 mr-2">Comprar ya</button></Link>
-                <button href="checkout.html" className="btn btn-primary py-3 px-4">Añadir a la canasta</button>
-                </div>
+                  <Link to="/canasta"><button className="btn btn-primary py-3 px-4 mr-2" onClick={this.addproduct}>Comprar ya</button></Link>
+                  <button className="btn btn-primary py-3 px-4" onClick={this.addproduct}>Añadir a la canasta</button>
                 </div>
               </div>
             </div>
-            <div className="row pt-5">
-              <h4>Productos relacionados</h4>
-              <SimilarProducts filter={this.state.categoria}></SimilarProducts>
-            </div>
-            <div className="row pt-5">
-              <h4>Opiniones de clientes</h4>
-            </div>
           </div>
-          <FooterComponent />
-        </div >
-        )
-      }
-    }
+          <div className="row pt-5">
+            <h4>Productos relacionados</h4>
+            <SimilarProducts filter={this.state.categoria}></SimilarProducts>
+          </div>
+          <div className="row pt-5">
+            <h4>Opiniones de clientes</h4>
+          </div>
+        </div>
+        <FooterComponent />
+      </div >
+    )
+  }
+}
