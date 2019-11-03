@@ -32,6 +32,7 @@ class FooterComponent extends React.Component {
                   <li><a href="/Productos" className="py-2 d-block">Productos</a></li>
                   <li><a href="/Canasta" className="py-2 d-block">Canasta</a></li>
                   <li><a href="/Perfil" className="py-2 d-block">Perfil de Usuario</a></li>
+                  <li><a href="/Calendario" className="py-2 d-block">Calendario Agrícola</a></li>
                 </ul>
               </div>
             </div>

@@ -25,6 +25,7 @@ import DetalleTienda from './views/AgroferiaCliente/StoreDetail';
 import DetalleProducto from './views/AgroferiaCliente/ProductDetail';
 import Login from './views/AgroferiaCliente/Login';
 import Registro from './views/AgroferiaCliente/Register';
+import Calendario from './views/AgroferiaCliente/Calendar';
 
 
 const routing = (
@@ -51,6 +52,8 @@ const routing = (
       <Route path="/detalleProducto/:id" component={DetalleProducto} />
       <Route path="/login" component={Login}/>
       <Route path="/registro" component={Registro}/>
+      <Route path="/calendario" component={Calendario}/>
+
 
       <Route component={NotFound}/>
     </Switch>
