@@ -40,15 +40,15 @@ export default class ProductDetail extends Component {
       idPedido: "",
       idTipoMedioPago: 1,
       idCupon: 1,
-      idCliente: this.state.idUsuario,
+      idCliente: parseInt(this.state.idUsuario),
       fecha: "2019-10-25",
       subtotal: this.state.total,
       igv: 0.18,
       total: this.state.total / (1.18),
       estado: -1,
-      idProducto: id,
-      cantidad: this.state.quantity,
-      monto: this.state.product.precio
+      idProducto: parseInt(id),
+      cantidad: parseFloat(this.state.quantity),
+      monto: parseFloat(this.state.product.precio)
     }
     console.log(prod)
     APIFerias.post('/Despliegue/api/pedido/producto', prod)
