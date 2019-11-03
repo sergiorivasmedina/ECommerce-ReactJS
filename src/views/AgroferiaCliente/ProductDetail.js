@@ -56,7 +56,7 @@ export default class ProductDetail extends Component {
         console.log("Producto añadido")
 
         Swal.fire({
-          title: 'Prodcuto añadido a la canasta',
+          title: 'Producto añadido a la canasta',
           type:'success'}
         )
 
