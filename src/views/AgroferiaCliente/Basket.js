@@ -5,6 +5,7 @@ import Heading from '../../components/Vegefoods/Heading';
 import ProductBasket from '../../components/AgroferiaCliente/ProductBasket';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import APIFerias from '../../services/FairsService';
+import {Link} from 'react-router-dom';
 
 
 
@@ -17,18 +18,24 @@ class Basket extends React.Component {
             idUsuario: null,
             idCliente: null,
             idPedido: null,
-            detalles:[]
+            detalles:[],
+            subtotal:0,
+            descuento:0,
+            total:0,
+            IGV:0,
         };
     }
 
 
 
-
+    componentWillMount(){
+        localStorage.setItem('subtotal',this.state.subtotal);
+        localStorage.setItem('total',this.state.total);
+        localStorage.setItem('descuento',this.state.descuento);
+    }
 
 
     componentDidMount() {
-
-
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
             console.log("idCliente: ",this.state.idCliente);
@@ -47,11 +54,16 @@ class Basket extends React.Component {
                             
                             });
                 });
-
+                
         }
 
     }
 
+    componentWillUpdate(){
+
+    }
+
+    
 
     render() {
         return (
@@ -90,13 +102,17 @@ class Basket extends React.Component {
                                 <p>Fecha de recojo: Domingo 2/11/2019</p>
                             </div>
                             <div className="col-md-3 text-right">
-                                <p>Subtotal: S/.100</p>
-                                <p>IGV: S/. 18</p>
+                                <p>Subtotal: S/.{this.state.subtotal}</p>
+                                <p>Descuento: S/.{this.state.descuento}</p>
+                                <p>IGV: S/.{this.state.IGV}</p>
                                 <hr></hr>
-                                <p>Total: S/.118</p>
+                                <p>Total: S/{this.state.total}</p>
                             </div>
                             <div className="col-md-12 mb-5">
-                                <button href="checkout.html" class="btn btn-primary py-3 px-4 pl-2 pr-2">Continuar <i></i></button>
+                                <Link  to={"/pago"} >
+                                    <button class="btn btn-primary py-3 px-4 pl-2 pr-2" 
+                                    >Continuar <i></i></button>
+                                </Link>
                             </div>
                         </div>
                     </div>

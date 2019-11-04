@@ -21,6 +21,10 @@ class Payment extends React.Component{
             validatedexpiry:false,
         };
     }
+    
+    componentWillMount(){
+        
+    }
 
     handleInputFocus = (e) => {
         this.setState({ focus: e.target.name });
@@ -47,17 +51,17 @@ class Payment extends React.Component{
     handleCheckout = () =>{
         /*this.closeModal();*/
         
-            if(this.state.cvc.length!==3){
+            if(this.state.cvc.length<3){
                 this.setState({
                     validatedcvc:true
                 })
             }
-            if(this.state.expiry=='' || this.state.expiry.length!==4){
+            if(this.state.expiry.length<4){
                 this.setState({
                     validatedexpiry:true
                 })
             }
-            if(this.state.number.length<=16) {
+            if(this.state.number.length<16) {
                 this.setState({
                     validatednumber:true
                 })
@@ -146,19 +150,19 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.20.60</span>
+                                                <span>S/.{localStorage.getItem('subtotal')}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>Despacho</span>
-                                                <span>S/.0.00</span>
+                                                <span>S/.0</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>Descuento</span>
-                                                <span>S/.3.00</span>
+                                                <span>S/.{localStorage.getItem('descuento')}</span>
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
-                                                <span>S/.17.60</span>
+                                                <span>S/.{localStorage.getItem('total')}</span>
                                             </p>
                                             </div>
                             </div>
@@ -184,6 +188,7 @@ class Payment extends React.Component{
                                     validatednumber={this.state.validatednumber}
                                     validatedcvc={this.state.validatedcvc}
                                     validatedexpiry={this.state.validatedexpiry}
+                                    total={localStorage.getItem('total')}
                                     ></FormCard>
                                 </div>
                             </div>

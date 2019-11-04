@@ -92,7 +92,7 @@ class FormCard extends React.Component{
                 
                 </Modal.Body>
                 <Modal.Footer>
-                <Button type="submit" variant="primary" size="lg" block onClick={()=>this.props.handleCheckout()}>Pagar</Button>
+                <Button type="submit" variant="primary" size="lg" block onClick={()=>this.props.handleCheckout()}>Pagar S/.{this.props.total}</Button>
                 </Modal.Footer>
             </Modal>
         )
