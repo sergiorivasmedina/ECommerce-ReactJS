@@ -4,7 +4,8 @@ import Heading from '../../components/Vegefoods/Heading';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import FormCard from '../../components/AgroferiaCliente/FormCard';
 import 'react-credit-cards/es/styles-compiled.css';
-
+import Swal from 'sweetalert2';
+import APIFerias from '../../services/FairsService';
 
 class Payment extends React.Component{
     constructor(props){
@@ -19,11 +20,20 @@ class Payment extends React.Component{
             validatednumber:false,
             validatedcvc:false,
             validatedexpiry:false,
+            usuario:{
+            
+          }
         };
     }
     
     componentWillMount(){
-        
+        if(sessionStorage.getItem("idCliente")!=null){
+            APIFerias.get('/Despliegue/api/usuario/cliente/'+ sessionStorage.getItem("idCliente"))
+            .then(res=>{
+                    const client = res.data;
+                    this.setState({ usuario:client})
+            })
+        }
     }
 
     handleInputFocus = (e) => {
@@ -44,13 +54,16 @@ class Payment extends React.Component{
 
     closeModal = () =>{
         this.setState({
-            status:false
+            status:false,
+            cvc: '',
+            expiry: '',
+            focus: '',
+            name: '',
+            number: ''
         });
     }
 
     handleCheckout = () =>{
-        /*this.closeModal();*/
-        
             if(this.state.cvc.length<3){
                 this.setState({
                     validatedcvc:true
@@ -65,6 +78,16 @@ class Payment extends React.Component{
                 this.setState({
                     validatednumber:true
                 })
+            }
+            if(this.state.cvc && this.state.expiry && this.state.number){
+                Swal.fire({
+                    type: 'success',
+                    title: '¡Enhorabuena!',
+                    text: 'Reserva realizada!',
+                    onAfterClose: window.location='/'
+        
+                });
+                this.closeModal();
             }
         
     }
@@ -84,19 +107,19 @@ class Payment extends React.Component{
                                     <div className="col-md-12">
                                         <div className="form-group">
                                             <label for="lastname">Documento de Identidad</label>
-                                            <input type="text" className="form-control" placeholder=""/>
+                                            <input type="text" className="form-control" placeholder={this.state.usuario.dni}/>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="firstname">Nombres</label>
-                                            <input type="text" className="form-control" placeholder=""/>
+                                            <input type="text" className="form-control" placeholder={this.state.usuario.nombres}/>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="firstname">Apellidos</label>
-                                            <input type="text" className="form-control" placeholder=""/>
+                                            <input type="text" className="form-control" placeholder={this.state.usuario.apellidoPaterno} />
                                         </div>
                                     </div>
                                     <div className="w-100"></div>
@@ -129,13 +152,13 @@ class Payment extends React.Component{
                                 <div className="col-md-6">
                                 <div className="form-group">
                                     <label for="phone">Telefono</label>
-                                <input type="text" className="form-control" placeholder=""/>
+                                <input type="text" className="form-control" placeholder={this.state.usuario.telefono}/>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-group">
                                     <label for="emailaddress">Correo electrónico</label>
-                                <input type="text" className="form-control" placeholder=""/>
+                                <input type="text" className="form-control" placeholder={this.state.usuario.correo}/>
                                 </div>
                             </div>
                             <div className="w-100"></div>
@@ -172,7 +195,7 @@ class Payment extends React.Component{
                                         <div className="form-group">
                                             <div className="col-md-12">
                                                 <div className="radio">
-                                                    <label><input type="radio" name="optradio" className="mr-2"/>Culqi</label>
+                                                    <label>Culqi</label>
                                                 </div>
                                             </div>
                                         </div>

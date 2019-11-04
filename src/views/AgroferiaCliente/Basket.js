@@ -6,6 +6,8 @@ import ProductBasket from '../../components/AgroferiaCliente/ProductBasket';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import APIFerias from '../../services/FairsService';
 import {Link} from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 
 
@@ -18,15 +20,73 @@ class Basket extends React.Component {
             idUsuario: null,
             idCliente: null,
             idPedido: null,
+
+            num:[],
             detalles:[],
+            precios:[],
+            cantidades:[],
+            totales:[],
+
             subtotal:0,
-            descuento:0,
+            igv:0,
             total:0,
-            IGV:0,
+            descuento:0
         };
+        this.updateMontos = this.updateMontos.bind(this);
+
     }
 
+    async updateMontos(evt,id,cantidad,total) {
+        console.log("2:",id,cantidad,total)
+        var newcantidades= this.state.cantidades
+        var newtotales= this.state.totales
+        newcantidades[id]=parseInt(cantidad)
+        newtotales[id]=parseFloat(total)
+        console.log(newcantidades)
+        console.log(newtotales)
 
+        this.setState({
+            cantidades: newcantidades,
+            totales: newtotales
+        })
+        console.log("cant",this.state.cantidades)
+        console.log("tot",this.state.totales)
+        
+        var i;
+
+        await this.setState({
+            total: 0
+          });
+
+        for (i = 0; i < this.state.cantidades.length; i++) {
+
+                await this.setState({
+                    total: this.state.total + this.state.totales[i]
+                    
+                    
+                })
+                
+            
+              }
+
+        await this.setState({
+            subtotal: (this.state.total / 1.18).toFixed(2),
+            igv: (this.state.total - this.state.total / 1.18).toFixed(2)
+                
+                
+            })
+      
+    }
+
+    handleBasket(){
+        Swal.fire({
+            type: 'success',
+            title: '¡Enhorabuena!',
+            text: 'Reserva realizada!',
+            /*onAfterClose: window.location='/'*/
+
+        });
+    }
 
     componentWillMount(){
         localStorage.setItem('subtotal',this.state.subtotal);
@@ -47,14 +107,47 @@ class Basket extends React.Component {
                     //traer el detallePedido del idPedido, el cual es el actual
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
                         .then(response => {
-                            console.log("dentro del segundo GET", response.data);
                             const detalless = response.data;
-                            console.log(detalless);
                             this.setState({ detalles:detalless })
+                            console.log("ACA",this.state.detalles);
+                            console.log("ACA",this.state.detalles);
+
+                            var arrayAux=this.state.detalles;
+
+                            arrayAux=arrayAux.map(function(e,index){
+                                e.index=index;
+                                return e
+                            });
+                            this.setState({
+                                detalles:arrayAux
+                            });
+                            var i;
+                            for (i = 0; i < this.state.detalles.length; i++) {
+                                this.setState({ 
+                                    precios: this.state.precios.concat([this.state.detalles[i].monto]),
+                                    cantidades: this.state.cantidades.concat([this.state.detalles[i].cantidad]),
+                                    totales: this.state.totales.concat([this.state.detalles[i].monto*this.state.detalles[i].cantidad]),
+                                    num:this.state.precios.concat([i])
+                                })
+                                this.setState({
+                                    total: this.state.total+ this.state.detalles[i].cantidad*this.state.detalles[i].monto
+                                })
+                                
                             
+                              }
+                              this.setState({
+                                subtotal: (this.state.total / 1.18).toFixed(2),
+                                igv: (this.state.total - this.state.total / 1.18).toFixed(2) 
+                            })
+
+
+
                             });
                 });
                 
+
+
+
         }
 
     }
@@ -89,8 +182,8 @@ class Basket extends React.Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                    {this.state.detalles.map(detalle => <ProductBasket idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto}/>)}
+                                    
+                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto}/>)}
                                     </tbody>
                                 </table>
                             </div>
@@ -104,13 +197,13 @@ class Basket extends React.Component {
                             <div className="col-md-3 text-right">
                                 <p>Subtotal: S/.{this.state.subtotal}</p>
                                 <p>Descuento: S/.{this.state.descuento}</p>
-                                <p>IGV: S/.{this.state.IGV}</p>
+                                <p>IGV: S/.{this.state.igv}</p>
                                 <hr></hr>
                                 <p>Total: S/{this.state.total}</p>
                             </div>
                             <div className="col-md-12 mb-5">
                                 <Link  to={"/pago"} >
-                                    <button class="btn btn-primary py-3 px-4 pl-2 pr-2" 
+                                    <button class="btn btn-primary py-3 px-4 pl-2 pr-2" onClick={this.handleBasket}
                                     >Continuar <i></i></button>
                                 </Link>
                             </div>

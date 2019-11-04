@@ -1,5 +1,6 @@
 import React from 'react';
 import APIFerias from '../../services/FairsService';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
 class ProductBasket extends React.Component {
@@ -7,13 +8,14 @@ class ProductBasket extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            quantity: null,
-            total: 0,
-            nombreProducto: '',
-            imagenProducto: null
+            quantity: this.props.cantidad,
+            total: this.props.cantidad*this.props.monto,
+
+            
         }
         
     this.updateQuantity = this.updateQuantity.bind(this);
+    this.removeProduct = this.removeProduct.bind(this);
     }
 
     componentDidMount() {
@@ -23,22 +25,41 @@ class ProductBasket extends React.Component {
                 this.setState({
                     nombreProducto: res.data.nombre,
                     imagenProducto: res.data.imagen
-                });
+                });         
             })
+        
         
     }
 
-    updateQuantity(evt) {
-        this.setState({
-          quantity: evt.target.value,
-          total: evt.target.value * this.props.monto
+    async updateQuantity(evt) {
+        await this.setState({
+            quantity: evt.target.value,
+            total: evt.target.value * this.props.monto
         });
-        console.log(this.state.quantity);
-      }
+        var tot = this.state.total;
+        console.log("1:",this.props.idDetalle,this.state.quantity,this.state.total)
 
-      removeProduct(evt) {
-          console.log("se removió producto")
-      }
+        await this.props.triggerParentUpdate(evt,this.props.idDetalle,this.state.quantity,this.state.total)
+    }
+
+    removeProduct(evt) {
+
+    APIFerias.delete('Despliegue/api/pedido/' + sessionStorage.getItem('idCliente') + '/producto/' +this.props.idProducto)
+      .then(res => {
+          Swal.fire({
+              type: 'success',
+              title: '¡Enhorabuena!',
+              text: '¡Elimino un producto',
+              onAfterClose: window.location = '/canasta'
+          });
+      }).catch(error => {
+          Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: '¡No se pudo eliminar la tienda favorita!',
+          })
+      })
+    }
 
     render() {
         return(
@@ -55,7 +76,7 @@ class ProductBasket extends React.Component {
 
             <td className="quantity">
                 <div className="input-group mb-3">
-                    <input type="text" name="quantity" className="quantity form-control input-number" value={this.state.quantity} onChange={this.updateQuantity}></input>
+                    <input type="number" name="quantity" className="quantity form-control input-number" value={this.state.quantity} onChange={this.updateQuantity}></input>
                 </div>
             </td>
 

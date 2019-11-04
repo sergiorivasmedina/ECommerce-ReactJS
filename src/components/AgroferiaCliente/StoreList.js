@@ -56,10 +56,11 @@ export default class StoreList extends React.Component {
     console.log("Tienda seleccionada:",store);
     if(store.heart){
       var storeselect={
-        idCliente:parseInt(sessionStorage.getItem("idCliente"),10),
-        idTienda:store.idTienda
+        idCliente: parseInt(sessionStorage.getItem("idCliente"),10),
+        idTienda: store.idTienda
       }
-      APIFerias.delete('/Despliegue/api/usuario/tiendasFavoritas/eliminar', storeselect)
+      console.log("Store Select", storeselect );
+      APIFerias.delete('/Despliegue/api/usuario/tiendasFavoritas/eliminar', {data: storeselect})
       .then(response => {
         console.log("buena", response);
         Swal.fire({
