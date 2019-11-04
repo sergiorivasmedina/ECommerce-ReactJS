@@ -1,5 +1,6 @@
 import React from 'react';
 import APIFerias from '../../services/FairsService';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
 class ProductBasket extends React.Component {
@@ -14,6 +15,7 @@ class ProductBasket extends React.Component {
         }
         
     this.updateQuantity = this.updateQuantity.bind(this);
+    this.removeProduct = this.removeProduct.bind(this);
     }
 
     componentDidMount() {
@@ -29,16 +31,32 @@ class ProductBasket extends React.Component {
     }
 
     updateQuantity(evt) {
+        console.log(this);
         this.setState({
           quantity: evt.target.value,
           total: evt.target.value * this.props.monto
         });
         console.log(this.state.quantity);
-      }
+    }
 
-      removeProduct(evt) {
-          console.log("se removió producto")
-      }
+
+    removeProduct(evt) {
+
+    APIFerias.delete('Despliegue/api/pedido/' + sessionStorage.getItem('idCliente') + '/producto/' +this.props.idProducto)
+      .then(res => {
+          Swal.fire({
+              type: 'success',
+              title: '¡Enhorabuena!',
+              text: '¡Elimino una tienda favorita!',
+          });
+      }).catch(error => {
+          Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: '¡No se pudo eliminar la tienda favorita!',
+          })
+      })
+    }
 
     render() {
         return(
