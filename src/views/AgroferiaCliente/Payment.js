@@ -3,14 +3,33 @@ import Menu from '../../components/AgroferiaCliente/Menu';
 import Heading from '../../components/Vegefoods/Heading';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import FormCard from '../../components/AgroferiaCliente/FormCard';
+import 'react-credit-cards/es/styles-compiled.css';
 
 
 class Payment extends React.Component{
     constructor(props){
         super(props);
         this.state ={
-            status:false
+            status:false,
+            cvc: '',
+            expiry: '',
+            focus: '',
+            name: '',
+            number: '',
+            validatednumber:false,
+            validatedcvc:false,
+            validatedexpiry:false,
         };
+    }
+
+    handleInputFocus = (e) => {
+        this.setState({ focus: e.target.name });
+      }
+      
+    handleInputChange = (e) => {
+        const { name, value } = e.target;
+        
+        this.setState({ [name]: value });
     }
 
     openModal(){
@@ -24,6 +43,28 @@ class Payment extends React.Component{
             status:false
         });
     }
+
+    handleCheckout = () =>{
+        /*this.closeModal();*/
+        
+            if(this.state.cvc.length!==3){
+                this.setState({
+                    validatedcvc:true
+                })
+            }
+            if(this.state.expiry=='' || this.state.expiry.length!==4){
+                this.setState({
+                    validatedexpiry:true
+                })
+            }
+            if(this.state.number.length<=16) {
+                this.setState({
+                    validatednumber:true
+                })
+            }
+        
+    }
+
     render(){
         return(
         <div className="Stores">
@@ -132,7 +173,18 @@ class Payment extends React.Component{
                                             </div>
                                         </div>
                                     <p><a href="#"className="btn btn-primary py-3 px-4" onClick={this.openModal.bind(this)}>Hacer pedido</a></p>
-                                    <FormCard  status={this.state.status} closeModal={this.closeModal.bind(this)}></FormCard>
+                                    <FormCard  status={this.state.status} closeModal={this.closeModal.bind(this)} 
+                                    handleInputFocus={this.handleInputFocus.bind(this)} handleInputChange={this.handleInputChange.bind(this)}
+                                    handleCheckout={this.handleCheckout.bind(this)}
+                                    cvc={this.state.cvc}
+                                    expiry={this.state.expiry}
+                                    focus={this.state.focus}
+                                    name={this.state.name}
+                                    number={this.state.number}
+                                    validatednumber={this.state.validatednumber}
+                                    validatedcvc={this.state.validatedcvc}
+                                    validatedexpiry={this.state.validatedexpiry}
+                                    ></FormCard>
                                 </div>
                             </div>
                         </div>
