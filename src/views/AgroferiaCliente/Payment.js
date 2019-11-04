@@ -2,9 +2,28 @@ import React from 'react';
 import Menu from '../../components/AgroferiaCliente/Menu';
 import Heading from '../../components/Vegefoods/Heading';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
+import FormCard from '../../components/AgroferiaCliente/FormCard';
 
 
 class Payment extends React.Component{
+    constructor(props){
+        super(props);
+        this.state ={
+            status:false
+        };
+    }
+
+    openModal(){
+        this.setState({
+            status:true
+        });
+    }
+
+    closeModal = () =>{
+        this.setState({
+            status:false
+        });
+    }
     render(){
         return(
         <div className="Stores">
@@ -112,7 +131,8 @@ class Payment extends React.Component{
                                                 </div>
                                             </div>
                                         </div>
-                                    <p><a href="#"className="btn btn-primary py-3 px-4">Hacer pedido</a></p>
+                                    <p><a href="#"className="btn btn-primary py-3 px-4" onClick={this.openModal.bind(this)}>Hacer pedido</a></p>
+                                    <FormCard  status={this.state.status} closeModal={this.closeModal.bind(this)}></FormCard>
                                 </div>
                             </div>
                         </div>
