@@ -9,17 +9,29 @@ class Menu extends React.Component {
         super(props);
         this.state = { 
             value: 'AGROFERIAS CAMPESINAS',
-            client: null };
+            client: null,
+            cantprod:0 };
             
 
     }
 
     componentDidMount(){
+
+
         
 
         if (sessionStorage.getItem("idUsuario")) {
             var idUSer = sessionStorage.getItem("idUsuario");
-          
+            var idCliente = sessionStorage.getItem("idCliente");
+            APIFerias.get('Despliegue/api/pedido/' + idCliente)
+                .then(res=> {
+                    console.log("menupedido",res.data);
+                    //traer el detallePedido del idPedido, el cual es el actual
+                    APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
+                        .then(response => {
+                            const detalless = response.data;
+                            this.setState({ cantprod:response.data.length })
+                        })})
 
         APIFerias.get('/Despliegue/api/usuario/cliente/'+ idUSer)
       .then(res=> {
@@ -27,6 +39,9 @@ class Menu extends React.Component {
         this.setState({ client:client, nombre:client.nombres, cierre:"Salir" })
         console.log(this.state.client);
       })}
+
+
+
 
     
       }
@@ -55,7 +70,7 @@ class Menu extends React.Component {
                             {/* ACTIVAR PARA SIGUIENTE SPRINT <li className="nav-item"><label className="nav-link"><Link to="/Map">MAPS</Link></label></li>
                             <li className="nav-item"><label className="nav-link"><Link to="/Calendar">CALENDARIO</Link></label></li> */}
                             
-                            <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Canasta"><span className="icons icon-shopping_basket"></span><span className="white">[0]</span></Link></label></li>
+                            <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Canasta"><span className="icons icon-shopping_basket"></span><span className="white">[{this.state.cantprod}]</span></Link></label></li>
                             <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/Login"><span className="icons icon-person"></span></Link></label></li>
                             <li className="nav-item"><label className="nav-link"><Link to="/perfil" ><h8 className="white"> {this.state.nombre}</h8></Link></label></li>
                             <li className="nav-item"><label className="nav-link"><Link to="/login" ><h8 className="white"> {this.state.cierre}</h8></Link></label></li>
