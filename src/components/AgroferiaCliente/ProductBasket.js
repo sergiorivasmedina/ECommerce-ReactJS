@@ -8,10 +8,10 @@ class ProductBasket extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            quantity: null,
-            total: 0,
-            nombreProducto: '',
-            imagenProducto: null
+            quantity: this.props.cantidad,
+            total: this.props.cantidad*this.props.monto,
+
+            
         }
         
     this.updateQuantity = this.updateQuantity.bind(this);
@@ -25,20 +25,22 @@ class ProductBasket extends React.Component {
                 this.setState({
                     nombreProducto: res.data.nombre,
                     imagenProducto: res.data.imagen
-                });
+                });         
             })
+        
         
     }
 
-    updateQuantity(evt) {
-        console.log(this);
-        this.setState({
-          quantity: evt.target.value,
-          total: evt.target.value * this.props.monto
+    async updateQuantity(evt) {
+        await this.setState({
+            quantity: evt.target.value,
+            total: evt.target.value * this.props.monto
         });
-        console.log(this.state.quantity);
-    }
+        var tot = this.state.total;
+        console.log("1:",this.props.idDetalle,this.state.quantity,this.state.total)
 
+        await this.props.triggerParentUpdate(evt,this.props.idDetalle,this.state.quantity,this.state.total)
+    }
 
     removeProduct(evt) {
 
@@ -47,7 +49,8 @@ class ProductBasket extends React.Component {
           Swal.fire({
               type: 'success',
               title: '¡Enhorabuena!',
-              text: '¡Elimino una tienda favorita!',
+              text: '¡Elimino un producto',
+              onAfterClose: window.location = '/canasta'
           });
       }).catch(error => {
           Swal.fire({
@@ -73,7 +76,7 @@ class ProductBasket extends React.Component {
 
             <td className="quantity">
                 <div className="input-group mb-3">
-                    <input type="text" name="quantity" className="quantity form-control input-number" value={this.state.quantity} onChange={this.updateQuantity}></input>
+                    <input type="number" name="quantity" className="quantity form-control input-number" value={this.state.quantity} onChange={this.updateQuantity}></input>
                 </div>
             </td>
 
