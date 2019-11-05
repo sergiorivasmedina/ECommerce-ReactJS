@@ -14,7 +14,7 @@ export default class ProductDetail extends Component {
     this.state = {
       product: [],
       simbolo: null,
-      quantity: 0,
+      quantity: 1,
       categoria: null,
       total: 0,
       idUsuario: null
@@ -118,7 +118,7 @@ export default class ProductDetail extends Component {
 
                 <div className="col-md-4">
                   <p>S/. {this.state.product.precio} por {this.state.simbolo}</p>
-                  <label>Cantidad: </label><input className="quantityInput" value={this.state.quantity} onChange={this.updateQuantity}></input>
+                  <label>Cantidad: </label><input className="quantityInput" type="number" min="1"  value={this.state.quantity} onChange={this.updateQuantity}></input>
                   <p className="pt-2">Total: {this.state.total} </p>
                 </div>
                 <div className="col-md-12">

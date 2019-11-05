@@ -88,21 +88,15 @@ class Login extends React.Component {
         APIFerias.post('/Despliegue/api/usuario/cliente/autenticacion', datauser)
             .then(response => {
                 console.log("buena", response);
-                Swal.fire({
-                    type: 'success',
-                    title: '¡Enhorabuena!',
-                    text: '¡Inicio de sesión exitoso!',
-                    onClose: window.location='/'
-
-                });
-
-
-
+                
+                
                 sessionStorage.setItem("idUsuario", response.data.idUsuario);
                 sessionStorage.setItem("idCliente", response.data.idCliente);
                 sessionStorage.setItem("idRol", response.data.idRol);
                 sessionStorage.setItem("idCliente", response.data.idCliente);
                 console.log("hola" + response.data.idCliente)
+
+                window.location='/'
 
 
                 //para llamar el sessionStorage hacer lo siguiente:

@@ -76,7 +76,7 @@ class ProductBasket extends React.Component {
 
             <td className="quantity">
                 <div className="input-group mb-3">
-                    <input type="number" name="quantity" className="quantity form-control input-number" value={this.state.quantity} onChange={this.updateQuantity}></input>
+                    <input type="number" min="1" name="quantity" className="quantity form-control input-number" value={this.state.quantity} onChange={this.updateQuantity}></input>
                 </div>
             </td>
 
