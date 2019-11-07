@@ -6,6 +6,8 @@ import FormCard from '../../components/AgroferiaCliente/FormCard';
 import 'react-credit-cards/es/styles-compiled.css';
 import Swal from 'sweetalert2';
 import APIFerias from '../../services/FairsService';
+import $ from 'jquery';
+import {Form,Button} from 'react-bootstrap';
 
 class Payment extends React.Component{
     constructor(props){
@@ -23,10 +25,36 @@ class Payment extends React.Component{
             validatedexpiry:false,
             usuario:{
             
-          }
+          },
+          activar:true
         };
     }
     
+    componentDidMount(){
+        window.Culqi.publicKey = 'pk_test_aV7wKGiwamJRCNqP';
+        window.Culqi.init();
+        console.log("Culqi:",window.Culqi);
+        window.Culqi.settings({
+            title: 'Agroferia',
+            currency: 'PEN',
+            description: 'Canasta',
+            amount: localStorage.getItem('total')
+        });
+        window.Culqi.options({
+            lang: 'auto',
+            modal: true,
+            installments: true,
+            customButton: 'Pagar',
+            style: {
+              logo: 'https://culqi.com/LogoCulqi.png',
+              maincolor: '#0ec1c1',
+              buttontext: '#ffffff',
+              maintext: '#4A4A4A',
+              desctext: '#4A4A4A'
+            }
+        });
+        
+    }
     componentWillMount(){
         const {idPedido} = this.props.match.params;
         this.setState({
@@ -40,6 +68,7 @@ class Payment extends React.Component{
                     this.setState({ usuario:client})
             })
         }
+        
     }
 
     handleInputFocus = (e) => {
@@ -53,9 +82,10 @@ class Payment extends React.Component{
     }
 
     openModal(){
-        this.setState({
+        /*this.setState({
             status:true
-        });
+        });*/
+        window.Culqi.open();
     }
 
     closeModal = () =>{
@@ -70,7 +100,7 @@ class Payment extends React.Component{
     }
 
     handleCheckout = () =>{
-            if(this.state.cvc.length<3){
+            if(this.state.cvc.length<3 ){
                 this.setState({
                     validatedcvc:true
                 })
@@ -96,8 +126,16 @@ class Payment extends React.Component{
                     onAfterClose: window.location='/'
         
                 });
+                window.Culqi.createToken();
+                console.log("Muestra:",window.Culqi.token);
                 this.closeModal();
             }
+    }
+    selectCheckout(){
+        let v=this.state.activar;
+        this.setState({
+            activar:!v
+        })
     }
 
     render(){
@@ -203,24 +241,13 @@ class Payment extends React.Component{
                                         <div className="form-group">
                                             <div className="col-md-12">
                                                 <div className="radio">
-                                                    <label>Culqi</label>
+                                                <Form.Check type="radio" aria-label="radio 1" label="Culqi" onClick={this.selectCheckout.bind(this)}/>
                                                 </div>
                                             </div>
                                         </div>
-                                    <p><a href="#"className="btn btn-primary py-3 px-4" onClick={this.openModal.bind(this)}>Hacer pedido</a></p>
-                                    <FormCard  status={this.state.status} closeModal={this.closeModal.bind(this)} 
-                                    handleInputFocus={this.handleInputFocus.bind(this)} handleInputChange={this.handleInputChange.bind(this)}
-                                    handleCheckout={this.handleCheckout.bind(this)}
-                                    cvc={this.state.cvc}
-                                    expiry={this.state.expiry}
-                                    focus={this.state.focus}
-                                    name={this.state.name}
-                                    number={this.state.number}
-                                    validatednumber={this.state.validatednumber}
-                                    validatedcvc={this.state.validatedcvc}
-                                    validatedexpiry={this.state.validatedexpiry}
-                                    total={localStorage.getItem('total')}
-                                    ></FormCard>
+                                    <p>
+                                    <Button disabled={this.state.activar} href="#"className="btn btn-primary py-3 px-4" onClick={this.openModal.bind(this)}>Hacer pedido</Button>
+                                    </p>
                                 </div>
                             </div>
                         </div>
