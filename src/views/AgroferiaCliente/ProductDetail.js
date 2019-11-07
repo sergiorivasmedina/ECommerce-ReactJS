@@ -122,8 +122,10 @@ export default class ProductDetail extends Component {
                   <p className="pt-2">Total: {this.state.total} </p>
                 </div>
                 <div className="col-md-12">
-                  <Link to="/canasta"><button className="btn btn-primary py-3 px-4 mr-2" onClick={this.addproduct}>Comprar ya</button></Link>
-                  <button className="btn btn-primary py-3 px-4" onClick={this.addproduct}>Añadir a la canasta</button>
+                  <Link to="/canasta">
+                 
+                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2" onClick={this.addproduct}>Comprar ya</button></Link>
+                  <button className="pinkButton btn pt-2 pb-2 px-4" onClick={this.addproduct}>Añadir a la canasta</button>
                 </div>
               </div>
             </div>

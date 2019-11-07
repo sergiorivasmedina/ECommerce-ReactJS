@@ -5,6 +5,7 @@ import Heading from '../../components/Vegefoods/Heading';
 import StoreList from '../../components/AgroferiaCliente/StoreList';
 import SearchBar from '../../components/AgroferiaCliente/SearchBar';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
+import FairHeading from '../../components/Vegefoods/FairHeading';
 
 class Stores extends React.Component {
     constructor(){
@@ -35,7 +36,7 @@ class Stores extends React.Component {
         return (
             <div className="Stores">
                 <Menu />
-                <Heading title="Tiendas" imageUrl="../images/agroferia_tienda1.jpg" />
+                <FairHeading title="Conoce nuestras tiendas" imageUrl="../images/agroferia_tienda1.jpg"/>
                 <section className="pt-5">
                     <div className="container">
                         <div className="row">

@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from '../../components/AgroferiaCliente/Menu';
 import Navigator from '../../components/Vegefoods/Navigator';
-import Heading from '../../components/Vegefoods/Heading';
+import FairHeading from '../../components/Vegefoods/FairHeading';
 import ProductList from '../../components/AgroferiaCliente/ProductList';
 import APIFerias from '../../services/FairsService';
 
@@ -46,7 +46,7 @@ class Stores extends React.Component {
         return (
             <div className="Products">
                 <Menu />
-                <Heading title="Productos" imageUrl="../images/agroferia_tienda1.jpg" />
+                <FairHeading title="Compra nuestros productos" imageUrl="../images/agroferia_tienda1.jpg"/>
                 <section className="pt-5">
                     <div className="container">
                         
