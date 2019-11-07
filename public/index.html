@@ -65,7 +65,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-
+    <script src="js/main.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -79,26 +79,14 @@
     <script src="js/jquery.animateNumber.min.js"></script>
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="js/main.js"></script>
+    
     <script src="https://checkout.culqi.com/js/v3"></script>
 
     <script>
         // Configura tu llave pública
-        Culqi.publicKey = 'Aquí inserta tu llave pública';
-        // Configura tu Culqi Checkout
-        Culqi.settings({
-            title: 'Culqi Store',
-            currency: 'PEN',
-            description: 'Polo Culqi lover',
-            amount: 3500
-        });
-        // Usa la funcion Culqi.open() en el evento que desees
-        $('#buyButton').on('click', function(e) {
-            // Abre el formulario con las opciones de Culqi.settings
-            Culqi.open();
-            e.preventDefault();
-        });
+        Culqi.publicKey = 'pk_test_aV7wKGiwamJRCNqP';
+        Culqi.init();
     </script>
-
+    
   </body>
 </html>
