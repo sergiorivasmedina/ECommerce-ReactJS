@@ -21,12 +21,16 @@
     object-fit: cover;
 }
 
+.width100 {
+    width: 100% !important;
+}
 
 .white {
     color: #fff !important;
 
   }
 
+  
   .icons {
     font-size: 24px !important;
     color: #fff !important;
@@ -43,7 +47,9 @@
 }
 
 .custom-heart {
-    font-size: 25px !important;
+    font-size: 20px !important;
+    padding-left: 5px !important;
+    color: #FC14AC !important;
 }
 
 .returnButton {
@@ -56,4 +62,59 @@
 
 .width20 {
     width: 20%;
+}
+
+.fairHeader {
+    padding-top: 80px !important;
+    padding-bottom: 20px !important;
+}
+
+.fairTitle {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #FC14AC !important;
+}
+
+button {
+    background-color: #FC14AC !important;
+    color: white !important;
+    border: solid #FC14AC 1px !important;
+    font-weight: 200px !important;
+    border-radius: 8px !important;
+}
+
+button:hover {
+    background-color: white !important;
+    color: #FC14AC !important;
+    border: solid #FC14AC 1px !important;
+}
+
+h5 {
+    color: #5e5e5e !important;
+}
+
+.customIcon {
+    color:#FC14AC !important;
+    font-size: 30px !important;
+}
+
+.pink {
+    color:#FC14AC !important;
+}
+
+.customLogo {
+    height: 50px;
+    padding-right: 20px !important; 
+  
+}
+
+.nav-link {
+    padding-bottom: 5px !important;
+}
+
+.cardTitle {
+    font-weight: 600;
+}
+
+.mouse-icon {
+    background-color: #FC14AC !important;
 }
