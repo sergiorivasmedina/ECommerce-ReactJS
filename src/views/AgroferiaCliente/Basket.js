@@ -202,7 +202,7 @@ class Basket extends React.Component {
                                 <p>Total: S/{this.state.total}</p>
                             </div>
                             <div className="col-md-12 mb-5">
-                                <Link  to={"/pago"} >
+                                <Link  to={"/pago/" + this.state.idPedido} >
                                     <button class="btn btn-primary py-3 px-4 pl-2 pr-2" onClick={this.handleBasket}
                                     >Continuar <i></i></button>
                                 </Link>

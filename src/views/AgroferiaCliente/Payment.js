@@ -11,6 +11,7 @@ class Payment extends React.Component{
     constructor(props){
         super(props);
         this.state ={
+            idPedido: null,
             status:false,
             cvc: '',
             expiry: '',
@@ -27,6 +28,11 @@ class Payment extends React.Component{
     }
     
     componentWillMount(){
+        const {idPedido} = this.props.match.params;
+        this.setState({
+            idPedido: idPedido
+        })
+        
         if(sessionStorage.getItem("idCliente")!=null){
             APIFerias.get('/Despliegue/api/usuario/cliente/'+ sessionStorage.getItem("idCliente"))
             .then(res=>{
@@ -80,6 +86,9 @@ class Payment extends React.Component{
                 })
             }
             if(this.state.cvc && this.state.expiry && this.state.number){
+                console.log(this.state.idPedido);
+                //aqui hacer que el estado del pedido pase a realizado
+
                 Swal.fire({
                     type: 'success',
                     title: '¡Enhorabuena!',
@@ -89,7 +98,6 @@ class Payment extends React.Component{
                 });
                 this.closeModal();
             }
-        
     }
 
     render(){

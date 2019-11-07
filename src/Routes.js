@@ -53,7 +53,7 @@ const routing = (
       <Route path="/detalleProducto/:id" component={DetalleProducto} />
       <Route path="/login" component={Login}/>
       <Route path="/registro" component={Registro}/>
-      <Route path="/pago" component={PagoFinal}/>
+      <Route path="/pago/:idPedido" component={PagoFinal}/>
       <Route path="/calendario" component={Calendario}/>
 
 
