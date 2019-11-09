@@ -64,6 +64,10 @@
     width: 20%;
 }
 
+.pinkBottom :active {
+    border-bottom: solid #FC14AC 5px !important;
+}
+
 .fairHeader {
     padding-top: 80px !important;
     padding-bottom: 20px !important;
@@ -89,6 +93,10 @@ button:hover {
 }
 
 h5 {
+    color: #5e5e5e !important;
+}
+
+.gray {
     color: #5e5e5e !important;
 }
 

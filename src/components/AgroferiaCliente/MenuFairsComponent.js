@@ -43,14 +43,15 @@ class Menu extends React.Component {
                     <div className="collapse navbar-collapse" id="ftco-nav">
                         <ul className="navbar-nav ml-auto">
 
-
+                            
                             <li className="nav-item cta cta-colored "><label className="nav-link"><Link to="/login"><i className="icons icon-person customIcon"></i></Link></label></li>
 
                         </ul>
 
                     </div>
-                    <label className="nav-link"><Link to="/perfil" ><h8 className="white"> {this.state.nombre}</h8></Link></label>
-                    <label className="nav-link"><Link to="/login" ><h8 className="white"> {this.state.cierre}</h8></Link></label>
+                    <label className="nav-link"><Link to="/perfil" ><h8 className=""> {this.state.nombre}</h8></Link></label>
+                    
+                    <label className="nav-link"><Link to="/login" ><h8 className=""> {this.state.cierre}</h8></Link></label>
                 </div>
             </nav>
         );
