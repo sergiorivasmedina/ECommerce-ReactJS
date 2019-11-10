@@ -219,7 +219,7 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.{localStorage.getItem('subtotal')}</span>
+                                                <span>S/.{localStorage.getItem('total')}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>Despacho</span>
