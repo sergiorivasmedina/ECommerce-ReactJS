@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from '../../components/AgroferiaCliente/Menu';
 import Navigator from '../../components/Vegefoods/Navigator';
-import Heading from '../../components/Vegefoods/Heading';
+import FairHeading from '../../components/Vegefoods/FairHeading';
 import ProductBasket from '../../components/AgroferiaCliente/ProductBasket';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import APIFerias from '../../services/FairsService';
@@ -162,7 +162,7 @@ class Basket extends React.Component {
         return (
             <div className="Stores">
                 <Menu />
-                <Heading title="Canasta de compras" imageUrl="../images/agroferia_tienda1.jpg" />
+                <FairHeading title="Canasta de compras" imageUrl="../images/agroferia_tienda1.jpg" />
                 <section className="pt-5">
                     <div className="container">
                         <div className="row">

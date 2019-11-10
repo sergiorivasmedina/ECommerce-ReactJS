@@ -126,3 +126,12 @@ h5 {
 .mouse-icon {
     background-color: #FC14AC !important;
 }
+
+.smallIcon {
+    font-size: 17px;
+    padding-top: 5px;
+}
+
+.mediumIcon {
+    font-size: 25px;
+}
