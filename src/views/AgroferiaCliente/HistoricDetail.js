@@ -95,8 +95,6 @@ class HistoricDetail extends React.Component {
 
 
     componentDidMount() {
-        const {id} = this.props.match.params;
-        console.log(id);
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
             console.log("idCliente: ",this.state.idCliente);
