@@ -1,8 +1,7 @@
 import React from 'react';
 import Menu from '../../components/AgroferiaCliente/Menu';
-import Navigator from '../../components/Vegefoods/Navigator';
 import Heading from '../../components/Vegefoods/Heading';
-import ProductBasket from '../../components/AgroferiaCliente/ProductBasket';
+import ProductHistoric from '../../components/AgroferiaCliente/ProductHistoric';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import APIFerias from '../../services/FairsService';
 import {Link} from 'react-router-dom';
@@ -11,7 +10,7 @@ import Swal from 'sweetalert2';
 
 
 
-class Basket extends React.Component {
+class HistoricDetail extends React.Component {
 
     constructor(props) {
         super(props);
@@ -30,10 +29,14 @@ class Basket extends React.Component {
             subtotal:0,
             igv:0,
             total:0,
-            descuento:0
+            descuento:0,
+            orden: null,
+            estado:"COMPLETADO",
+            fechaCompra:null
         };
         this.updateMontos = this.updateMontos.bind(this);
         this.handleBasket = this.handleBasket.bind(this);
+        this.pad = this.pad.bind(this);
 
     }
 
@@ -92,6 +95,8 @@ class Basket extends React.Component {
 
 
     componentDidMount() {
+        const {id} = this.props.match.params;
+        console.log(id);
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
             console.log("idCliente: ",this.state.idCliente);
@@ -100,6 +105,11 @@ class Basket extends React.Component {
             APIFerias.get('Despliegue/api/pedido/' + this.state.idCliente)
                 .then(res=> {
                     console.log("dentro de primer GET",res.data);
+                    this.setState({
+                        orden:res.data.idPedido,
+                        fechaCompra: res.data.fecha,
+                        fechaCompra: res.data.estado,
+                    });
                     //traer el detallePedido del idPedido, el cual es el actual
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
                         .then(response => {
@@ -149,6 +159,12 @@ class Basket extends React.Component {
 
     }
 
+    pad(num, size) {
+        var s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
+    }
+
     componentWillUpdate(){
 
     }
@@ -159,18 +175,49 @@ class Basket extends React.Component {
         return (
             <div className="Stores">
                 <Menu />
-                <Heading title="Canasta de compras" imageUrl="../images/agroferia_tienda1.jpg" />
+                <Heading title="detalle del pedido" imageUrl="../images/agroferia_tienda1.jpg" />
                 <section className="pt-5">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-6">
-                                <h4 className="heading">Resumen de pedido</h4>
+                                <h4 className="heading"> Detalle del pedido</h4>
                             </div>
                             <div className="col-md-12">
                                 <table className="table">
                                     <thead className="thead-primary">
                                         <tr className="text-center">
+                                            <th>N° Orden</th>
                                             <th>&nbsp;</th>
+                                            <th>Estado de tu compra</th>
+                                            <th>Fecha de Compra</th>
+                                            <th>Total</th>
+                                            <th>&nbsp;</th>
+
+
+                                        </tr>   
+                                    </thead>
+                                    <tbody>
+                                    <tr className="text-center">
+                                            <th>{this.pad(this.state.orden,5)}</th>
+                                            <th>&nbsp;</th>
+                                            <th>{this.state.estado}</th>
+                                            <th>{this.state.fechaCompra}</th>
+                                            <th>S/. {this.state.total}</th>
+                                            <th>&nbsp;</th>
+
+
+                                        </tr>  
+                                     
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="col-md-6">
+                                <h4 className="heading"> Productos adquiridos</h4>
+                            </div>
+                            <div className="col-md-12">
+                                <table className="table">
+                                    <thead className="thead-primary">
+                                        <tr className="text-center">
                                             <th>&nbsp;</th>
                                             <th>Nombre</th>
                                             <th>Precio</th>
@@ -180,31 +227,13 @@ class Basket extends React.Component {
                                     </thead>
                                     <tbody>
                                     
-                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto}/>)}
+                                    {this.state.detalles.map(detalle => <ProductHistoric  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto}/>)}
                                     </tbody>
                                 </table>
                             </div>
 
                         </div>
-                        <div className="row">
-                            <div className="col-md-9">
-                                <p>Entrega (recojo en tienda): Gratis</p>
-                                <p>Fecha de recojo: Domingo 2/11/2019</p>
-                            </div>
-                            <div className="col-md-3 text-right">
-                                <p>Subtotal: S/.{this.state.subtotal}</p>
-                                <p>Descuento: S/.{this.state.descuento}</p>
-                                <p>IGV: S/.{this.state.igv}</p>
-                                <hr></hr>
-                                <p>Total: S/{this.state.total}</p>
-                            </div>
-                            <div className="col-md-12 mb-5">
-                                <Link  to={"/pago/" + this.state.idPedido} >
-                                    <button class="btn btn-primary py-3 px-4 pl-2 pr-2" onClick={this.handleBasket}
-                                    >Continuar <i></i></button>
-                                </Link>
-                            </div>
-                        </div>
+
                     </div>
 
                 </section>
@@ -216,4 +245,4 @@ class Basket extends React.Component {
 
 }
 
-export default Basket;
+export default HistoricDetail;
