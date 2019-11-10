@@ -126,11 +126,12 @@ export default class StoreList extends React.Component {
             </div>
           </div>
         </div>
+        <div className="row">
         {filterStore.map(store => <ShopDescription index={store.idTienda} shopname={store.empresa.nombreComercial} shopdetail={store.descripcion}
           urlimage={store.foto} 
           like={store.heart} 
           handleClick={this.handleClick} />)}
-
+      </div>
       </div>
     )
   }

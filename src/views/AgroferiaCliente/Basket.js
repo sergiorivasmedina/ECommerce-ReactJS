@@ -33,6 +33,7 @@ class Basket extends React.Component {
             descuento:0
         };
         this.updateMontos = this.updateMontos.bind(this);
+        this.handleBasket = this.handleBasket.bind(this);
 
     }
 
@@ -79,13 +80,11 @@ class Basket extends React.Component {
     }
 
     handleBasket(){
-        Swal.fire({
-            type: 'success',
-            title: '¡Enhorabuena!',
-            text: 'Reserva realizada!',
-            /*onAfterClose: window.location='/'*/
+        APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
+        .then(response => {
+            console.log("cambio de estado de pedido a reservado");
 
-        });
+        })
     }
 
     componentWillMount(){
@@ -108,6 +107,7 @@ class Basket extends React.Component {
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
                         .then(response => {
                             const detalless = response.data;
+                            this.state.idPedido = res.data.idPedido;
                             this.setState({ detalles:detalless })
                             console.log("ACA",this.state.detalles);
                             console.log("ACA",this.state.detalles);
@@ -202,7 +202,7 @@ class Basket extends React.Component {
                                 <p>Total: S/{this.state.total}</p>
                             </div>
                             <div className="col-md-12 mb-5">
-                                <Link  to={"/pago"} >
+                                <Link  to={"/pago/" + this.state.idPedido} >
                                     <button class="btn btn-primary py-3 px-4 pl-2 pr-2" onClick={this.handleBasket}
                                     >Continuar <i></i></button>
                                 </Link>
