@@ -34,71 +34,18 @@ class HistoricDetail extends React.Component {
             estado:"COMPLETADO",
             fechaCompra:null
         };
-        this.updateMontos = this.updateMontos.bind(this);
-        this.handleBasket = this.handleBasket.bind(this);
-        this.pad = this.pad.bind(this);
 
     }
 
-    async updateMontos(evt,id,cantidad,total) {
-        console.log("2:",id,cantidad,total)
-        var newcantidades= this.state.cantidades
-        var newtotales= this.state.totales
-        newcantidades[id]=parseInt(cantidad)
-        newtotales[id]=parseFloat(total)
-        console.log(newcantidades)
-        console.log(newtotales)
-
-        this.setState({
-            cantidades: newcantidades,
-            totales: newtotales
-        })
-        console.log("cant",this.state.cantidades)
-        console.log("tot",this.state.totales)
-        
-        var i;
-
-        await this.setState({
-            total: 0
-          });
-
-        for (i = 0; i < this.state.cantidades.length; i++) {
-
-                await this.setState({
-                    total: this.state.total + this.state.totales[i]
-                    
-                    
-                })
-                
-            
-              }
-
-        await this.setState({
-            subtotal: (this.state.total / 1.18).toFixed(2),
-            igv: (this.state.total - this.state.total / 1.18).toFixed(2)
-                
-                
-            })
-      
-    }
-
-    handleBasket(){
-        localStorage.setItem('subtotal',this.state.subtotal);
-        localStorage.setItem('total',this.state.total);
-        localStorage.setItem('descuento',this.state.descuento);
-        APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
-        .then(response => {
-            console.log("cambio de estado de pedido a reservado");
-
-        })
-    }
-
+    
+ 
 
     componentDidMount() {
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
             console.log("idCliente: ",this.state.idCliente);
 
+            const {id} = this.props.match.params;
             //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
             APIFerias.get('Despliegue/api/pedido/' + this.state.idCliente)
                 .then(res=> {

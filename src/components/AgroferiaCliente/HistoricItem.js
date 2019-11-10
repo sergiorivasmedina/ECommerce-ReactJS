@@ -25,7 +25,7 @@ class HistoricItem extends React.Component {
         return(
         <tr className="text-center">
     
-            <td className="id">{this.props.id}</td>
+            <Link to={"/detalleHistorial/" + this.props.id}><td className="id">{this.props.id}</td></Link>
 
             <td className="state">{this.props.state}</td>
 
