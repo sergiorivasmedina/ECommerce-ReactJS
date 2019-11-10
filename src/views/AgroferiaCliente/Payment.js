@@ -31,7 +31,7 @@ class Payment extends React.Component{
     }
     
     componentDidMount(){
-        window.Culqi.publicKey = 'pk_test_aV7wKGiwamJRCNqP';
+        window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
         window.Culqi.init();
         console.log("Culqi:",window.Culqi);
         window.Culqi.settings({
