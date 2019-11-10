@@ -45,56 +45,22 @@ class HistoricDetail extends React.Component {
             this.state.idCliente = sessionStorage.getItem("idCliente");
             console.log("idCliente: ",this.state.idCliente);
 
-            const {id} = this.props.match.params;
+            const {idPedido} = this.props.match.params;
             //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
-            APIFerias.get('Despliegue/api/pedido/' + this.state.idCliente)
+            APIFerias.get('Despliegue/api/pedidos/generico/' + idPedido)
                 .then(res=> {
-                    console.log("dentro de primer GET",res.data);
+                    console.log(res.data)
+
                     this.setState({
-                        orden:res.data.idPedido,
-                        fechaCompra: res.data.fecha,
-                        fechaCompra: res.data.estado,
+                        orden:idPedido,
+                        fechaCompra: res.data.pedido.fecha,
+                        estado: res.data.pedido.estado,
+                        total: res.data.pedido.total,
+                        detalles: res.data.lstDetallePedido
                     });
                     //traer el detallePedido del idPedido, el cual es el actual
-                    APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
-                        .then(response => {
-                            const detalless = response.data;
-                            this.state.idPedido = res.data.idPedido;
-                            this.setState({ detalles:detalless })
-                            console.log("ACA",this.state.detalles);
-                            console.log("ACA",this.state.detalles);
-
-                            var arrayAux=this.state.detalles;
-
-                            arrayAux=arrayAux.map(function(e,index){
-                                e.index=index;
-                                return e
-                            });
-                            this.setState({
-                                detalles:arrayAux
-                            });
-                            var i;
-                            for (i = 0; i < this.state.detalles.length; i++) {
-                                this.setState({ 
-                                    precios: this.state.precios.concat([this.state.detalles[i].monto]),
-                                    cantidades: this.state.cantidades.concat([this.state.detalles[i].cantidad]),
-                                    totales: this.state.totales.concat([this.state.detalles[i].monto*this.state.detalles[i].cantidad]),
-                                    num:this.state.precios.concat([i])
-                                })
-                                this.setState({
-                                    total: this.state.total+ this.state.detalles[i].cantidad*this.state.detalles[i].monto
-                                })
-                                
-                            
-                              }
-                              this.setState({
-                                subtotal: (this.state.total / 1.18).toFixed(2),
-                                igv: (this.state.total - this.state.total / 1.18).toFixed(2) 
-                            })
-
-
-
-                            });
+                   
+                             
                 });
                 
 

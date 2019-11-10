@@ -49,7 +49,7 @@ class Menu extends React.Component {
                                 <a class="nav-link dropdown-toggle text-left" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span className="mediumIcon icon-person pink"></span><span className="pink">{this.state.nombre}</span></a>
                                 <div class="dropdown-menu show" aria-labelledby="dropdown04">
 
-                                    <a className="dropdown-item" href="/historic"><span>HISTORIAL DE PEDIDOS</span></a>
+                                    <a className="dropdown-item" href="/historial"><span>HISTORIAL DE PEDIDOS</span></a>
                                     <a className="dropdown-item" href="/login"><span>CERRAR SESIÓN</span></a>
                                 </div>
                             </li>
