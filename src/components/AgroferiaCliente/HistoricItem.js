@@ -32,7 +32,7 @@ class HistoricItem extends React.Component {
             <td className="date">{this.props.date}</td>
 
             <td className="total">S/.{this.props.total}</td>
-            <td> <i className="detail" className="icon-eye pink"> </i> </td>
+            <td> <Link to={"/detalleHistorial/" + this.props.id}><i className="detail" className="icon-eye pink"> </i> </Link> </td>
         </tr>
         );
 

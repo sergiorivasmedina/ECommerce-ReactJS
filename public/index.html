@@ -80,12 +80,20 @@
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/scrollax.min.js"></script>
     
-    <script src="https://checkout.culqi.com/js/v3"></script>
-
+    <script src="https://checkout.culqi.com/js/v3"
+    console.log(window);
+    ></script>
     <script>
-        // Configura tu llave pública
-        Culqi.publicKey = 'pk_test_aV7wKGiwamJRCNqP';
-        Culqi.init();
+      function culqi(){
+        console.log(">>", window.Payment);
+        if(Culqi.token){
+          console.log("Existe token");
+          window.Payment.registroExitoso();
+        }else{
+          console.log("No se genero el token");
+          window.Payment.registroFallido();
+        }
+      }
     </script>
     
   </body>
