@@ -6,7 +6,7 @@ class ReturnButton extends React.Component {
         let status;
 
         return (
-            <div className="pl-0 col-md-6 col-lg-3">
+            <div className="pl-0 col-md-6 col-lg-3 pt-2">
                <a><i className="icon-chevron-left"></i><span className="returnButton">&nbsp; Regresar a {this.props.previousPage}</span>
                </a>
                </div>

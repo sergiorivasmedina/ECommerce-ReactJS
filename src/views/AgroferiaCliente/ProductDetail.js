@@ -17,7 +17,8 @@ export default class ProductDetail extends Component {
       quantity: 1,
       categoria: null,
       total: 0,
-      idUsuario: null
+      idUsuario: null,
+      store: ""
     }
     this.updateQuantity = this.updateQuantity.bind(this);
     this.addproduct = this.addproduct.bind(this);
@@ -73,14 +74,15 @@ export default class ProductDetail extends Component {
       this.state.idUsuario = sessionStorage.getItem("idCliente");
 
     }
-
+    
 
   }
 
 
   componentWillMount() {
     const { id } = this.props.match.params;
-
+    
+    
 
     APIFerias.get('Despliegue/api/producto/' + id)
       .then(res => {
@@ -88,9 +90,20 @@ export default class ProductDetail extends Component {
         this.setState({
           product: product,
           simbolo: product.unidadMedida.simbolo,
-          categoria: product.subCategoria.categoria.idCategoria
+          categoria: product.subCategoria.categoria.idCategoria,
+          quantity: 1,
+          total: product.precio
+        });
+        APIFerias.get('Despliegue/api/tienda/perfil/' + this.state.product.idTienda)
+        .then(res=> {
+        const store = res.data;
+        this.setState({ store:store.empresa.nombreComercial });
+
+        
+        
         });
       });
+      
 
   }
 
@@ -112,7 +125,7 @@ export default class ProductDetail extends Component {
                   <h4>{this.state.product.nombre}</h4>
                 </div>
                 <div className="col-md-8">
-                  <p>De: Tienda</p>
+                  <p>De: {this.state.store}</p>
                   <p>Descripción: {this.state.product.descripcion}</p>
                 </div>
 

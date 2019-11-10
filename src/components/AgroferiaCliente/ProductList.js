@@ -34,6 +34,9 @@ export default class ProductList extends React.Component {
       });
 
       
+
+
+      
   }
 
   render() {
@@ -51,7 +54,7 @@ export default class ProductList extends React.Component {
         </div>
         <div className="row">
         {this.state.activeProducts.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount="0"
-          store={product.store} unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
+          store={product.idTienda} unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
 </div>
       </div>
     )

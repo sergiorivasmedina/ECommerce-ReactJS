@@ -43,7 +43,7 @@ class Fairs extends React.Component {
     return (
       <div className="Fairs">
         <MenuFairComponent />
-        <FairHeading title="Te esperamos en nuestras ferias" imageUrl="images/bg_2.jpg"/>
+        <FairHeading title="Te esperamos en nuestras ferias" imageUrl="../images/agroferia_tienda1.jpg"/>
 
       
       <section className="ftco-section">

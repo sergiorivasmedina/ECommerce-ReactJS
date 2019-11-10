@@ -47,6 +47,9 @@ class Basket extends React.Component {
                 <section className="pt-5">
                     <div className="container">
                         <div className="row">
+                        <div className="col-md-6">
+                            <h4 className="heading">Historial de pedidos</h4>
+                        </div>
                             <div className="col-md-12">
                                 <table className="table">
                                     <thead className="thead-primary">
