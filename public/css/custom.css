@@ -150,3 +150,7 @@ h5 {
     color: rgb(255, 255, 255) !important;
     border: solid #FC14AC 1px !important;
 }
+
+.textRequired{
+    font-size: 12px !important;
+}
