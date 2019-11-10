@@ -28,6 +28,8 @@ import Registro from './views/AgroferiaCliente/Register';
 import PagoFinal from './views/AgroferiaCliente/Payment';
 import Calendario from './views/AgroferiaCliente/Calendar';
 import Historic from './views/AgroferiaCliente/Historic';
+import DetalleHistorial from './views/AgroferiaCliente/HistoricDetail';
+
 
 const routing = (
   <Router>
@@ -56,6 +58,7 @@ const routing = (
       <Route path="/registro" component={Registro}/>
       <Route path="/pago/:idPedido" component={PagoFinal}/>
       <Route path="/calendario" component={Calendario}/>
+      <Route path="/detalleHistorial" component={DetalleHistorial}/>
 
 
       <Route component={NotFound}/>
