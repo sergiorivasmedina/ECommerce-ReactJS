@@ -10,7 +10,7 @@ class ProductBasket extends React.Component {
         this.state = {
             quantity: this.props.cantidad,
             discount: this.props.discount,
-            total: this.props.cantidad*this.props.monto
+            total: this.props.cantidad*this.props.monto*(100-this.props.discount)/100
 
             
         }
@@ -35,12 +35,11 @@ class ProductBasket extends React.Component {
     async updateQuantity(evt) {
         await this.setState({
             quantity: evt.target.value,
-            total: evt.target.value * this.props.monto
+            total: evt.target.value * this.props.monto  * (100-this.props.discount)/100,
         });
         var tot = this.state.total;
-        console.log("1:",this.props.idDetalle,this.state.quantity,this.state.total)
 
-        await this.props.triggerParentUpdate(evt,this.props.idDetalle,this.state.quantity,this.state.total)
+        await this.props.triggerParentUpdate(evt,this.props.idDetalle,this.state.quantity,this.state.total, this.state.discount)
     }
 
     removeProduct(evt) {
@@ -66,12 +65,12 @@ class ProductBasket extends React.Component {
         let pricing;
         if (this.props.discount == "0") {
 
-            pricing = <p className="price"><span>S/.{this.props.monto}</span></p>;
+            pricing = <p className="price"><span>S/.{this.props.monto.toFixed(2)}</span></p>;
         }
         else {
             var discountPrice = (100 - parseFloat(this.state.discount)) * parseFloat(this.props.monto) / 100;
-            discountPrice = discountPrice.toString();
-            pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.props.monto}</span><span className="price-sale">S/.{discountPrice}</span></p>;
+            discountPrice = discountPrice.toFixed(2).toString();
+            pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.props.monto.toFixed(2)}</span><span className="price-sale">S/.{discountPrice}</span></p>;
         }
         return(
         <tr className="text-center">
@@ -91,7 +90,7 @@ class ProductBasket extends React.Component {
                 </div>
             </td>
 
-            <td className="total">{this.state.total*(100-this.state.discount)/100}</td>
+            <td className="total">S/.{this.state.total.toFixed(2)}</td>
         </tr>
         );
 
