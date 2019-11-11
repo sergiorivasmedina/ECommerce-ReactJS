@@ -141,3 +141,6 @@ h5 {
     font-size: 25px;
 }
 
+.customLineThrough {
+    text-decoration: line-through !important;
+}
