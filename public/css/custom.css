@@ -64,7 +64,7 @@
     width: 20%;
 }
 
-.pinkBottom :active {
+.pinkBottom {
     border-bottom: solid #FC14AC 5px !important;
 }
 
@@ -77,6 +77,11 @@
     background-color: rgba(255, 255, 255, 0.8);
     color: #FC14AC !important;
 }
+
+.customBorder {
+    border-bottom: solid #F2F2F2 1px;
+}
+
 
 button {
     background-color: #FC14AC !important;
@@ -162,4 +167,8 @@ h5 {
 
 .textRequired{
     font-size: 12px !important;
+}
+
+.customLineThrough {
+    text-decoration: line-through !important;
 }

@@ -23,6 +23,10 @@ class ProducerCard extends React.Component {
         });
     }
     render() {
+        var producerName = this.props.producerName;
+        if (producerName.length > 22) {
+            producerName = this.props.producerName.substring(0,22).concat('...');
+        }
         return (
             <div className="col-lg-3 col-6">
                 <div className="product p-3 pl-5 pr-5">
@@ -31,7 +35,7 @@ class ProducerCard extends React.Component {
                     </a>
                     <div className="text pt-3 text-center">
                         <h3><a href="#" onClick={this.openModal.bind(this)}>{this.props.producerName}</a>
-                        <ModalProducer coment={this.props.coment} image={this.props.imageUrl} name={this.props.producerName} status={this.state.status} closeModal={this.closeModal.bind(this)}></ModalProducer>
+                        <ModalProducer coment={this.props.coment} image={this.props.imageUrl} name={producerName} status={this.state.status} closeModal={this.closeModal.bind(this)}></ModalProducer>
                         </h3>
                     </div>
                     <div className="text text-center">

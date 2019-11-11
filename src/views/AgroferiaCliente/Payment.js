@@ -33,7 +33,9 @@ class Payment extends React.Component{
         console.log("location",window.location);
         const {idPedido} = this.props.match.params;
         this.setState({
-            idPedido: idPedido
+            idPedido: idPedido,
+            subtotal: localStorage.getItem('subtotal'),
+            total: localStorage.getItem('total')
         })
         if(idPedido!=null){
             APIFerias.get('/Despliegue/api/pedido/'+ sessionStorage.getItem("idCliente"))

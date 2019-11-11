@@ -24,6 +24,7 @@ class Stores extends React.Component {
             const categories = res.data;
             this.setState({ categories:categories })
           })
+          localStorage.setItem('activePage', 3);
       }
 
     filterCategory(type) {
@@ -59,7 +60,7 @@ class Stores extends React.Component {
                             </ul>
                         </div>
                             <div className="col-md-6" >
-                                <h4 className="heading">Lista de Productos</h4>
+                                <h4 className="heading">Lista de productos</h4>
                             </div>
                         </div>
                         
