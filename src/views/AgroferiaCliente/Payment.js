@@ -10,6 +10,7 @@ import {Form,Button} from 'react-bootstrap';
 import FairHeading from '../../components/Vegefoods/FairHeading';
 
 
+
 class Payment extends React.Component{
     constructor(props){
         super(props);
@@ -33,19 +34,10 @@ class Payment extends React.Component{
         this.setState({
             idPedido: idPedido,
             subtotal: localStorage.getItem('subtotal'),
-            total: localStorage.getItem('total')
+            total: localStorage.getItem('total'),
+            igv:localStorage.getItem('igv')
         })
         if(idPedido!=null){
-            APIFerias.get('/Despliegue/api/pedido/'+ sessionStorage.getItem("idCliente"))
-            .then(res=>{
-                const pedidoActual=res.data;
-                const total = parseInt(pedidoActual.total);
-                console.log("Pedido Actual:",pedidoActual);
-                this.setState({
-                    subtotal:pedidoActual.subtotal,
-                    igv:pedidoActual.igv,
-                    total:pedidoActual.total
-                })
                 window.Payment = this;
                 window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
                 window.Culqi.init();
@@ -53,7 +45,7 @@ class Payment extends React.Component{
                     title: 'Agroferia',
                     currency: 'PEN',
                     description: 'Canasta',
-                    amount: total
+                    amount: parseInt(localStorage.getItem('total'))
                 });
                 window.Culqi.options({
                     lang: 'auto',
@@ -68,9 +60,6 @@ class Payment extends React.Component{
                       desctext: '#4A4A4A'
                     }
                 });
-
-            })
-            
         }
         
         if(sessionStorage.getItem("idCliente")!=null){
@@ -89,6 +78,13 @@ class Payment extends React.Component{
     }
 
     registroExitoso(){
+        let data={
+            token:window.Culqi.token.id,
+            monto:this.state.total,
+            correo:this.state.usuario.correo
+        }
+        console.log("Data para back",data);
+        /*APIFerias.put('/Despliegue/api/pagos/registrarPago/'+ sessionStorage.getItem("idCliente") , data)*/
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
             Swal.fire({
@@ -206,7 +202,7 @@ class Payment extends React.Component{
                                                 <span>S/.{this.state.igv}</span>
                                             </p>
                                             <p className="d-flex">
-                                                <span>Descuento</span>
+                                                <span>Despacho</span>
                                                 <span>S/.{this.state.descuento}</span>
                                             </p>
                                             <p className="d-flex total-price">
