@@ -141,6 +141,34 @@ h5 {
     font-size: 25px;
 }
 
+.btnLogin{
+    background-color: #FC14AC !important;
+    color: white !important;
+    border: solid #FC14AC 1px !important;
+    font-weight: 200px !important;
+    border-radius: 8px !important;
+    width: 360px;
+}
+
+.btnLoginReg{
+    background-color: rgb(255, 255, 255) !important;
+    color: #FC14AC !important;
+    border: solid #FC14AC 1px !important;
+    font-weight: 200px !important;
+    border-radius: 8px !important;
+    width: 360px;
+}
+
+.btnLoginReg:hover {
+    background-color: #FC14AC !important;
+    color: rgb(255, 255, 255) !important;
+    border: solid #FC14AC 1px !important;
+}
+
+.textRequired{
+    font-size: 12px !important;
+}
+
 .customLineThrough {
     text-decoration: line-through !important;
 }
