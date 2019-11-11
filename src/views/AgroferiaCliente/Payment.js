@@ -98,9 +98,7 @@ class Payment extends React.Component{
                 timer: 1500
             });
         })
-        ReactDOM.render(
-            <Redirect to={"/resumen/" + this.state.idPedido} />
-        );
+        this.props.history.push("/resumen/" + this.state.idPedido);
     }
 
     registroFallido(){

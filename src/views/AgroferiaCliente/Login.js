@@ -46,15 +46,16 @@ class Login extends React.Component {
             if (result.value) {
                 Swal.fire({
                     title: 'Correo enviado a ' + result.value,
-                    type:'success'}
+                    type: 'success'
+                }
                 )
                 console.log(result.value)
 
-                var mailrec = { correo: result.value}
+                var mailrec = { correo: result.value }
                 APIFerias.post('/Despliegue/api/usuario/cliente/recuperar', mailrec)
-                .then(response => {
-                    return response;
-                })
+                    .then(response => {
+                        return response;
+                    })
             }
 
 
@@ -72,9 +73,9 @@ class Login extends React.Component {
         this.setState({ password: event.target.value });
     };
 
-    componentWillMount(){
+    componentWillMount() {
         sessionStorage.clear();
-    
+
     }
 
 
@@ -88,15 +89,15 @@ class Login extends React.Component {
         APIFerias.post('/Despliegue/api/usuario/cliente/autenticacion', datauser)
             .then(response => {
                 console.log("buena", response);
-                
-                
+
+
                 sessionStorage.setItem("idUsuario", response.data.idUsuario);
                 sessionStorage.setItem("idCliente", response.data.idCliente);
                 sessionStorage.setItem("idRol", response.data.idRol);
                 sessionStorage.setItem("idCliente", response.data.idCliente);
                 console.log("hola" + response.data.idCliente)
 
-                window.location='/'
+                window.location = '/'
 
 
                 //para llamar el sessionStorage hacer lo siguiente:
@@ -117,7 +118,7 @@ class Login extends React.Component {
 
     };
 
-   
+
 
 
 
@@ -128,31 +129,33 @@ class Login extends React.Component {
 
                 <div class="d-flex justify-content-center">
                     <div class="w-50 p-3 ">
-                        <Form>
+                        <Form class="d-flex justify-content-center">
                             <Form.Group className="text-center"><h3>Bienvenido Casero</h3></Form.Group>
                             <Form.Group className="text-center"><h4>Inicia Sesión</h4></Form.Group>
+                            <div style={{flex: 1}} className="text-center justify-content-center">
+                                <Form.Group as={Row} controlId="formBasicEmail2" className="text-center justify-content-center">
+                                    <Form.Label column sm="2">Usuario</Form.Label>
+                                    <Col sm="5"><Form.Control required type="user" onChange={this.handleUser} /></Col>
+                                </Form.Group>
 
-                            <Form.Group as={Row} controlId="formBasicEmail2">
-                                <Form.Label column sm="2">Usuario</Form.Label>
-                                <Col sm="10"><Form.Control required type="user" onChange={this.handleUser} /></Col>
-                            </Form.Group>
+                                <Form.Group as={Row} controlId="formPasswordd" className="text-center justify-content-center">
+                                    <Form.Label column sm="2">Contraseña</Form.Label>
+                                    <Col sm="5"><Form.Control required type="password" onChange={this.handlePassword} /></Col>
+                                </Form.Group>
 
-                            <Form.Group as={Row} controlId="formPasswordd">
-                                <Form.Label column sm="2">Contraseña</Form.Label>
-                                <Col sm="10"><Form.Control required type="password" onChange={this.handlePassword} /></Col>
-                            </Form.Group>
+                            </div>
                             <div className="text-center">
                                 <Link onClick={this.handleRecovery}>Olvidé mi contraseña</Link>
                             </div>
                             <div> . </div>
                             <div className="text-center">
-                                <Button variant="primary" onClick={this.handleLogin}>Ingresar</Button>
+                                <Button className="btnLogin" variant="primary" onClick={this.handleLogin}>Ingresar</Button>
                             </div>
                             <Form.Group className="text-center"><h1>.....</h1></Form.Group>
 
                             <Form.Group className="text-center"><h4>¿Eres un nuevo casero?</h4></Form.Group>
                             <div className="text-center">
-                                <Button href="/registro" variant="primary" >Regístrate</Button>
+                                <Button className="btnLoginReg" href="/registro" variant="primary" >Regístrate</Button>
                             </div>
                         </Form>
                     </div>
