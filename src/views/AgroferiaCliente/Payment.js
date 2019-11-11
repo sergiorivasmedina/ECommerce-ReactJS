@@ -42,7 +42,7 @@ class Payment extends React.Component{
                 this.setState({
                     subtotal:pedidoActual.subtotal,
                     igv:pedidoActual.igv,
-                    total:pedidoActual.total
+                    total:pedidoActual.totalValor
                 })
                 window.Payment = this;
                 window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
@@ -51,7 +51,7 @@ class Payment extends React.Component{
                     title: 'Agroferia',
                     currency: 'PEN',
                     description: 'Canasta',
-                    amount: parseInt(pedidoActual.total)
+                    amount: parseInt(pedidoActual.total*100)
                 });
                 window.Culqi.options({
                     lang: 'auto',
