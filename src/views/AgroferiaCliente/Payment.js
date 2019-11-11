@@ -45,13 +45,13 @@ class Payment extends React.Component{
                     title: 'Agroferia',
                     currency: 'PEN',
                     description: 'Canasta',
-                    amount: parseInt(localStorage.getItem('total'))
+                    amount: localStorage.getItem('total')*100
                 });
                 window.Culqi.options({
                     lang: 'auto',
                     modal: true,
                     installments: true,
-                    customButton: 'Pagar',
+                    customButton: 'Pagar S/.' + localStorage.getItem('total'),
                     style: {
                       logo: 'https://culqi.com/LogoCulqi.png',
                       maincolor: '#0ec1c1',
@@ -60,6 +60,7 @@ class Payment extends React.Component{
                       desctext: '#4A4A4A'
                     }
                 });
+                console.log(window.Culqi);
         }
         
         if(sessionStorage.getItem("idCliente")!=null){
@@ -78,13 +79,15 @@ class Payment extends React.Component{
     }
 
     registroExitoso(){
-        let data={
+        let info={
             token:window.Culqi.token.id,
-            monto:this.state.total,
+            monto:this.state.total*100,
             correo:this.state.usuario.correo
         }
-        console.log("Data para back",data);
-        /*APIFerias.put('/Despliegue/api/pagos/registrarPago/'+ sessionStorage.getItem("idCliente") , data)*/
+        APIFerias.post('/Despliegue/api/pagos/registrarPago/'+ sessionStorage.getItem("idCliente") , {data:info})
+        .then(res=>{
+            console.log("Respuesta conexion culqi:",res);
+        })
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
             Swal.fire({
