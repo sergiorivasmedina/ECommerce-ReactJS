@@ -23,6 +23,7 @@ class Stores extends React.Component {
         const {id} = this.props.match.params;
         localStorage.setItem('idFeria', id);
         console.log("probando",localStorage.getItem('idFeria'));
+        localStorage.setItem('activePage', 2);
     }
 
     updateSearch (event){
@@ -41,7 +42,7 @@ class Stores extends React.Component {
                     <div className="container">
                         <div className="row">
                         <div className="col-md-6">
-                            <h4 className="heading">Lista de Tiendas</h4>
+                            <h4 className="heading">Lista de tiendas</h4>
                         </div>
                         <div className="col-md-6">
                             <SearchBar search={this.state.search} updateSearch={this.updateSearch.bind(this)}></SearchBar>

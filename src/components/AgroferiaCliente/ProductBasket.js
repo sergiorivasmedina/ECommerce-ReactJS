@@ -9,7 +9,8 @@ class ProductBasket extends React.Component {
         super(props);
         this.state = {
             quantity: this.props.cantidad,
-            total: this.props.cantidad*this.props.monto,
+            discount: this.props.discount,
+            total: this.props.cantidad*this.props.monto
 
             
         }
@@ -62,6 +63,16 @@ class ProductBasket extends React.Component {
     }
 
     render() {
+        let pricing;
+        if (this.props.discount == "0") {
+
+            pricing = <p className="price"><span>S/.{this.props.monto}</span></p>;
+        }
+        else {
+            var discountPrice = (100 - parseFloat(this.state.discount)) * parseFloat(this.props.monto) / 100;
+            discountPrice = discountPrice.toString();
+            pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.props.monto}</span><span className="price-sale">S/.{discountPrice}</span></p>;
+        }
         return(
         <tr className="text-center">
             <td className="product-remove" onClick={this.removeProduct}><a href="#"><span className="ion-ios-close"></span></a></td>
@@ -72,7 +83,7 @@ class ProductBasket extends React.Component {
                 <h3>{this.state.nombreProducto}</h3>
             </td>
 
-            <td className="price">S/.{this.props.monto}</td>
+            <td className=""><p>{pricing}</p></td>
 
             <td className="quantity">
                 <div className="input-group mb-3">
@@ -80,7 +91,7 @@ class ProductBasket extends React.Component {
                 </div>
             </td>
 
-            <td className="total">{this.state.total}</td>
+            <td className="total">{this.state.total*(100-this.state.discount)/100}</td>
         </tr>
         );
 

@@ -10,7 +10,8 @@ class Menu extends React.Component {
         this.state = {
             value: 'AGROFERIAS CAMPESINAS',
             client: null,
-            cantprod: 0
+            cantprod: 0,
+            user: ""
         };
 
 
@@ -24,6 +25,7 @@ class Menu extends React.Component {
         if (sessionStorage.getItem("idUsuario")) {
             var idUSer = sessionStorage.getItem("idUsuario");
             var idCliente = sessionStorage.getItem("idCliente");
+            this.setState({ user: idUSer });
             APIFerias.get('Despliegue/api/pedido/' + idCliente)
                 .then(res => {
                     console.log("menupedido", res.data);
@@ -50,8 +52,45 @@ class Menu extends React.Component {
     }
 
     render() {
+        var bottomProducts = "nav-link";
+        var bottomStores = "nav-link";
+
+        if (localStorage.getItem('activePage') == 2) {
+            bottomStores = "nav-link pinkBottom";
+        } else if (localStorage.getItem('activePage') == 3) {
+            bottomProducts = "nav-link pinkBottom";
+        }
+        var userActions;
+        var basketUrl;
+        console.log(this.state.user);
+        if(this.state.user == "") {
+            basketUrl = "/login"
+            userActions = <ul className="navbar-nav ml-auto row">
+
+
+
+            <li className="nav-item active dropdown show">
+                <a className="nav-link text-left" href="/login" id="dropdown04" aria-haspopup="true" aria-expanded="true"><span className="mediumIcon icon-person pink pr-1"></span><span className="pink">INICIAR SESIÓN</span></a>
+                
+            </li>
+        </ul>
+        } else {
+            basketUrl = "/Canasta"
+            userActions = <ul className="navbar-nav ml-auto row">
+
+            <li className="nav-item active dropdown">
+                <a className="nav-link dropdown-toggle text-left" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span className="mediumIcon icon-person pink"></span><span className="pink">{this.state.nombre}</span></a>
+                <div className="dropdown-menu" aria-labelledby="dropdown04">
+
+                    <a className="dropdown-item" href="/historial"><span>HISTORIAL DE PEDIDOS</span></a>
+                    <a className="dropdown-item" href="/perfil"><span>PERFIL</span></a>
+                    <a className="dropdown-item" href="/login"><span>CERRAR SESIÓN</span></a>
+                </div>
+            </li>
+        </ul>
+        }
         return (
-            <nav className="navbar navbar-expand-lg ftco-navbar-light" id="ftco-navbar">
+            <nav className="navbar navbar-expand-lg ftco-navbar-light customBorder" id="ftco-navbar">
                 <div className="container pt-3">
 
 
@@ -71,27 +110,20 @@ class Menu extends React.Component {
                         <div className="collapse navbar-collapse" id="ftco-nav">
                             <ul className="navbar-nav ml-auto row">
 
-                                <li className="nav-item"><label className="nav-link pinkBottom"><Link to="/Ferias" ><span className="gray">FERIAS</span></Link></label></li>
+                                <li className="nav-item"><label className="nav-link pinkButton"><Link to="/Ferias" ><span className="gray">FERIAS</span></Link></label></li>
 
-                                <li className="nav-item"><label className="nav-link pinkBottom"><Link to={"/tiendas/" + localStorage.getItem('idFeria')}><span className="gray">TIENDAS</span></Link></label></li>
-                                <li className="nav-item"><label className="nav-link pinkBottom"><Link to="/Productos"><span className="gray">PRODUCTOS</span></Link></label></li>
+                                <li className="nav-item"><label className={bottomStores}><Link to={"/tiendas/" + localStorage.getItem('idFeria')}><span className="gray">TIENDAS</span></Link></label></li>
+                                <li className="nav-item"><label className={bottomProducts}><Link to="/Productos"><span className="gray">PRODUCTOS</span></Link></label></li>
 
 
                                 {/* ACTIVAR PARA SIGUIENTE SPRINT <li className="nav-item"><label className="nav-link"><Link to="/Map">MAPS</Link></label></li>
                             <li className="nav-item"><label className="nav-link"><Link to="/Calendar">CALENDARIO</Link></label></li> */}
 
-                                <li className="nav-item cta cta-colored"><label className="nav-link"><Link to="/Canasta"><span className="icons icon-shopping_basket pink"></span><span>[{this.state.cantprod}]</span></Link></label></li>
+                                <li className="nav-item cta cta-colored"><label className="nav-link"><Link to={basketUrl}><span className="icons icon-shopping_basket pink"></span><span>[{this.state.cantprod}]</span></Link></label></li>
 
 
                             
-                                <li class="nav-item active dropdown show">
-                                    <a class="nav-link dropdown-toggle text-left" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span className="mediumIcon icon-person pink"></span><span className="pink">{this.state.nombre}</span></a>
-                                    <div class="dropdown-menu show" aria-labelledby="dropdown04">
-                                    
-                                    <a className="dropdown-item" href="/historial"><span>HISTORIAL DE PEDIDOS</span></a>
-                                    <a className="dropdown-item" href="/login"><span>CERRAR SESIÓN</span></a>
-                                    </div>
-                                </li>
+                               {userActions}
 
                                 {/*<li className="nav-item"><label className="nav-link"><Link to="/login" ><h8 className="gray"> {this.state.cierre}</h8></Link></label></li>*/}
 

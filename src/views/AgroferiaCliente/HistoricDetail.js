@@ -32,7 +32,17 @@ class HistoricDetail extends React.Component {
             descuento:0,
             orden: null,
             estado:"COMPLETADO",
-            fechaCompra:null
+            fechaCompra:null,
+            estados : {
+                3: "Pendiente",
+                4: "Registrado",
+                5: "Por recoger",
+                6: "Despachado",
+                7: "No recogido",
+                8: "Cancelado",
+                9: "Rechazado",
+
+              }
         };
 
     }
@@ -52,7 +62,7 @@ class HistoricDetail extends React.Component {
                     console.log(res.data)
 
                     this.setState({
-                        orden:idPedido,
+                        orden:parseInt(idPedido),
                         fechaCompra: res.data.pedido.fecha,
                         estado: res.data.pedido.estado,
                         total: res.data.pedido.total,
@@ -100,7 +110,7 @@ class HistoricDetail extends React.Component {
                                             <th>N° Orden</th>
                                             <th>&nbsp;</th>
                                             <th>Estado de tu compra</th>
-                                            <th>Fecha de Compra</th>
+                                            <th>Fecha de compra</th>
                                             <th>Total</th>
                                             <th>&nbsp;</th>
 
@@ -111,8 +121,8 @@ class HistoricDetail extends React.Component {
                                     <tr className="text-center">
                                             <th>{this.pad(this.state.orden,5)}</th>
                                             <th>&nbsp;</th>
-                                            <th>{this.state.estado}</th>
-                                            <th>{this.state.fechaCompra}</th>
+                                            <th>{this.state.estados[this.state.estado]}</th>
+                                            <th>{Date.parse(this.state.fechaCompra)}</th>
                                             <th>S/. {this.state.total}</th>
                                             <th>&nbsp;</th>
 
