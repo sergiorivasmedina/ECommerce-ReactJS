@@ -1,6 +1,5 @@
 import React from 'react';
 import Menu from '../../components/AgroferiaCliente/Menu';
-import Heading from '../../components/Vegefoods/Heading';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import FormCard from '../../components/AgroferiaCliente/FormCard';
 import 'react-credit-cards/es/styles-compiled.css';
@@ -8,8 +7,7 @@ import Swal from 'sweetalert2';
 import APIFerias from '../../services/FairsService';
 import $ from 'jquery';
 import {Form,Button} from 'react-bootstrap';
-import ReactDOM from 'react-dom';
-import {Redirect} from 'react-router-dom';
+import FairHeading from '../../components/Vegefoods/FairHeading';
 
 
 class Payment extends React.Component{
@@ -124,7 +122,7 @@ class Payment extends React.Component{
         return(
         <div className="Stores">
             <Menu />
-            <Heading title="Pago" imageUrl="../images/agroferia_tienda1.jpg" />
+            <FairHeading title="Pago" imageUrl="../images/agroferia_tienda1.jpg" />
             <section className="ftco-section">
                 <div className="container">
                     <div className="row justify-content-center">
