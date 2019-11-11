@@ -27,12 +27,12 @@ class Payment extends React.Component{
         };
     }
     
-    componentDidMount(){
+    componentWillMount(){
         const {idPedido} = this.props.match.params;
         this.setState({
             idPedido: idPedido,
-            subtotal: localStorage.getItem('subtotal'),
-            total: localStorage.getItem('total')
+            subtotalValor: localStorage.getItem('subtotal'),
+            totalValor: localStorage.getItem('total')
         })
         if(idPedido!=null){
             APIFerias.get('/Despliegue/api/pedido/'+ sessionStorage.getItem("idCliente"))
@@ -51,7 +51,7 @@ class Payment extends React.Component{
                     title: 'Agroferia',
                     currency: 'PEN',
                     description: 'Canasta',
-                    amount: pedidoActual.total
+                    amount: parseInt(pedidoActual.total)
                 });
                 window.Culqi.options({
                     lang: 'auto',
@@ -198,7 +198,7 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.{this.state.subtotal}</span>
+                                                <span>S/.{this.state.subtotalValor}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>IGV</span>
@@ -210,7 +210,7 @@ class Payment extends React.Component{
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
-                                                <span>S/.{this.state.total}</span>
+                                                <span>S/.{this.state.totalValor}</span>
                                             </p>
                                             </div>
                             </div>

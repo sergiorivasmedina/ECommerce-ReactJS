@@ -56,7 +56,7 @@ class ProductHistoric extends React.Component {
           Swal.fire({
               type: 'error',
               title: 'Oops...',
-              text: '¡No se pudo eliminar la tienda favorita!',
+              text: '¡No se pudo eliminar!',
           })
       })
     }
