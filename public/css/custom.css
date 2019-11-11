@@ -78,6 +78,11 @@
     color: #FC14AC !important;
 }
 
+.customBorder {
+    border-bottom: solid #F2F2F2 1px;
+}
+
+
 button {
     background-color: #FC14AC !important;
     color: white !important;
@@ -162,4 +167,8 @@ h5 {
 
 .textRequired{
     font-size: 12px !important;
+}
+
+.customLineThrough {
+    text-decoration: line-through !important;
 }

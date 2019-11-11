@@ -13,6 +13,12 @@ class HistoricItem extends React.Component {
     
     }
 
+    pad(num, size) {
+        var s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
+    }
+
     componentDidMount() {
 
        
@@ -25,7 +31,7 @@ class HistoricItem extends React.Component {
         return(
         <tr className="text-center">
     
-            <Link to={"/detalleHistorial/" + this.props.id}><td className="id">{this.props.id}</td></Link>
+            <Link to={"/detalleHistorial/" + this.props.id}><td className="id">{this.pad(this.props.id,5)}</td></Link>
 
             <td className="state">{this.props.state}</td>
 
