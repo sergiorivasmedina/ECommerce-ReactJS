@@ -172,3 +172,13 @@ h5 {
 .customLineThrough {
     text-decoration: line-through !important;
 }
+
+.colorCardLogin{
+    background-color: rgb(255, 255, 255) !important;
+    width: 500px;
+    height: 584px;
+}
+
+.imagePerfil{
+    padding-left: 110px;
+}

@@ -7,7 +7,6 @@ import APIFerias from '../../services/FairsService'
 import { Link } from 'react-router-dom';
 
 
-
 import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -127,8 +126,8 @@ class Login extends React.Component {
             <div>
                 <MenuFairComponent></MenuFairComponent>
 
-                <div class="d-flex justify-content-center">
-                    <div class="w-50 p-3 ">
+                <div class="d-flex justify-content-center" style={{ backgroundImage: "url(images/login2.png)" }}>
+                    <div className="p-3 colorCardLogin">
                         <Form class="d-flex justify-content-center">
                             <Form.Group className="text-center"><h3>Bienvenido Casero</h3></Form.Group>
                             <Form.Group className="text-center"><h4>Inicia Sesión</h4></Form.Group>

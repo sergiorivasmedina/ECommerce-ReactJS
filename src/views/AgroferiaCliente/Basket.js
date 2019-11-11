@@ -20,7 +20,7 @@ class Basket extends React.Component {
             idUsuario: null,
             idCliente: null,
             idPedido: null,
-            discount:10, // se debera cargar en el didmount
+            discount:0, // se debera cargar en el didmount
 
             num:[],
             detalles:[],
@@ -84,7 +84,7 @@ class Basket extends React.Component {
     handleBasket(){
         localStorage.setItem('subtotal',this.state.subtotal);
         localStorage.setItem('total',this.state.total);
-        localStorage.setItem('descuento',this.state.descuento);
+        localStorage.setItem('igv',this.state.igv);
         APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
         .then(response => {
             console.log("cambio de estado de pedido a reservado");
@@ -186,7 +186,7 @@ class Basket extends React.Component {
                                     </thead>
                                     <tbody>
                                     
-                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} discount="10"/>)}
+                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} discount="0"/>)}
                                     </tbody>
                                 </table>
                             </div>

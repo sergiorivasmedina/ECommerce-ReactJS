@@ -1,6 +1,5 @@
 import React from 'react';
 import Menu from '../../components/AgroferiaCliente/Menu';
-import Heading from '../../components/Vegefoods/Heading';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import FormCard from '../../components/AgroferiaCliente/FormCard';
 import 'react-credit-cards/es/styles-compiled.css';
@@ -8,6 +7,8 @@ import Swal from 'sweetalert2';
 import APIFerias from '../../services/FairsService';
 import $ from 'jquery';
 import {Form,Button} from 'react-bootstrap';
+import FairHeading from '../../components/Vegefoods/FairHeading';
+
 
 
 class Payment extends React.Component{
@@ -26,22 +27,17 @@ class Payment extends React.Component{
           descuento:0,
         };
     }
-    
-    componentDidMount(){
+
+    componentWillMount(){
+        console.log("location",window.location);
         const {idPedido} = this.props.match.params;
         this.setState({
-            idPedido: idPedido
+            idPedido: idPedido,
+            subtotal: localStorage.getItem('subtotal'),
+            total: localStorage.getItem('total'),
+            igv:localStorage.getItem('igv')
         })
         if(idPedido!=null){
-            APIFerias.get('/Despliegue/api/pedido/'+ sessionStorage.getItem("idCliente"))
-            .then(res=>{
-                const pedidoActual=res.data;
-                console.log("Pedido Actual:",pedidoActual);
-                this.setState({
-                    subtotal:pedidoActual.subtotal,
-                    igv:pedidoActual.igv,
-                    total:pedidoActual.total
-                })
                 window.Payment = this;
                 window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
                 window.Culqi.init();
@@ -49,13 +45,13 @@ class Payment extends React.Component{
                     title: 'Agroferia',
                     currency: 'PEN',
                     description: 'Canasta',
-                    amount: pedidoActual.total
+                    amount: localStorage.getItem('total')*100
                 });
                 window.Culqi.options({
                     lang: 'auto',
                     modal: true,
                     installments: true,
-                    customButton: 'Pagar',
+                    customButton: 'Pagar S/.' + localStorage.getItem('total'),
                     style: {
                       logo: 'https://culqi.com/LogoCulqi.png',
                       maincolor: '#0ec1c1',
@@ -64,9 +60,7 @@ class Payment extends React.Component{
                       desctext: '#4A4A4A'
                     }
                 });
-
-            })
-            
+                console.log(window.Culqi);
         }
         
         if(sessionStorage.getItem("idCliente")!=null){
@@ -80,22 +74,39 @@ class Payment extends React.Component{
     }
 
     openCheckout=(e)=>{
-        window.Culqi.open();
-        e.preventDefault();
+        if(localStorage.getItem('total')>=3){
+            window.Culqi.open();
+            e.preventDefault();
+        }else{
+            Swal.fire({
+                type: 'error',
+                title: 'Lo sentimos',
+                text: 'El monto minimo para pagar con tarjeta es S./ 3.00',
+            });
+        }
     }
 
     registroExitoso(){
-        
+        let montoI=this.state.total*100;
+        let info={
+            token:window.Culqi.token.id,
+            monto:montoI.toString(),
+            correo:this.state.usuario.correo
+        }
+        APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
+        .then(res=>{
+            console.log("Respuesta conexion culqi:",res.data);
+        })
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
             Swal.fire({
                 type: 'success',
                 title: 'Tu pedido ha sido procesado correctamente',
                 text: 'Gracias por tu compra',
-                onAfterClose: window.location='/resumen',
                 timer: 1500
             });
         })
+        this.props.history.push("/resumen/" + this.state.idPedido);
     }
 
     registroFallido(){
@@ -111,15 +122,16 @@ class Payment extends React.Component{
     selectCheckout(){
         let v=this.state.activar;
         this.setState({
-            activar:!v
+            activar:!v,
         })
     }
 
     render(){
+        
         return(
         <div className="Stores">
             <Menu />
-            <Heading title="Pago" imageUrl="../images/agroferia_tienda1.jpg" />
+            <FairHeading title="Pago" imageUrl="../images/agroferia_tienda1.jpg" />
             <section className="ftco-section">
                 <div className="container">
                     <div className="row justify-content-center">
@@ -196,19 +208,19 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.{this.state.subtotal}</span>
+                                                <span>S/.{localStorage.getItem('subtotal')}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>IGV</span>
                                                 <span>S/.{this.state.igv}</span>
                                             </p>
                                             <p className="d-flex">
-                                                <span>Descuento</span>
+                                                <span>Despacho</span>
                                                 <span>S/.{this.state.descuento}</span>
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
-                                                <span>S/.{this.state.total}</span>
+                                                <span>S/.{localStorage.getItem('total')}</span>
                                             </p>
                                             </div>
                             </div>
@@ -218,7 +230,7 @@ class Payment extends React.Component{
                                         <div className="form-group">
                                             <div className="col-md-12">
                                                 <div className="radio">
-                                                <Form.Check type="radio" aria-label="radio 1" label="Culqi" onClick={this.selectCheckout.bind(this)}/>
+                                                <Form.Check type="radio" aria-label="radio 1" label="Tarjeta Débito/Crédito" onClick={this.selectCheckout.bind(this)}/>
                                                 </div>
                                             </div>
                                         </div>
