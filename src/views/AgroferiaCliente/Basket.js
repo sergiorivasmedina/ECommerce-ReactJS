@@ -20,11 +20,13 @@ class Basket extends React.Component {
             idUsuario: null,
             idCliente: null,
             idPedido: null,
+            discount:10, // se debera cargar en el didmount
 
             num:[],
             detalles:[],
             precios:[],
             cantidades:[],
+            descuentos:[],
             totales:[],
 
             subtotal:0,
@@ -40,15 +42,15 @@ class Basket extends React.Component {
     async updateMontos(evt,id,cantidad,total) {
         console.log("2:",id,cantidad,total)
         var newcantidades= this.state.cantidades
+        var newdescuentos= this.state.descuentos
         var newtotales= this.state.totales
         newcantidades[id]=parseInt(cantidad)
         newtotales[id]=parseFloat(total)
-        console.log(newcantidades)
-        console.log(newtotales)
+
 
         this.setState({
             cantidades: newcantidades,
-            totales: newtotales
+            totales: newtotales,
         })
         console.log("cant",this.state.cantidades)
         console.log("tot",this.state.totales)
@@ -62,7 +64,7 @@ class Basket extends React.Component {
         for (i = 0; i < this.state.cantidades.length; i++) {
 
                 await this.setState({
-                    total: this.state.total + this.state.totales[i]
+                    total: this.state.total + this.state.totales[i] 
                     
                     
                 })
@@ -120,14 +122,17 @@ class Basket extends React.Component {
                             });
                             var i;
                             for (i = 0; i < this.state.detalles.length; i++) {
+                                console.log("prueba",this.state.detalles)
                                 this.setState({ 
                                     precios: this.state.precios.concat([this.state.detalles[i].monto]),
                                     cantidades: this.state.cantidades.concat([this.state.detalles[i].cantidad]),
-                                    totales: this.state.totales.concat([this.state.detalles[i].monto*this.state.detalles[i].cantidad]),
-                                    num:this.state.precios.concat([i])
+                                    totales: this.state.totales.concat([this.state.detalles[i].monto* (100-this.state.discount)/100*this.state.detalles[i].cantidad]),//modificar el discount cuando venga de back
+                                    num:this.state.precios.concat([i]),
+                                    descuentos: this.state.precios.concat([this.state.detalles[i].descuento])
                                 })
                                 this.setState({
-                                    total: this.state.total+ this.state.detalles[i].cantidad*this.state.detalles[i].monto
+                                    total: this.state.total+ this.state.detalles[i].cantidad*this.state.detalles[i].monto *(100-this.state.discount)/100 //modificar el discount cuando venga de back
+                                    
                                 })
                                 
                             
@@ -193,10 +198,9 @@ class Basket extends React.Component {
                             </div>
                             <div className="col-md-3 text-right">
                                 <p>Subtotal: S/.{this.state.subtotal}</p>
-                                <p>Descuento: S/.{this.state.descuento}</p>
                                 <p>IGV: S/.{this.state.igv}</p>
                                 <hr></hr>
-                                <p>Total: S/{this.state.total}</p>
+                                <p>Total: S/{this.state.total.toFixed(2)}</p>
                             </div>
                             <div className="col-md-12 mb-5">
                                 <Link  to={"/pago/" + this.state.idPedido} >
