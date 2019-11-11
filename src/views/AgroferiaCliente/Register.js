@@ -270,9 +270,9 @@ class Register extends React.Component {
                         <Form>
 
                             <Form.Group className="text-center"><h3>Regístrate</h3></Form.Group>
-
+                            <Form.Group className="text-left"><h6 className="textRequired">* : Campos obligatorios</h6></Form.Group>
                             <Form.Group as={Row} controlId="formname">
-                                <Form.Label column sm="2">Nombres</Form.Label>
+                                <Form.Label column sm="2">Nombres*</Form.Label>
                                 <Col sm="10">
                                     <Form.Control required type="name" onChange={this.handleNames} />
                                     <span>
@@ -281,7 +281,7 @@ class Register extends React.Component {
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formlastname1">
-                                <Form.Label column sm="2">Apellidos </Form.Label>
+                                <Form.Label column sm="2">Apellidos* </Form.Label>
                                 <Col sm="5"><Form.Control required type="Last name1" onChange={this.handleLastNames1} />
                                 <span>
                                         {this.state.lastname1correct ? '' : 'Campo Obligatorio'}
@@ -297,8 +297,8 @@ class Register extends React.Component {
         
 
                             <Form.Group as={Row} controlId="formBasicdni">
-                                <Form.Label column sm="2">DNI</Form.Label>
-                                <Col sm="10"><Form.Control required type="number" onChange={this.handleDni} />
+                                <Form.Label column sm="2">DNI*</Form.Label>
+                                <Col sm="5"><Form.Control required type="number" onChange={this.handleDni} />
                                 {this.state.dnicorrect ? '' : 'DNI iválido'}
 
                                 </Col>
@@ -306,14 +306,14 @@ class Register extends React.Component {
         
 
                             <Form.Group as={Row} controlId="formBasictelef">
-                                <Form.Label column sm="2">Teléfono</Form.Label>
-                                <Col sm="10"><Form.Control required type="number"  onChange={this.handlePhone} />
+                                <Form.Label column sm="2">Teléfono*</Form.Label>
+                                <Col sm="5"><Form.Control required type="number"  onChange={this.handlePhone} />
                                 {this.state.phonecorrect ? '' : 'Teléfono inválido'}
 
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formBasicEmail2">
-                                <Form.Label column sm="2">Correo</Form.Label>
+                                <Form.Label column sm="2">Correo*</Form.Label>
                                 <Col sm="10"><Form.Control required type="email" onChange={this.handleMail} />
                                 {this.state.mailcorrect ? '' : 'Correo inválido'}
 
@@ -324,17 +324,17 @@ class Register extends React.Component {
                             <Form.Group className="text-center"><h1>.....</h1></Form.Group>
 
                             <Form.Group as={Row} controlId="formBasicUser">
-                                <Form.Label column sm="2">Usuario</Form.Label>
+                                <Form.Label column sm="2">Usuario*</Form.Label>
                                 <Col sm="10"><Form.Control required type="user" onChange={this.handleUser} /></Col>
                             </Form.Group>
 
                             <Form.Group as={Row} controlId="formPasswordd">
-                                <Form.Label column sm="2">Contraseña</Form.Label>
+                                <Form.Label column sm="2">Contraseña*</Form.Label>
                                 <Col sm="10"><Form.Control required type="password" onChange={this.handlePassword} /></Col>
                             </Form.Group>
 
                             <Form.Group as={Row} controlId="FormconfirmPassword" >
-                                <Form.Label column sm="2">Confirmar Contraseña</Form.Label>
+                                <Form.Label column sm="2">Confirmar Contraseña*</Form.Label>
                                 <Col sm="10">
                                     <Form.Control required type="password" onChange={this.handleConfirmedPassword} />
 
@@ -349,7 +349,7 @@ class Register extends React.Component {
 
                             <div className="text-center">
 
-                                <Button variant="primary"  onClick={this.handleRegistro}>Registrarme</Button>
+                                <Button variant="primary" onClick={this.handleRegistro}>Registrarme</Button>
                             </div>
                         </Form>
                     </div>
