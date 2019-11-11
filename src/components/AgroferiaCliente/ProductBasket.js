@@ -48,7 +48,7 @@ class ProductBasket extends React.Component {
       .then(res => {
           Swal.fire({
               type: 'success',
-              title: '¡Enhorabuena!',
+              title: '¡Cambio realizado!',
               text: '¡Elimino un producto',
               onAfterClose: window.location = '/canasta'
           });
@@ -56,7 +56,7 @@ class ProductBasket extends React.Component {
           Swal.fire({
               type: 'error',
               title: 'Oops...',
-              text: '¡No se pudo eliminar la tienda favorita!',
+              text: '¡No se pudo eliminar el producto!',
           })
       })
     }

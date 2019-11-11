@@ -65,7 +65,7 @@ export default class StoreList extends React.Component {
         console.log("buena", response);
         Swal.fire({
             type: 'success',
-            title: '¡Enhorabuena!',
+            title: '¡Cambio realizado!',
             text: '¡Elimino una tienda favorita!',
         });
       }).catch(error => {
@@ -88,7 +88,7 @@ export default class StoreList extends React.Component {
         console.log("buena", response);
         Swal.fire({
             type: 'success',
-            title: '¡Enhorabuena!',
+            title: '¡Nueva tienda favorita!',
             text: '¡Añadio una tienda favorita!',
         });
       }).catch(error => {

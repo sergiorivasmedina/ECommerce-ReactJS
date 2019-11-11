@@ -28,7 +28,7 @@ class Payment extends React.Component{
         };
     }
     
-    componentDidMount(){
+    componentWillMount(){
         console.log("location",window.location);
         const {idPedido} = this.props.match.params;
         this.setState({
@@ -84,7 +84,7 @@ class Payment extends React.Component{
             monto:this.state.total*100,
             correo:this.state.usuario.correo
         }
-        APIFerias.post('/Despliegue/api/pagos/registrarPago/'+ sessionStorage.getItem("idCliente") , {data:info})
+        APIFerias.post('/Despliegue/api/pagos/registrarPago/'+ sessionStorage.getItem("idUsuario") , {data:info})
         .then(res=>{
             console.log("Respuesta conexion culqi:",res);
         })
@@ -198,7 +198,7 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.{this.state.subtotal}</span>
+                                                <span>S/.{this.state.subtotalValor}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>IGV</span>
@@ -210,7 +210,7 @@ class Payment extends React.Component{
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
-                                                <span>S/.{this.state.total}</span>
+                                                <span>S/.{this.state.totalValor}</span>
                                             </p>
                                             </div>
                             </div>

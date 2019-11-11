@@ -20,7 +20,7 @@ class Basket extends React.Component {
             idUsuario: null,
             idCliente: null,
             idPedido: null,
-            discount:10, // se debera cargar en el didmount
+            discount:0, // se debera cargar en el didmount
 
             num:[],
             detalles:[],
@@ -186,7 +186,7 @@ class Basket extends React.Component {
                                     </thead>
                                     <tbody>
                                     
-                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} discount="10"/>)}
+                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} discount="0"/>)}
                                     </tbody>
                                 </table>
                             </div>
