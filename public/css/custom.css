@@ -154,3 +154,9 @@ h5 {
 .textRequired{
     font-size: 12px !important;
 }
+
+.colorCardLogin{
+    background-color: rgb(255, 255, 255) !important;
+    width: 500px;
+    height: 584px;
+}

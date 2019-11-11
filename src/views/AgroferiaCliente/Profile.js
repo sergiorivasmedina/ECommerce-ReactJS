@@ -4,7 +4,7 @@ import Menu from '../../components/AgroferiaCliente/Menu';
 import DatePicker from "react-datepicker";
 import APIFerias from '../../services/FairsService'
 import Swal from 'sweetalert2';
-
+//import FieldGroup from "components/PhotoHandler/FieldGroup";
 
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -281,10 +281,11 @@ class Profile extends React.Component {
                     <div className="w-50 p-3 ">
                         <Form>
 
-                            <Form.Group className="text-center"><h3>Información del Cacero</h3></Form.Group>
-
+                            <Form.Group className="text-center"><h3>Información del Casero</h3></Form.Group>
+                            <Form.Group className="text-left"><h6 className="textRequired">* : Campos obligatorios</h6></Form.Group>
+                            
                             <Form.Group as={Row} controlId="formname">
-                                <Form.Label column sm="2">Nombres</Form.Label>
+                                <Form.Label column sm="2">Nombres*</Form.Label>
                                 <Col sm="10">
                                     <Form.Control required type="name" value = {this.state.names} onChange={this.handleNames} />
                                     <span>
@@ -293,7 +294,7 @@ class Profile extends React.Component {
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formlastname1">
-                                <Form.Label column sm="2">Apellidos </Form.Label>
+                                <Form.Label column sm="2">Apellidos* </Form.Label>
                                 <Col sm="5"><Form.Control required type="Last name1" value = {this.state.lastname1}onChange={this.handleLastNames1} />
                                 <span>
                                         {this.state.lastname1correct ? '' : 'Campo Obligatorio'}
@@ -309,8 +310,8 @@ class Profile extends React.Component {
         
 
                             <Form.Group as={Row} controlId="formBasicdni">
-                                <Form.Label column sm="2">DNI</Form.Label>
-                                <Col sm="10"><Form.Control required type="number" value = {this.state.dni} onChange={this.handleDni} />
+                                <Form.Label column sm="2">DNI*</Form.Label>
+                                <Col sm="5"><Form.Control required type="number" value = {this.state.dni} onChange={this.handleDni} />
                                 {this.state.dnicorrect ? '' : 'DNI iválido'}
 
                                 </Col>
@@ -318,14 +319,14 @@ class Profile extends React.Component {
         
 
                             <Form.Group as={Row} controlId="formBasictelef">
-                                <Form.Label column sm="2">Teléfono</Form.Label>
-                                <Col sm="10"><Form.Control required type="number" value = {this.state.phone}  onChange={this.handlePhone} />
+                                <Form.Label column sm="2">Teléfono*</Form.Label>
+                                <Col sm="5"><Form.Control required type="number" value = {this.state.phone}  onChange={this.handlePhone} />
                                 {this.state.phonecorrect ? '' : 'Teléfono inválido'}
 
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formBasicEmail2">
-                                <Form.Label column sm="2">Correo</Form.Label>
+                                <Form.Label column sm="2">Correo*</Form.Label>
                                 <Col sm="10"><Form.Control required type="email" value = {this.state.mail} onChange={this.handleMail} />
                                 {this.state.mailcorrect ? '' : 'Correo inválido'}
 
@@ -334,7 +335,7 @@ class Profile extends React.Component {
 
                            
                             <Form.Group as={Row} controlId="formBasicUser">
-                                <Form.Label column sm="2">Usuario</Form.Label>
+                                <Form.Label column sm="2">Usuario*</Form.Label>
                                 <Col sm="10">{this.state.user}</Col>
                             </Form.Group>
 
@@ -344,7 +345,7 @@ class Profile extends React.Component {
 
                             <div className="text-center">
 
-                                <Button variant="primary"  onClick={this.handleModif}>Actualizar Información</Button>
+                                <Button variant="primary" className="btnLogin" onClick={this.handleModif}>Actualizar Información</Button>
                             </div>
                         </Form>
                     </div>
