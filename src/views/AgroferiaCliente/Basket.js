@@ -84,6 +84,7 @@ class Basket extends React.Component {
     handleBasket(){
         localStorage.setItem('subtotal',this.state.subtotal);
         localStorage.setItem('total',this.state.total);
+        localStorage.setItem('igv',this.state.igv);
         APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
         .then(response => {
             console.log("cambio de estado de pedido a reservado");
