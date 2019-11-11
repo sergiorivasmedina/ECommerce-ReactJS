@@ -27,7 +27,7 @@ class Payment extends React.Component{
           descuento:0,
         };
     }
-    
+
     componentWillMount(){
         console.log("location",window.location);
         const {idPedido} = this.props.match.params;
@@ -74,19 +74,28 @@ class Payment extends React.Component{
     }
 
     openCheckout=(e)=>{
-        window.Culqi.open();
-        e.preventDefault();
+        if(localStorage.getItem('total')>=3){
+            window.Culqi.open();
+            e.preventDefault();
+        }else{
+            Swal.fire({
+                type: 'error',
+                title: 'Lo sentimos',
+                text: 'El monto minimo para pagar con tarjeta es S./ 3.00',
+            });
+        }
     }
 
     registroExitoso(){
+        let montoI=this.state.total*100;
         let info={
             token:window.Culqi.token.id,
-            monto:this.state.total*100,
+            monto:montoI.toString(),
             correo:this.state.usuario.correo
         }
-        APIFerias.post('/Despliegue/api/pagos/registrarPago/'+ sessionStorage.getItem("idUsuario") , {data:info})
+        APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
         .then(res=>{
-            console.log("Respuesta conexion culqi:",res);
+            console.log("Respuesta conexion culqi:",res.data);
         })
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
@@ -113,11 +122,12 @@ class Payment extends React.Component{
     selectCheckout(){
         let v=this.state.activar;
         this.setState({
-            activar:!v
+            activar:!v,
         })
     }
 
     render(){
+        
         return(
         <div className="Stores">
             <Menu />
@@ -198,7 +208,7 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.{this.state.subtotalValor}</span>
+                                                <span>S/.{localStorage.getItem('subtotal')}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>IGV</span>
@@ -210,7 +220,7 @@ class Payment extends React.Component{
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
-                                                <span>S/.{this.state.totalValor}</span>
+                                                <span>S/.{localStorage.getItem('total')}</span>
                                             </p>
                                             </div>
                             </div>
@@ -220,7 +230,7 @@ class Payment extends React.Component{
                                         <div className="form-group">
                                             <div className="col-md-12">
                                                 <div className="radio">
-                                                <Form.Check type="radio" aria-label="radio 1" label="Culqi" onClick={this.selectCheckout.bind(this)}/>
+                                                <Form.Check type="radio" aria-label="radio 1" label="Tarjeta Débito/Crédito" onClick={this.selectCheckout.bind(this)}/>
                                                 </div>
                                             </div>
                                         </div>
