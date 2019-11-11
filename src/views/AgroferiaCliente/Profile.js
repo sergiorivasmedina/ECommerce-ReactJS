@@ -243,7 +243,7 @@ class Profile extends React.Component {
     };
 
     componentDidMount(){
-
+        localStorage.setItem('activePage', 0);
         if (sessionStorage.getItem("idUsuario")) {
             var idUSer = sessionStorage.getItem("idUsuario");
           

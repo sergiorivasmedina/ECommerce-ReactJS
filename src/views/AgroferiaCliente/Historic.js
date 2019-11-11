@@ -34,6 +34,7 @@ class Basket extends React.Component {
     }
 
     componentDidMount() {
+        localStorage.setItem('activePage', 0);
         APIFerias.get('https://fmh7fxbfoh.execute-api.us-east-2.amazonaws.com/Despliegue/api/pedidos/' + sessionStorage.getItem('idCliente'))
           .then(res=> {
             const pedidos = res.data;

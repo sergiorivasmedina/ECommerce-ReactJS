@@ -52,6 +52,14 @@ class Menu extends React.Component {
     }
 
     render() {
+        var bottomProducts = "nav-link";
+        var bottomStores = "nav-link";
+
+        if (localStorage.getItem('activePage') == 2) {
+            bottomStores = "nav-link pinkBottom";
+        } else if (localStorage.getItem('activePage') == 3) {
+            bottomProducts = "nav-link pinkBottom";
+        }
         var userActions;
         var basketUrl;
         console.log(this.state.user);
@@ -70,9 +78,9 @@ class Menu extends React.Component {
             basketUrl = "/Canasta"
             userActions = <ul className="navbar-nav ml-auto row">
 
-            <li className="nav-item active dropdown show">
+            <li className="nav-item active dropdown">
                 <a className="nav-link dropdown-toggle text-left" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span className="mediumIcon icon-person pink"></span><span className="pink">{this.state.nombre}</span></a>
-                <div className="dropdown-menu show" aria-labelledby="dropdown04">
+                <div className="dropdown-menu" aria-labelledby="dropdown04">
 
                     <a className="dropdown-item" href="/historial"><span>HISTORIAL DE PEDIDOS</span></a>
                     <a className="dropdown-item" href="/perfil"><span>PERFIL</span></a>
@@ -102,10 +110,10 @@ class Menu extends React.Component {
                         <div className="collapse navbar-collapse" id="ftco-nav">
                             <ul className="navbar-nav ml-auto row">
 
-                                <li className="nav-item"><label className="nav-link pinkBottom"><Link to="/Ferias" ><span className="gray">FERIAS</span></Link></label></li>
+                                <li className="nav-item"><label className="nav-link pinkButton"><Link to="/Ferias" ><span className="gray">FERIAS</span></Link></label></li>
 
-                                <li className="nav-item"><label className="nav-link pinkBottom"><Link to={"/tiendas/" + localStorage.getItem('idFeria')}><span className="gray">TIENDAS</span></Link></label></li>
-                                <li className="nav-item"><label className="nav-link pinkBottom"><Link to="/Productos"><span className="gray">PRODUCTOS</span></Link></label></li>
+                                <li className="nav-item"><label className={bottomStores}><Link to={"/tiendas/" + localStorage.getItem('idFeria')}><span className="gray">TIENDAS</span></Link></label></li>
+                                <li className="nav-item"><label className={bottomProducts}><Link to="/Productos"><span className="gray">PRODUCTOS</span></Link></label></li>
 
 
                                 {/* ACTIVAR PARA SIGUIENTE SPRINT <li className="nav-item"><label className="nav-link"><Link to="/Map">MAPS</Link></label></li>

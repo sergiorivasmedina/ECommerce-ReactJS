@@ -23,6 +23,7 @@ class Stores extends React.Component {
         const {id} = this.props.match.params;
         localStorage.setItem('idFeria', id);
         console.log("probando",localStorage.getItem('idFeria'));
+        localStorage.setItem('activePage', 2);
     }
 
     updateSearch (event){

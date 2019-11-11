@@ -24,6 +24,7 @@ class Stores extends React.Component {
             const categories = res.data;
             this.setState({ categories:categories })
           })
+          localStorage.setItem('activePage', 3);
       }
 
     filterCategory(type) {

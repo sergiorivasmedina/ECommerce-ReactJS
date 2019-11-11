@@ -35,7 +35,7 @@ class Fairs extends React.Component {
     console.log(this.state.client);
   })}
 
-      
+  localStorage.setItem('activePage', 1);
   }
 
   render() {

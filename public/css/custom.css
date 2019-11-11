@@ -64,7 +64,7 @@
     width: 20%;
 }
 
-.pinkBottom :active {
+.pinkBottom {
     border-bottom: solid #FC14AC 5px !important;
 }
 
