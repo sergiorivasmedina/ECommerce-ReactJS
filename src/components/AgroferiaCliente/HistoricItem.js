@@ -2,7 +2,7 @@ import React from 'react';
 import APIFerias from '../../services/FairsService';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-
+import moment from 'moment';
 class HistoricItem extends React.Component {
 
     constructor(props){
@@ -28,6 +28,8 @@ class HistoricItem extends React.Component {
    
 
     render() {
+        let date = new Date(this.props.date);
+        let dateFormat = moment(date).format('DD/MM/YYYY');
         return(
         <tr className="text-center">
     
@@ -35,7 +37,7 @@ class HistoricItem extends React.Component {
 
             <td className="state">{this.props.state}</td>
 
-            <td className="date">{this.props.date}</td>
+            <td className="date">{dateFormat}</td>
 
             <td className="total">S/.{this.props.total}</td>
             <td> <Link to={"/detalleHistorial/" + this.props.id}><i className="detail" className="icon-eye pink"> </i> </Link> </td>

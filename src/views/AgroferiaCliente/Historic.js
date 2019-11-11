@@ -48,6 +48,7 @@ class Basket extends React.Component {
     
 
     render() {
+        
         return (
             <div className="Stores">
                 <Menu />
@@ -70,7 +71,7 @@ class Basket extends React.Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {this.state.pedidos.map(pedido => <HistoricItem  id={pedido.idPedido} total={pedido.total} date={pedido.fecha.match(/(\d\d)(\d\d)(\d\d\d\d)/)} state={this.state.estados[pedido.estado]}/>)}
+                                    {this.state.pedidos.map(pedido => <HistoricItem  id={pedido.idPedido} total={pedido.total} date={pedido.fecha} state={this.state.estados[pedido.estado]}/>)}
                                     
                                     </tbody>
                                 </table>

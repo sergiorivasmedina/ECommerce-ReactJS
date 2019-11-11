@@ -53,9 +53,10 @@ class Menu extends React.Component {
 
     render() {
         var userActions;
-        
+        var basketUrl;
         console.log(this.state.user);
         if(this.state.user == "") {
+            basketUrl = "/login"
             userActions = <ul className="navbar-nav ml-auto row">
 
 
@@ -66,15 +67,14 @@ class Menu extends React.Component {
             </li>
         </ul>
         } else {
+            basketUrl = "/Canasta"
             userActions = <ul className="navbar-nav ml-auto row">
-
-
 
             <li className="nav-item active dropdown show">
                 <a className="nav-link dropdown-toggle text-left" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span className="mediumIcon icon-person pink"></span><span className="pink">{this.state.nombre}</span></a>
                 <div className="dropdown-menu show" aria-labelledby="dropdown04">
 
-                    <a className="dropdown-item" href="/historic"><span>HISTORIAL DE PEDIDOS</span></a>
+                    <a className="dropdown-item" href="/historial"><span>HISTORIAL DE PEDIDOS</span></a>
                     <a className="dropdown-item" href="/perfil"><span>PERFIL</span></a>
                     <a className="dropdown-item" href="/login"><span>CERRAR SESIÓN</span></a>
                 </div>
@@ -111,7 +111,7 @@ class Menu extends React.Component {
                                 {/* ACTIVAR PARA SIGUIENTE SPRINT <li className="nav-item"><label className="nav-link"><Link to="/Map">MAPS</Link></label></li>
                             <li className="nav-item"><label className="nav-link"><Link to="/Calendar">CALENDARIO</Link></label></li> */}
 
-                                <li className="nav-item cta cta-colored"><label className="nav-link"><Link to="/Canasta"><span className="icons icon-shopping_basket pink"></span><span>[{this.state.cantprod}]</span></Link></label></li>
+                                <li className="nav-item cta cta-colored"><label className="nav-link"><Link to={basketUrl}><span className="icons icon-shopping_basket pink"></span><span>[{this.state.cantprod}]</span></Link></label></li>
 
 
                             
