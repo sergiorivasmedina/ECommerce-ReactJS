@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import APIFerias from '../../services/FairsService';
 import $ from 'jquery';
 import {Form,Button} from 'react-bootstrap';
+import ReactDOM from 'react-dom';
+import {Redirect} from 'react-router-dom';
 
 
 class Payment extends React.Component{
@@ -28,6 +30,7 @@ class Payment extends React.Component{
     }
     
     componentDidMount(){
+        console.log("location",window.location);
         const {idPedido} = this.props.match.params;
         this.setState({
             idPedido: idPedido
@@ -36,6 +39,7 @@ class Payment extends React.Component{
             APIFerias.get('/Despliegue/api/pedido/'+ sessionStorage.getItem("idCliente"))
             .then(res=>{
                 const pedidoActual=res.data;
+                const total = parseInt(pedidoActual.total);
                 console.log("Pedido Actual:",pedidoActual);
                 this.setState({
                     subtotal:pedidoActual.subtotal,
@@ -49,7 +53,7 @@ class Payment extends React.Component{
                     title: 'Agroferia',
                     currency: 'PEN',
                     description: 'Canasta',
-                    amount: pedidoActual.total
+                    amount: total
                 });
                 window.Culqi.options({
                     lang: 'auto',
@@ -85,17 +89,18 @@ class Payment extends React.Component{
     }
 
     registroExitoso(){
-        
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
             Swal.fire({
                 type: 'success',
                 title: 'Tu pedido ha sido procesado correctamente',
                 text: 'Gracias por tu compra',
-                onAfterClose: window.location='/resumen',
                 timer: 1500
             });
         })
+        ReactDOM.render(
+            <Redirect to={"/resumen/" + this.state.idPedido} />
+        );
     }
 
     registroFallido(){
