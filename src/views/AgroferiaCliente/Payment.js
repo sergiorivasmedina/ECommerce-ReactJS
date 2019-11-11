@@ -9,57 +9,65 @@ import APIFerias from '../../services/FairsService';
 import $ from 'jquery';
 import {Form,Button} from 'react-bootstrap';
 
+
 class Payment extends React.Component{
     constructor(props){
         super(props);
         this.state ={
             idPedido: null,
             status:false,
-            cvc: '',
-            expiry: '',
-            focus: '',
-            name: '',
-            number: '',
-            validatednumber:false,
-            validatedcvc:false,
-            validatedexpiry:false,
             usuario:{
             
           },
-          activar:true
+          activar:true,
+          subtotal:0,
+          igv:0,
+          total:0,
+          descuento:0,
         };
     }
     
     componentDidMount(){
-        window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
-        window.Culqi.init();
-        console.log("Culqi:",window.Culqi);
-        window.Culqi.settings({
-            title: 'Agroferia',
-            currency: 'PEN',
-            description: 'Canasta',
-            amount: localStorage.getItem('total')
-        });
-        window.Culqi.options({
-            lang: 'auto',
-            modal: true,
-            installments: true,
-            customButton: 'Pagar',
-            style: {
-              logo: 'https://culqi.com/LogoCulqi.png',
-              maincolor: '#0ec1c1',
-              buttontext: '#ffffff',
-              maintext: '#4A4A4A',
-              desctext: '#4A4A4A'
-            }
-        });
-        
-    }
-    componentWillMount(){
         const {idPedido} = this.props.match.params;
         this.setState({
             idPedido: idPedido
         })
+        if(idPedido!=null){
+            APIFerias.get('/Despliegue/api/pedido/'+ sessionStorage.getItem("idCliente"))
+            .then(res=>{
+                const pedidoActual=res.data;
+                console.log("Pedido Actual:",pedidoActual);
+                this.setState({
+                    subtotal:pedidoActual.subtotal,
+                    igv:pedidoActual.igv,
+                    total:pedidoActual.total
+                })
+                window.Payment = this;
+                window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
+                window.Culqi.init();
+                window.Culqi.settings({
+                    title: 'Agroferia',
+                    currency: 'PEN',
+                    description: 'Canasta',
+                    amount: pedidoActual.total
+                });
+                window.Culqi.options({
+                    lang: 'auto',
+                    modal: true,
+                    installments: true,
+                    customButton: 'Pagar',
+                    style: {
+                      logo: 'https://culqi.com/LogoCulqi.png',
+                      maincolor: '#0ec1c1',
+                      buttontext: '#ffffff',
+                      maintext: '#4A4A4A',
+                      desctext: '#4A4A4A'
+                    }
+                });
+
+            })
+            
+        }
         
         if(sessionStorage.getItem("idCliente")!=null){
             APIFerias.get('/Despliegue/api/usuario/cliente/'+ sessionStorage.getItem("idCliente"))
@@ -71,66 +79,35 @@ class Payment extends React.Component{
         
     }
 
-    handleInputFocus = (e) => {
-        this.setState({ focus: e.target.name });
-      }
-      
-    handleInputChange = (e) => {
-        const { name, value } = e.target;
-        
-        this.setState({ [name]: value });
-    }
-
-    openModal(){
-        /*this.setState({
-            status:true
-        });*/
+    openCheckout=(e)=>{
         window.Culqi.open();
+        e.preventDefault();
     }
 
-    closeModal = () =>{
-        this.setState({
-            status:false,
-            cvc: '',
-            expiry: '',
-            focus: '',
-            name: '',
-            number: ''
+    registroExitoso(){
+        
+        APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
+        .then(res=>{
+            Swal.fire({
+                type: 'success',
+                title: 'Tu pedido ha sido procesado correctamente',
+                text: 'Gracias por tu compra',
+                onAfterClose: window.location='/resumen',
+                timer: 1500
+            });
+        })
+    }
+
+    registroFallido(){
+        Swal.fire({
+            type: 'error',
+            title: 'Lo sentimos, su pedido no ha podido ser procesado',
+            text: 'Le pedimos que lo intente nuevamente',
+            onAfterClose: window.location='/canasta',
+            timer: 1500
         });
     }
 
-    handleCheckout = () =>{
-            if(this.state.cvc.length<3 ){
-                this.setState({
-                    validatedcvc:true
-                })
-            }
-            if(this.state.expiry.length<4){
-                this.setState({
-                    validatedexpiry:true
-                })
-            }
-            if(this.state.number.length<16) {
-                this.setState({
-                    validatednumber:true
-                })
-            }
-            if(this.state.cvc && this.state.expiry && this.state.number){
-                console.log(this.state.idPedido);
-                //aqui hacer que el estado del pedido pase a realizado
-
-                Swal.fire({
-                    type: 'success',
-                    title: '¡Enhorabuena!',
-                    text: 'Reserva realizada!',
-                    onAfterClose: window.location='/'
-        
-                });
-                window.Culqi.createToken();
-                console.log("Muestra:",window.Culqi.token);
-                this.closeModal();
-            }
-    }
     selectCheckout(){
         let v=this.state.activar;
         this.setState({
@@ -219,19 +196,19 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.{localStorage.getItem('total')}</span>
+                                                <span>S/.{this.state.subtotal}</span>
                                             </p>
                                             <p className="d-flex">
-                                                <span>Despacho</span>
-                                                <span>S/.0</span>
+                                                <span>IGV</span>
+                                                <span>S/.{this.state.igv}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>Descuento</span>
-                                                <span>S/.{localStorage.getItem('descuento')}</span>
+                                                <span>S/.{this.state.descuento}</span>
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
-                                                <span>S/.{localStorage.getItem('total')}</span>
+                                                <span>S/.{this.state.total}</span>
                                             </p>
                                             </div>
                             </div>
@@ -246,7 +223,7 @@ class Payment extends React.Component{
                                             </div>
                                         </div>
                                     <p>
-                                    <Button disabled={this.state.activar} href="#"className="btn btn-primary py-3 px-4" onClick={this.openModal.bind(this)}>Hacer pedido</Button>
+                                    <Button disabled={this.state.activar} href="#"className="btn btn-primary py-3 px-4" onClick={this.openCheckout.bind(this)}>Hacer pedido</Button>
                                     </p>
                                 </div>
                             </div>
@@ -254,6 +231,7 @@ class Payment extends React.Component{
                     </div> 
                     </div>
                 </div>
+                {window.Culqi.token!=null?<div>El token existe</div>:null}
             </section>
         <FooterComponent/>
         </div>

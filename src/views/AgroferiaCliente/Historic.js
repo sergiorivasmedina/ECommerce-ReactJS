@@ -15,12 +15,20 @@ class Basket extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pedidos: []
+            pedidos: [],
+            estados : {
+                3: "Pendiente",
+                4: "Registrado",
+                5: "Por recoger",
+                6: "Despachado",
+                7: "No recogido",
+                8: "Cancelado",
+                9: "Rechazado",
+
+              }
         }
     }    
 
-    handleBasket(){
-    }
 
     componentWillMount(){
     }
@@ -54,15 +62,15 @@ class Basket extends React.Component {
                                 <table className="table">
                                     <thead className="thead-primary">
                                         <tr className="text-center">
-                                            <th>Número de orden</th>
-                                            <th>Estado de compra</th>
+                                            <th>N° Orden</th>
+                                            <th>Estado de tu compra</th>
                                             <th>Fecha de compra</th>
-                                            <th>Monto total</th>
+                                            <th>Total</th>
                                             <th>Detalle de pedido</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {this.state.pedidos.map(pedido => <HistoricItem  id={pedido.idPedido} total={pedido.total} date={pedido.fecha} state={pedido.estado}/>)}
+                                    {this.state.pedidos.map(pedido => <HistoricItem  id={pedido.idPedido} total={pedido.total} date={pedido.fecha.match(/(\d\d)(\d\d)(\d\d\d\d)/)} state={this.state.estados[pedido.estado]}/>)}
                                     
                                     </tbody>
                                 </table>

@@ -27,8 +27,9 @@ import Login from './views/AgroferiaCliente/Login';
 import Registro from './views/AgroferiaCliente/Register';
 import PagoFinal from './views/AgroferiaCliente/Payment';
 import Calendario from './views/AgroferiaCliente/Calendar';
-import Historic from './views/AgroferiaCliente/Historic';
+import Historial from './views/AgroferiaCliente/Historic';
 import DetalleHistorial from './views/AgroferiaCliente/HistoricDetail';
+import OrderSummary from './views/AgroferiaCliente/OrderSummary';
 
 
 const routing = (
@@ -54,11 +55,12 @@ const routing = (
       <Route path="/detalleTienda/:id" component={DetalleTienda} />
       <Route path="/detalleProducto/:id" component={DetalleProducto} />
       <Route path="/login" component={Login}/>
-      <Route path="/historic" component={Historic}/>
+      <Route path="/historial" component={Historial}/>
       <Route path="/registro" component={Registro}/>
       <Route path="/pago/:idPedido" component={PagoFinal}/>
       <Route path="/calendario" component={Calendario}/>
       <Route path="/detalleHistorial/:idPedido" component={DetalleHistorial}/>
+      <Route path="/resumen" component={OrderSummary}/>
 
 
       <Route component={NotFound}/>
