@@ -4,6 +4,7 @@ import Heading from '../../components/Vegefoods/Heading';
 import ProductHistoric from '../../components/AgroferiaCliente/ProductHistoric';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import APIFerias from '../../services/FairsService';
+import moment from 'moment';
 import {Link} from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -64,11 +65,13 @@ class HistoricDetail extends React.Component {
 
                     this.setState({
                         orden:parseInt(idPedido),
-                        fechaCompra: res.data.pedido.fecha,
+                        fechaCompra: moment(new Date(res.data.pedido.fecha)).format('DD/MM/YYYY'),
                         estado: res.data.pedido.estado,
                         total: res.data.pedido.total,
                         detalles: res.data.lstDetallePedido
                     });
+
+                    console.log("Fecha de compra: ", this.state.fechaCompra);
                     //traer el detallePedido del idPedido, el cual es el actual
                    
                              
@@ -123,7 +126,7 @@ class HistoricDetail extends React.Component {
                                             <th>{this.pad(this.state.orden,5)}</th>
                                             <th>&nbsp;</th>
                                             <th>{this.state.estados[this.state.estado]}</th>
-                                            <th>{Date.parse(this.state.fechaCompra)}</th>
+                                            <th>{this.state.fechaCompra}</th>
                                             <th>S/. {this.state.total}</th>
                                             <th>&nbsp;</th>
 
