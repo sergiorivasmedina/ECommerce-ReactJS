@@ -6,7 +6,7 @@ import 'react-credit-cards/es/styles-compiled.css';
 import Swal from 'sweetalert2';
 import APIFerias from '../../services/FairsService';
 import $ from 'jquery';
-import {Form,Button} from 'react-bootstrap';
+import {Form,Button, ListGroup} from 'react-bootstrap';
 import FairHeading from '../../components/Vegefoods/FairHeading';
 
 
@@ -25,6 +25,11 @@ class Payment extends React.Component{
           igv:0,
           total:0,
           descuento:0,
+          boleta:false,
+          usarTarjetaExistente:false,/**Procesa culqi con la tarjeta guardad previamente */
+          guardarTarjetaNueva:false,/**Guarda tarjeta, si existe una previa la chanca */
+          tieneTarjeta:false,
+          terminacionTarjeta:''/**terminacion de la tarjeta guardada previamente */
         };
     }
     componentDidMount() {
@@ -72,6 +77,7 @@ class Payment extends React.Component{
                     this.setState({ usuario:client})
             })
         }
+        /**Traer data de la tarjeta */
         
     }
 
@@ -89,12 +95,85 @@ class Payment extends React.Component{
         }
     }
 
+    clickBoleta(){
+        let v=this.state.boleta;
+        this.setState({
+            boleta:!v,
+        })
+    }
+
+    emitirBoleta(){
+        let someData = {
+            close2u: {
+                tipoIntegracion: "OFFLINE",
+                tipoPlantilla: "01",
+                tipoRegistro: "PRECIOS_CON_IGV"},
+            datosDocumento: {
+                fechaEmision: "2019-08-19",
+                formaPago: "EFECTIVO",
+                moneda: "PEN",
+                numero: 1,
+                serie: "BBV1" },
+            detalleDocumento: [{
+                cantidad: 3,
+                codigoProducto: "PROD2",
+                codigoProductoSunat: null,
+                descripcion: "OPERCION RECARGA MES MAYO", "numeroOrden": 1,
+                precioVentaUnitarioItem: 25,
+                tipoAfectacion: "GRAVADO_OPERACION_ONEROSA",
+                unidadMedida: "UNIDAD_SERVICIOS"} ],
+            emisor: {
+                correo: "facturacion@emisor.com.pe", 
+                correoCopia: "",
+                domicilioFiscal: {
+                    departamento: "LIMA",
+                    direccion: "DIRECCION DE EMISOR", "distrito": "MIRAFLORES",
+                    pais: "PERU",
+                    provincia: "LIMA",
+                    ubigeo: "150133",
+                    urbanizacion: ""},
+                nombreComercial: "VENDEMAS",
+                nombreLegal: "ARMIDA VICTORIA OCHOA TAMARIZ ",
+                numeroDocumentoIdentidad: "55111222333",
+                tipoDocumentoIdentidad: "RUC"},
+            informacionAdicional: {
+                tipoOperacion: "VENTA_INTERNA" },
+            receptor: {
+                correo: "johana27094@hotmail.com",
+                domicilioFiscal: {
+                    direccion: "DIRECCION DEL CLIENTE NRO 200",
+                    pais: "PERU" },
+                nombreComercial: "ARMIDA OCHOA",
+                nombreLegal: "ARMIDA OCHOA", 
+                numeroDocumentoIdentidad: "32404736",
+                tipoDocumentoIdentidad:"DOC_NACIONAL_DE_IDENTIDAD"} 
+            } 
+
+        let username='empresa.emprendedora.1@close2u.pe';
+        let password='55111222333.1';
+        let headers_v = new Headers();
+        headers_v.set('Authorization', 'Basic ' + Buffer.from(username +  ":" + password).toString('base64'));
+        const putMethod = {
+            method: 'PUT', // Method itself
+            headers: headers_v,
+            body: JSON.stringify(someData), // We send data in JSON format
+            
+           }
+        fetch('https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/boleta?key=qxE5+sLdubT8GXccl9Mmmw==', {putMethod})
+           .then((response) => {
+               response.json()})
+           .then((data) => {console.log(data)}) // Manipulate the data retrieved back, if we want to do something with it
+           .catch(err => {console.log(err)}) // Do something with the error
+    }
+
     registroExitoso(){
         let montoI=this.state.total*100;
         let info={
             token:window.Culqi.token.id,
             monto:montoI.toString(),
-            correo:this.state.usuario.correo
+            correo:this.state.usuario.correo,
+            usarTarjetaExistente:this.state.usarTarjetaExistente,
+            guardarTarjetaNueva:this.state.guardarTarjetaNueva
         }
         APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
         .then(res=>{
@@ -117,10 +196,13 @@ class Payment extends React.Component{
                 type: 'success',
                 title: 'Tu pedido ha sido procesado correctamente',
                 text: 'Gracias por tu compra',
-                timer: 1500
             });
         })
         this.props.history.push("/resumen/" + this.state.idPedido);
+        /*Emitir Boleta */
+        if(this.state.boleta){
+            this.emitirBoleta()
+        }
     }
 
     registroFallido(){
@@ -137,6 +219,20 @@ class Payment extends React.Component{
         let v=this.state.activar;
         this.setState({
             activar:!v,
+        })
+    }
+     
+    guardaTarjeta(){
+        let v=this.state.guardarTarjetaNueva;
+        this.setState({
+            guardarTarjetaNueva:!v,
+        })
+    }
+
+    usarTarjetaGuardada(){
+        let v=this.state.usarTarjetaExistente;
+        this.setState({
+            usarTarjetaExistente:!v,
         })
     }
 
@@ -171,51 +267,38 @@ class Payment extends React.Component{
                                             <input type="text" className="form-control" placeholder={this.state.usuario.apellidoPaterno} />
                                         </div>
                                     </div>
-                                    <div className="w-100"></div>
-                                    <div className="w-100"></div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <label for="streetaddress">Dirección</label>
-                                                <input type="text" className="form-control" placeholder="Calle y número"/>
-                                            </div>
+                                <div className="w-100"></div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                    <label for="towncity">Direccion</label>
+                                <input type="text" className="form-control" placeholder=""/>
+                                </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label for="postcodezip">Ciudad</label>
+                                <input type="text" className="form-control" placeholder=""/>
+                                </div>
+                                </div>
+                                <div className="w-100"></div>
+                                    <div className="col-md-6">
+                                        <div className="form-group">
+                                            <label for="phone">Telefono</label>
+                                            <input type="text" className="form-control" placeholder={this.state.usuario.telefono}/>
                                         </div>
+                                    </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Apartamento, casa, unidad, etc (opcional)"/>
+                                        <label for="emailaddress">Correo electrónico</label>
+                                    <input type="text" className="form-control" placeholder={this.state.usuario.correo}/>
+                                    </div>
                                 </div>
-                                </div>
-                                <div className="w-100"></div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                    <label for="towncity">Ciudad</label>
-                                <input type="text" className="form-control" placeholder=""/>
-                                </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label for="postcodezip">Código postal</label>
-                                <input type="text" className="form-control" placeholder=""/>
-                                </div>
-                                </div>
-                                <div className="w-100"></div>
-                                <div className="col-md-6">
-                                <div className="form-group">
-                                    <label for="phone">Telefono</label>
-                                <input type="text" className="form-control" placeholder={this.state.usuario.telefono}/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label for="emailaddress">Correo electrónico</label>
-                                <input type="text" className="form-control" placeholder={this.state.usuario.correo}/>
-                                </div>
-                            </div>
                             <div className="w-100"></div>
                             <div className="col-md-12"></div>
-                            </div>
+                        </div>
                         </form>
-                                </div>
-                                <div className="col-xl-5">
+                    </div>
+                        <div className="col-xl-5">
                         <div className="row mt-5 pt-3">
                             <div className="col-md-12 d-flex mb-5">
                                 <div className="cart-detail cart-total p-3 p-md-4">
@@ -244,7 +327,22 @@ class Payment extends React.Component{
                                         <div className="form-group">
                                             <div className="col-md-12">
                                                 <div className="radio">
-                                                <Form.Check type="radio" aria-label="radio 1" label="Tarjeta Débito/Crédito" onClick={this.selectCheckout.bind(this)}/>
+                                                <Form.Check type="checkbox" aria-label="radio 1" label="Tarjeta Débito/Crédito" onClick={this.selectCheckout.bind(this)}/>
+                                                <ListGroup>
+                                                {!this.state.activar?
+                                                <ListGroup.Item>
+                                                    <Form.Check type="checkbox" aria-label="radio 1" label="Guardar Tarjeta" onClick={this.guardaTarjeta.bind(this)}/>
+                                                </ListGroup.Item>
+                                                :null}
+                                                {(this.state.tieneTarjeta & !this.state.activar)?
+                                                <ListGroup.Item>
+                                                    <Form.Check type="checkbox" aria-label="radio 1" label="Tarjeta Bancaria" onClick={this.usarTarjetaGuardada.bind(this)}></Form.Check>
+                                                    <p className="d-flex">
+                                                    <span>  Terminación {this.state.terminacionTarjeta}</span>
+                                                    </p>
+                                                </ListGroup.Item>
+                                                :null}
+                                                </ListGroup>
                                                 </div>
                                             </div>
                                         </div>
