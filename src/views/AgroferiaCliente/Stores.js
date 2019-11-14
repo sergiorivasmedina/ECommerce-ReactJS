@@ -18,6 +18,10 @@ class Stores extends React.Component {
         
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+
     componentWillMount() {
         
         const {id} = this.props.match.params;

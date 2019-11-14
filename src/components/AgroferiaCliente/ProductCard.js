@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import APIFerias from '../../services/FairsService';
-
+import { withRouter } from 'react-router-dom';
 class ProductCard extends React.Component {
 
     constructor(props) {
@@ -10,11 +10,28 @@ class ProductCard extends React.Component {
             photo: null,
             store: ""
         }
+        this.routeChange = this.routeChange.bind(this);
+        this.routeChange2 = this.routeChange2.bind(this);
     }
     componentDidMount() {
 
         
     }
+
+
+
+    routeChange() {
+        window.location.href = "detalleProducto/" + this.props.id;
+      }
+
+
+
+      async routeChange2() {
+        await sessionStorage.setItem("productId", this.props.id);
+        let path = "/detalleProducto";
+        this.props.history.push(path);
+      }
+
 
     render() {
         let status;
@@ -45,14 +62,13 @@ class ProductCard extends React.Component {
                 this.setState({ store: store.empresa.nombreComercial });
             });
         if (this.state.store != "") {
-            console.log(this.state.store);
             var tienda = <div className="text-center">
 
                 <p>Tienda: {this.state.store}</p>
             </div>;
         }
 
-        var url = "detalleProducto/" + this.props.id
+        var url = "detalleProducto/" + this.props.id;
         var productName = this.props.productName;
         if (productName.length > 22) {
             productName = this.props.productName.substring(0,22).concat('...');
@@ -62,12 +78,12 @@ class ProductCard extends React.Component {
         return (
             <div className="col-lg-3 col-6">
                 <div className="product">
-                    <a href="#" className="img-prod"><img className="img-fluid customImage" src={image} alt="Colorlib Template" />
+                <a><Link to={url}><img className="img-fluid customImage" src={image} alt="Colorlib Template" /></Link>
                         {status}
                         <div className="overlay"></div>
                     </a>
                     <div className="text py-3 pb-4 px-3 text-center">
-                        <h3><Link to={url}>{productName}</Link></h3>
+                    <Link to={url}><a><h3>{productName}</h3></a></Link>
                         {tienda}
                         <div className="text-center">
 
@@ -91,5 +107,4 @@ class ProductCard extends React.Component {
     }
 
 }
-
-export default ProductCard;
+export default withRouter(ProductCard);

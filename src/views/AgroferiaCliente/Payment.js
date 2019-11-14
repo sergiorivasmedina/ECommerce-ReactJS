@@ -27,7 +27,9 @@ class Payment extends React.Component{
           descuento:0,
         };
     }
-
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
     componentWillMount(){
         console.log("location",window.location);
         const {idPedido} = this.props.match.params;

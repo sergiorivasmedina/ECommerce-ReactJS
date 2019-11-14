@@ -51,6 +51,7 @@ class HistoricDetail extends React.Component {
  
 
     componentDidMount() {
+        window.scrollTo(0, 0);
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
             console.log("idCliente: ",this.state.idCliente);
