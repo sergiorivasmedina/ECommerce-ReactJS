@@ -50,7 +50,8 @@ export default class ProductDetail extends Component {
       idProducto: parseInt(id),
       cantidad: parseFloat(this.state.quantity),
       monto: parseFloat(this.state.product.precio),
-      idTienda: this.state.product.idTienda
+      idTienda: this.state.product.idTienda,
+      idFeria: localStorage.getItem("idFeria")
     }
     console.log(prod)
     APIFerias.post('/Despliegue/api/pedido/producto', prod)

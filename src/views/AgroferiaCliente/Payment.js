@@ -75,6 +75,7 @@ class Payment extends React.Component{
 
     openCheckout=(e)=>{
         if(localStorage.getItem('total')>=3){
+            //abrir culqi
             window.Culqi.open();
             e.preventDefault();
         }else{
@@ -95,7 +96,18 @@ class Payment extends React.Component{
         }
         APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
         .then(res=>{
+
             console.log("Respuesta conexion culqi:",res.data);
+
+            //Hacer cambio de estado del pedido
+            // APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
+            // .then(response => {
+            //     console.log("cambio de estado de pedido a reservado");
+
+            // })
+        }).catch(error => {
+            console.log("No hubo conexión con culqi");
+
         })
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
