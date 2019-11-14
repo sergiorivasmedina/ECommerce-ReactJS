@@ -148,6 +148,7 @@ class HistoricDetail extends React.Component {
                                             <th>Precio</th>
                                             <th>Cantidad</th>
                                             <th>Total</th>
+                                            <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
