@@ -17,8 +17,8 @@ class Basket extends React.Component {
         this.state = {
             pedidos: [],
             estados : {
-                3: "Pendiente",
-                4: "Registrado",
+                3: "Por atender",
+                4: "Procesado",
                 5: "Por recoger",
                 6: "Despachado",
                 7: "No recogido",
