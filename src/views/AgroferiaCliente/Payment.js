@@ -29,7 +29,7 @@ class Payment extends React.Component{
           usarTarjetaExistente:false,/**Procesa culqi con la tarjeta guardad previamente */
           guardarTarjetaNueva:false,/**Guarda tarjeta, si existe una previa la chanca */
           tieneTarjeta:false,
-          terminacionTarjeta:''/**terminacion de la tarjeta guardada previamente */
+          terminacionTarjeta:null/**terminacion de la tarjeta guardada previamente */
         };
     }
     componentDidMount() {
@@ -77,15 +77,42 @@ class Payment extends React.Component{
                     this.setState({ usuario:client})
             })
         }
-        /**Traer data de la tarjeta */
+         /**Preguntar si hay tarjeta guardada */
+         APIFerias.get('/Despliegue/api/pagos/verInfoTarjeta/' + sessionStorage.getItem("idUsuario"))
+         .then(res=>{
+             console.log("infoTarjeta:", res.data);
+             this.setState({
+                 terminacionTarjeta:res.data,
+                 tieneTarjeta:true
+             })
+         }).catch(error=>console.log(error))
         
     }
 
     openCheckout=(e)=>{
         if(localStorage.getItem('total')>=3){
             //abrir culqi
-            window.Culqi.open();
-            e.preventDefault();
+            if(!this.state.usarTarjetaExistente){
+                window.Culqi.open();
+                e.preventDefault();
+            }else{
+                let montoI=this.state.total*100;
+                let info={
+                    token:'pk_token_xxxssdfsdfss',
+                    monto:montoI.toString(),
+                    correo:this.state.usuario.correo,
+                    usarTarjetaExistente:this.state.usarTarjetaExistente,
+                    guardarTarjetaNueva:this.state.guardarTarjetaNueva
+                }
+                APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
+                .then(res=>{
+                    console.log("Respuesta conexion culqi:",res.data);
+                }).catch(error => {
+                    console.log("No hubo conexión con culqi");
+                    this.registroFallido();
+                })
+                this.realizaPedido();
+            }
         }else{
             Swal.fire({
                 type: 'error',
@@ -177,19 +204,15 @@ class Payment extends React.Component{
         }
         APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
         .then(res=>{
-
             console.log("Respuesta conexion culqi:",res.data);
-
-            //Hacer cambio de estado del pedido
-            // APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
-            // .then(response => {
-            //     console.log("cambio de estado de pedido a reservado");
-
-            // })
         }).catch(error => {
             console.log("No hubo conexión con culqi");
-
+            this.registroFallido();
         })
+        this.realizaPedido();
+    }
+
+    realizaPedido(){
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
             Swal.fire({
@@ -204,7 +227,6 @@ class Payment extends React.Component{
             this.emitirBoleta()
         }
     }
-
     registroFallido(){
         Swal.fire({
             type: 'error',
@@ -220,6 +242,7 @@ class Payment extends React.Component{
         this.setState({
             activar:!v,
         })
+       
     }
      
     guardaTarjeta(){
@@ -338,7 +361,10 @@ class Payment extends React.Component{
                                                 <ListGroup.Item>
                                                     <Form.Check type="checkbox" aria-label="radio 1" label="Tarjeta Bancaria" onClick={this.usarTarjetaGuardada.bind(this)}></Form.Check>
                                                     <p className="d-flex">
-                                                    <span>  Terminación {this.state.terminacionTarjeta}</span>
+                                                    <span>  Tipo {this.state.terminacionTarjeta.tipo_tarjeta}</span>
+                                                    </p>
+                                                    <p className="d-flex">
+                                                    <span>  Terminación {this.state.terminacionTarjeta.ultimos_cuatro}</span>
                                                     </p>
                                                 </ListGroup.Item>
                                                 :null}
