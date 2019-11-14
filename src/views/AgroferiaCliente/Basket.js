@@ -85,15 +85,17 @@ class Basket extends React.Component {
         localStorage.setItem('subtotal',this.state.subtotal);
         localStorage.setItem('total',this.state.total);
         localStorage.setItem('igv',this.state.igv);
-        APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
-        .then(response => {
-            console.log("cambio de estado de pedido a reservado");
+        console.log("idPedido Basket: ", this.state.idPedido);
+        // APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
+        // .then(response => {
+        //     console.log("cambio de estado de pedido a reservado");
 
-        })
+        // })
     }
 
 
     componentDidMount() {
+        window.scrollTo(0, 0);
         localStorage.setItem('activePage', 0);
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
@@ -195,7 +197,7 @@ class Basket extends React.Component {
                         <div className="row">
                             <div className="col-md-9">
                                 <p>Entrega (recojo en tienda): Gratis</p>
-                                <p>Fecha de recojo: Domingo 2/11/2019</p>
+                                <p>Fecha de recojo: Domingo 17/11/2019</p>
                             </div>
                             <div className="col-md-3 text-right">
                                 <p>Subtotal: S/.{this.state.subtotal}</p>
@@ -205,7 +207,7 @@ class Basket extends React.Component {
                             </div>
                             <div className="col-md-12 mb-5">
                                 <Link  to={"/pago/" + this.state.idPedido} >
-                                    <button class="btn btn-primary py-3 px-4 pl-2 pr-2" onClick={this.handleBasket}
+                                    <button disabled={this.state.idPedido == null} class="btn btn-primary py-3 px-4 pl-2 pr-2" onClick={this.handleBasket}
                                     >Continuar <i></i></button>
                                 </Link>
                             </div>

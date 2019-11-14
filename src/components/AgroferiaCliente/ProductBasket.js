@@ -72,14 +72,15 @@ class ProductBasket extends React.Component {
             discountPrice = discountPrice.toFixed(2).toString();
             pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.props.monto.toFixed(2)}</span><span className="price-sale">S/.{discountPrice}</span></p>;
         }
+        var url = "detalleProducto/" + this.props.idProducto;
         return(
         <tr className="text-center">
             <td className="product-remove" onClick={this.removeProduct}><a href="#"><span className="ion-ios-close"></span></a></td>
 
-            <td className="image-prod"><div className="" > <img className="img-fluid basketImage" src={this.state.imagenProducto} alt="Colorlib Template" /></div></td>
+            <td className="image-prod"><div className="" > <Link to={url}><img className="img-fluid basketImage" src={this.state.imagenProducto} alt="Colorlib Template" /></Link></div></td>
 
             <td className="product-name">
-                <h3>{this.state.nombreProducto}</h3>
+            <Link to={url}><h3>{this.state.nombreProducto}</h3></Link>
             </td>
 
             <td className=""><p>{pricing}</p></td>

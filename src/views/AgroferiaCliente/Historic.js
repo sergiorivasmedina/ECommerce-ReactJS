@@ -17,8 +17,8 @@ class Basket extends React.Component {
         this.state = {
             pedidos: [],
             estados : {
-                3: "Pendiente",
-                4: "Registrado",
+                3: "Por atender",
+                4: "Procesado",
                 5: "Por recoger",
                 6: "Despachado",
                 7: "No recogido",
@@ -34,6 +34,7 @@ class Basket extends React.Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
         localStorage.setItem('activePage', 0);
         APIFerias.get('https://fmh7fxbfoh.execute-api.us-east-2.amazonaws.com/Despliegue/api/pedidos/' + sessionStorage.getItem('idCliente'))
           .then(res=> {

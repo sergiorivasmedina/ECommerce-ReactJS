@@ -26,10 +26,10 @@ class FairComponent extends React.Component {
 
         <div className="row">
           <div className="col-md-5">
-            <a className="img-prod"><img className="img-fluid customImage" src={this.props.imageUrl} alt="Colorlib Template" />
+          <Link to={"/tiendas/" + this.props.idFeria}><img className="img-fluid customImage" src={this.props.imageUrl} alt="Colorlib Template" />
               {status}
               
-            </a>
+            </Link>
           </div>
           <div className="col-md-7 pt-3">
 

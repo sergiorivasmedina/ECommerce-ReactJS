@@ -50,7 +50,8 @@ export default class ProductDetail extends Component {
       idProducto: parseInt(id),
       cantidad: parseFloat(this.state.quantity),
       monto: parseFloat(this.state.product.precio),
-      idTienda: this.state.product.idTienda
+      idTienda: this.state.product.idTienda,
+      idFeria: localStorage.getItem("idFeria")
     }
     console.log(prod)
     APIFerias.post('/Despliegue/api/pedido/producto', prod)
@@ -69,15 +70,17 @@ export default class ProductDetail extends Component {
   }
 
   componentDidMount() {
-
+    window.scrollTo(0, 0);
     if (sessionStorage.getItem("idCliente")) {
       this.state.idUsuario = sessionStorage.getItem("idCliente");
 
     }
+    window.scrollTo(0, 0);
     
 
   }
 
+  
 
   componentWillMount() {
     const { id } = this.props.match.params;
@@ -92,8 +95,13 @@ export default class ProductDetail extends Component {
           simbolo: product.unidadMedida.simbolo,
           categoria: product.subCategoria.categoria.idCategoria,
           quantity: 1,
-          total: product.precio
+          total: product.precio,
+          precio: product.precio,
+          precioFixed: product.precio.toFixed(2),
+          discount: 0
         });
+        
+        console.log(this.state);
         APIFerias.get('Despliegue/api/tienda/perfil/' + this.state.product.idTienda)
         .then(res=> {
         const store = res.data;
@@ -109,6 +117,16 @@ export default class ProductDetail extends Component {
 
 
   render() {
+    let pricing;
+    if (this.state.discount == "0") {
+
+      pricing = <p className="price"><span>S/.{this.state.precioFixed} por {this.state.simbolo}</span></p>;
+  }
+  else {
+      var discountPrice = (100 - parseFloat(this.state.discount)) * parseFloat(this.state.precio) / 100;
+      discountPrice = discountPrice.toFixed(2).toString();
+      pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.state.precioFixed}</span><span className="price-sale pink">S/.{discountPrice} por {this.state.simbolo}</span></p>;
+  }
     return (
       <div>
         <Menu />
@@ -130,9 +148,10 @@ export default class ProductDetail extends Component {
                 </div>
 
                 <div className="col-md-4">
-                  <p>S/. {this.state.product.precio} por {this.state.simbolo}</p>
+                  {pricing}
+                  
                   <label>Cantidad: </label><input className="quantityInput" type="number" min="1"  value={this.state.quantity} onChange={this.updateQuantity}></input>
-                  <p className="pt-2">Total: {this.state.total} </p>
+                  <p className="pt-2">Total: {this.state.total * (100-this.state.discount)/100} </p>
                 </div>
                 <div className="col-md-12">
                   <Link to="/canasta">
