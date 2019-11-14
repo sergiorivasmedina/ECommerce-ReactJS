@@ -72,7 +72,7 @@ export default class ProductDetail extends Component {
     }
 
     componentDidMount() {
-
+        window.scrollTo(0, 0);
         if (sessionStorage.getItem("idCliente")) {
             this.state.idUsuario = sessionStorage.getItem("idCliente");
 

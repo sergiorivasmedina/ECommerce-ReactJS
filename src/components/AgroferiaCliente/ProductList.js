@@ -10,6 +10,7 @@ export default class ProductList extends React.Component {
       products: [],
       activeProducts:[]
     };
+    
   }
 
   componentWillReceiveProps(props) {

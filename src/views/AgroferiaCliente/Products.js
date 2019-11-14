@@ -19,6 +19,7 @@ class Stores extends React.Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
         APIFerias.get('Despliegue/api/producto/categorias/')
           .then(res=> {
             const categories = res.data;

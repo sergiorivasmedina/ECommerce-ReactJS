@@ -244,7 +244,7 @@ class Profile extends React.Component {
     };
 
     componentDidMount() {
-
+        window.scrollTo(0, 0);
         if (sessionStorage.getItem("idUsuario")) {
             var idUSer = sessionStorage.getItem("idUsuario");
 

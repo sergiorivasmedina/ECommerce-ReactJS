@@ -19,11 +19,11 @@ class ShopDescription extends React.Component {
             <div className="product">
         <div className="row">
           <div className="col-md-5">
-            <a className="img-prod"><img className="img-fluid customImage" src={this.props.urlimage==null?"../images/noimage.png":this.props.urlimage}
+          <Link to={url}><img className="img-fluid customImage" src={this.props.urlimage==null?"../images/noimage.png":this.props.urlimage}
                     alt="Colorlib Template"></img>
               {status}
               
-            </a>
+            </Link>
           </div>
           <div className="col-md-7 pt-3 pr-4">
 

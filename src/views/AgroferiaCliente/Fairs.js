@@ -16,7 +16,7 @@ class Fairs extends React.Component {
   }
 
   componentDidMount(){
-    
+    window.scrollTo(0, 0);
     APIFerias.get('/Despliegue/api/ferias')
       .then(res=> {
         const fairs = res.data;
