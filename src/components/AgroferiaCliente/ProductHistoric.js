@@ -77,6 +77,7 @@ class ProductHistoric extends React.Component {
             
 
             <td className="total">S/.{this.state.total}</td>
+            <td className="total">{this.props.estadoDetalle}</td>
         </tr>
         );
 
