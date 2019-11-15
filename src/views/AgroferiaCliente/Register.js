@@ -214,7 +214,15 @@ class Register extends React.Component {
                 username: user,
                 password: password,
                 fechaRegistro: '2019-10-03',
-                dni: dni            };
+                dni: dni,
+                foto: '',
+                idClienteCulqui: '---',
+                object: null,
+                saldo: 0.0,
+                requiereCambiarContrasena: 0,
+                direccion:'',
+                ciudad:''
+            };
             //llamamos el metodo post del api
             APIFerias.post('/Despliegue/api/usuario/cliente/registro', dataAPI)
                 .then(response => {
