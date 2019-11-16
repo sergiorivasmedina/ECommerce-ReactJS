@@ -61,7 +61,7 @@ class HistoricDetail extends React.Component {
             //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
             APIFerias.get('Despliegue/api/pedidos/generico/' + idPedido)
                 .then(res=> {
-                    console.log(res.data)
+                    console.log("HOLA",res.data)
 
                     this.setState({
                         orden:parseInt(idPedido),

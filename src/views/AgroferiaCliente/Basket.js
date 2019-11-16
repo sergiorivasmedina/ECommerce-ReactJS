@@ -82,10 +82,12 @@ class Basket extends React.Component {
     }
 
     handleBasket(){
-        localStorage.setItem('subtotal',this.state.subtotal);
+        localStorage.setItem("subtotal",this.state.subtotal);
         localStorage.setItem('total',this.state.total);
         localStorage.setItem('igv',this.state.igv);
         console.log("idPedido Basket: ", this.state.idPedido);
+        console.log('total',this.state.total);
+        console.log('subtotal',this.state.subtotal);
         // APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
         // .then(response => {
         //     console.log("cambio de estado de pedido a reservado");
@@ -111,9 +113,6 @@ class Basket extends React.Component {
                             const detalless = response.data;
                             this.state.idPedido = res.data.idPedido;
                             this.setState({ detalles:detalless })
-                            console.log("ACA",this.state.detalles);
-                            console.log("ACA",this.state.detalles);
-
                             var arrayAux=this.state.detalles;
 
                             arrayAux=arrayAux.map(function(e,index){
@@ -137,6 +136,8 @@ class Basket extends React.Component {
                                     total: this.state.total+ this.state.detalles[i].cantidad*this.state.detalles[i].monto *(100-this.state.discount)/100 //modificar el discount cuando venga de back
                                     
                                 })
+                                console.log("luego",this.state.total)
+
                                 
                             
                               }
