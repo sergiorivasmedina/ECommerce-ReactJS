@@ -49,7 +49,7 @@ export default class ProductDetail extends Component {
       estado: -1,
       idProducto: parseInt(id),
       cantidad: parseFloat(this.state.quantity),
-      monto: parseFloat(this.state.product.precio),
+      monto: this.state.total,
       idTienda: this.state.product.idTienda,
       idFeria: localStorage.getItem("idFeria")
     }

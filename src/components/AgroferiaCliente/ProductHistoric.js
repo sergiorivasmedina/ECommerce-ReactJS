@@ -34,7 +34,7 @@ class ProductHistoric extends React.Component {
     async updateQuantity(evt) {
         await this.setState({
             quantity: evt.target.value,
-            total: evt.target.value * this.props.monto
+            total: this.props.monto
         });
         var tot = this.state.total;
         console.log("1:",this.props.idDetalle,this.state.quantity,this.state.total)
@@ -71,12 +71,12 @@ class ProductHistoric extends React.Component {
                 <h3>{this.state.nombreProducto}</h3>
             </td>
 
-            <td className="price">S/.{this.props.monto}</td>
+            <td className="price">S/.{(this.props.monto / this.state.quantity)}</td>
             <td className="price">{this.state.quantity}</td>
 
             
 
-            <td className="total">S/.{this.state.total}</td>
+            <td className="total">S/.{this.props.monto}</td>
             <td className="total">{this.props.estadoDetalle}</td>
         </tr>
         );
