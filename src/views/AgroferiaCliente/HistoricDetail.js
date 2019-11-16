@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from '../../components/AgroferiaCliente/Menu';
 import Heading from '../../components/Vegefoods/Heading';
-import ProductHistoric from '../../components/AgroferiaCliente/ProductHistoric';
+import ProductHistoricRate from '../../components/AgroferiaCliente/ProductHistoricRate';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import APIFerias from '../../services/FairsService';
 import moment from 'moment';
@@ -61,8 +61,6 @@ class HistoricDetail extends React.Component {
             //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
             APIFerias.get('Despliegue/api/pedidos/generico/' + idPedido)
                 .then(res=> {
-                    console.log("HOLA",res.data)
-
                     this.setState({
                         orden:parseInt(idPedido),
                         fechaCompra: moment(new Date(res.data.pedido.fecha)).format('DD/MM/YYYY'),
@@ -149,11 +147,12 @@ class HistoricDetail extends React.Component {
                                             <th>Cantidad</th>
                                             <th>Total</th>
                                             <th>Estado</th>
+                                            <th>Valorar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     
-                                    {this.state.detalles.map(detalle => <ProductHistoric  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} estadoDetalle={this.state.estados[detalle.estado]}/>)}
+                                    {this.state.detalles.map(detalle => <ProductHistoricRate  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} estadoDetalle={this.state.estados[detalle.estado]}/>)}
                                     </tbody>
                                 </table>
                             </div>
