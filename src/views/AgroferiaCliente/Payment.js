@@ -107,11 +107,11 @@ class Payment extends React.Component{
                 APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
                 .then(res=>{
                     console.log("Respuesta conexion culqi:",res.data);
+                    this.realizaPedido();
                 }).catch(error => {
                     console.log("No hubo conexión con culqi");
                     this.registroFallido();
                 })
-                this.realizaPedido();
             }
         }else{
             Swal.fire({
@@ -205,11 +205,11 @@ class Payment extends React.Component{
         APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
         .then(res=>{
             console.log("Respuesta conexion culqi:",res.data);
+            this.realizaPedido();
         }).catch(error => {
             console.log("No hubo conexión con culqi");
             this.registroFallido();
         })
-        this.realizaPedido();
     }
 
     realizaPedido(){
