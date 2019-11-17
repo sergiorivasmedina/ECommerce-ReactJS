@@ -25,12 +25,11 @@ export default class SimilarProducts extends React.Component {
       this.setState({ activeProducts:activeProducts });
     } else {
       this.setState({ activeProducts: this.state.products });
-    }
-   
+    }   
   }
 
   componentDidMount() {
-    APIFerias.get('Despliegue/api/productos/feria/' + localStorage.getItem('idFeria'))
+    APIFerias.get('Despliegue/api/productos/feria_promociones/' + localStorage.getItem('idFeria'))
       .then(res=> {
         const products = res.data;
         this.setState({ products:products });
@@ -44,7 +43,7 @@ export default class SimilarProducts extends React.Component {
     return (
       <div>
         <div className="row">
-        {this.state.activeProducts.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount="0"
+        {this.state.activeProducts.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount={product.porcDescuento*100}
           store={product.store} unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
         </div>
       </div>

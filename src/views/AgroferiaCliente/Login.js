@@ -88,9 +88,10 @@ class Login extends React.Component {
         APIFerias.post('/Despliegue/api/usuario/cliente/autenticacion', datauser)
             .then(response => {
                 console.log("buena", response);
-
+                console.log(response);
 
                 sessionStorage.setItem("idUsuario", response.data.idUsuario);
+                console.log(sessionStorage.getItem("idUsuario"));
                 sessionStorage.setItem("idCliente", response.data.idCliente);
                 sessionStorage.setItem("idRol", response.data.idRol);
                 sessionStorage.setItem("idCliente", response.data.idCliente);

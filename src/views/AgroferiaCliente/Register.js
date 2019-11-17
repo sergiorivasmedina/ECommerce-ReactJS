@@ -222,7 +222,7 @@ class Register extends React.Component {
                 .then(response => {
                     console.log("buena", response);
 
-                    
+                    console.log(response);
                     sessionStorage.setItem("idUsuario", response.data.idUsuario);
                     sessionStorage.setItem("idRol", response.data.idRol);
 
