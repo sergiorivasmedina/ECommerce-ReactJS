@@ -94,6 +94,13 @@ class Payment extends React.Component{
     }
 
     openCheckout=(e)=>{
+        if(this.state.usarTarjetaExistente && this.state.guardarTarjetaNueva){
+            Swal.fire({
+                type: 'error',
+                title: 'Lo sentimos',
+                text: 'Solo seleccione una opción: Guardar tarjeta o una tarjeta bancaria',
+            });
+        }else{
         if(localStorage.getItem('total')>=3){
             //abrir culqi
             if(!this.state.usarTarjetaExistente){
@@ -124,6 +131,7 @@ class Payment extends React.Component{
                 text: 'El monto minimo para pagar con tarjeta es S./ 3.00',
             });
         }
+    }
     }
 
     clickBoleta(){
