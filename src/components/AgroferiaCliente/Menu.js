@@ -110,7 +110,7 @@ class Menu extends React.Component {
 
                                 <li className="nav-item"><label className="nav-link pinkButton"><Link to="/Ferias" ><span className="gray">FERIAS</span></Link></label></li>
 
-                                <li className="nav-item"><label className={bottomStores}><Link to={"/tiendas/" + localStorage.getItem('idFeria')}><span className="gray">TIENDAS</span></Link></label></li>
+                                <li className="nav-item"><label className={bottomStores}><Link to={"/tiendas"}><span className="gray">TIENDAS</span></Link></label></li>
                                 <li className="nav-item"><label className={bottomProducts}><Link to="/Productos"><span className="gray">PRODUCTOS</span></Link></label></li>
 
 

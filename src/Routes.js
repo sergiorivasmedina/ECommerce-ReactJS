@@ -49,12 +49,12 @@ const routing = (
       <Route path="/template" component={Template} />
       <Route path="/store" component={Store} />
       <Route path="/ferias" component={Ferias} />
-      <Route path="/tiendas/:id" component={Tiendas} />
+      <Route path="/tiendas" component={Tiendas} />
       <Route path="/productos" component={Productos} />
       <Route path="/canasta" component={Canasta} />
       <Route path="/perfil" component={Perfil} />
-      <Route path="/detalleTienda/:id" component={DetalleTienda} />
-      <Route path="/detalleProducto/:id" component={DetalleProducto} />
+      <Route path="/detalleTienda" component={DetalleTienda} />
+      <Route path="/detalleProducto" component={DetalleProducto} />
       <Route path="/login" component={Login}/>
       <Route path="/historial" component={Historial}/>
       <Route path="/registro" component={Registro}/>

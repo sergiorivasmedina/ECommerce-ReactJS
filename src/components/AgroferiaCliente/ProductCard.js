@@ -20,7 +20,9 @@ class ProductCard extends React.Component {
 
 
       async routeChange() {
-        await sessionStorage.setItem("productId", this.props.id);
+        
+        await sessionStorage.setItem("idProducto", this.props.id);
+        console.log(sessionStorage.getItem("idProducto"));
         let path = "/detalleProducto";
         this.props.history.push(path);
       }
@@ -71,14 +73,14 @@ class ProductCard extends React.Component {
         return (
             <div className="col-lg-3 col-6">
                 <div className="product">
-                <a className="img-prod"><Link to={url}><img className="img-fluid customImage" src={image} alt="Colorlib Template" /> {status} <div className="overlay"></div></Link>
+                <a href="" className="img-prod" onClick={this.routeChange}><img className="img-fluid customImage" src={image} alt="Colorlib Template" /> {status} <div className="overlay"></div>
                         
                        
                     </a>
 
                 
                     <div className="text py-3 pb-4 px-3 text-center">
-                    <Link to={url}><a><h3>{productName}</h3></a></Link>
+                    <a href="" onClick={this.routeChange}><h3>{productName}</h3></a>
                         {tienda}
                         <div className="text-center">
 

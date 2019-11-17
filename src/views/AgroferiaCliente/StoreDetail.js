@@ -28,11 +28,8 @@ export default class StoreDetail extends Component {
     window.scrollTo(0, 0);
   }
   componentWillMount(){
-    const {id} = this.props.match.params;
-    console.log(id);
 
-  
-    APIFerias.get('Despliegue/api/tienda/perfil/' + id)
+    APIFerias.get('Despliegue/api/tienda/perfil/' + sessionStorage.getItem("idTienda"))
       .then(res=> {
         const profile = res.data;
         console.log(profile);
@@ -58,7 +55,7 @@ export default class StoreDetail extends Component {
         })
       } 
 
-      APIFerias.get('Despliegue/api/productos/tienda/' + id)
+      APIFerias.get('Despliegue/api/productos/tienda/' + sessionStorage.getItem("idTienda"))
       .then(res=> {
         const products = res.data;
         console.log(products);
@@ -75,7 +72,7 @@ export default class StoreDetail extends Component {
       <div>
         <Menu />
           <div className="container">
-          <Link to={"/tiendas/" + localStorage.getItem('idFeria')}>
+          <Link to={"/tiendas"}>
               <ReturnButton previousPage="Tiendas"></ReturnButton></Link>
               
                 <ShopProfile

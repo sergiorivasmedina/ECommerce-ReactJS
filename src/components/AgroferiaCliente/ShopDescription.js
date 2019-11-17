@@ -2,28 +2,43 @@
 
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class ShopDescription extends React.Component {
     
+    constructor(props){
+      super(props);
+      this.routeChange = this.routeChange.bind(this);
+    }
+
+    async routeChange() {
+      await sessionStorage.setItem("idTienda", this.props.index);
+      console.log(sessionStorage.getItem("idTienda"));
+      let path = "/detalleTienda";
+      this.props.history.push(path);
+    }
+
     render() {
       var shopdetail = this.props.shopdetail;
         if (shopdetail.length > 85) {
           shopdetail = this.props.shopdetail.substring(0,85).concat('...');
         }
     let status;
-    console.log("envia:" , this.props.like)
-    var url = "/detalleTienda/" + this.props.index;
+
+    
+  
+
     return (
 
         <div className="col-md-6">
             <div className="product">
         <div className="row">
           <div className="col-md-5">
-          <Link to={url}><img className="img-fluid customImage" src={this.props.urlimage==null?"../images/noimage.png":this.props.urlimage}
+          <a><img className="img-fluid customImage" src={this.props.urlimage==null?"../images/noimage.png":this.props.urlimage}
                     alt="Colorlib Template"></img>
               {status}
               
-            </Link>
+            </a>
           </div>
           <div className="col-md-7 pt-3 pr-4">
 
@@ -34,7 +49,7 @@ class ShopDescription extends React.Component {
           
       
             <p className="pt-4">{shopdetail}</p>
-            <Link to={url}><button className="width100 pinkButton btn pt-1 pb-1 px-4" onClick={this.addproduct}>Ingresar a tienda</button></Link>
+            <a><button className="width100 pinkButton btn pt-1 pb-1 px-4" onClick={this.routeChange}>Ingresar a tienda</button></a>
           </div>
         </div>
         </div>
@@ -45,4 +60,4 @@ class ShopDescription extends React.Component {
 
 }
 
-export default ShopDescription;
+export default withRouter(ShopDescription);

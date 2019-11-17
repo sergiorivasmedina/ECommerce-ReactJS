@@ -17,6 +17,13 @@ export default class SimilarProducts extends React.Component {
     this.filter(props.filter);
   }
 
+  async routeChange() {
+    await sessionStorage.setItem("idProducto", this.props.id);
+    let path = "/detalleProducto";
+    this.props.history.push(path);
+  }
+
+
   filter(filterValue) {
     if (filterValue != "Todos") {
       var activeProducts = this.state.products.filter(function(p){

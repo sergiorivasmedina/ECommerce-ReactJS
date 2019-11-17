@@ -36,7 +36,6 @@ export default class ProductDetail extends Component {
   }
 
   addproduct = (event) => {
-    const { id } = this.props.match.params;
     var prod = {
       idPedido: "",
       idTipoMedioPago: 1,
@@ -47,7 +46,7 @@ export default class ProductDetail extends Component {
       igv: 0.18,
       total: this.state.total ,
       estado: -1,
-      idProducto: parseInt(id),
+      idProducto: parseInt(sessionStorage.getItem("idProducto")),
       cantidad: parseFloat(this.state.quantity),
       monto: this.state.total,
       idTienda: this.state.product.idTienda,
@@ -83,11 +82,10 @@ export default class ProductDetail extends Component {
   
 
   componentWillMount() {
-    const { id } = this.props.match.params;
-    
+
     
 
-    APIFerias.get('Despliegue/api/producto/' + id)
+    APIFerias.get('Despliegue/api/producto/' + sessionStorage.getItem("idProducto"))
       .then(res => {
         const product = res.data;
 

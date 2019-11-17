@@ -25,7 +25,7 @@ export default class ProductList extends React.Component {
   }
 
   componentDidMount() {
-    APIFerias.get('Despliegue/api/productos/feria_promociones/' + localStorage.getItem('idFeria'))
+    APIFerias.get('Despliegue/api/productos/feria_promociones/' + sessionStorage.getItem('idFeria'))
       .then(res=> {
         const products = res.data;
         this.setState({ products:products });
