@@ -29,7 +29,7 @@ class Payment extends React.Component{
           usarTarjetaExistente:false,/**Procesa culqi con la tarjeta guardad previamente */
           guardarTarjetaNueva:false,/**Guarda tarjeta, si existe una previa la chanca */
           tieneTarjeta:false,
-          terminacionTarjeta:''/**terminacion de la tarjeta guardada previamente */
+          terminacionTarjeta:null/**terminacion de la tarjeta guardada previamente */
         };
     }
     componentDidMount() {
@@ -38,12 +38,14 @@ class Payment extends React.Component{
     componentWillMount(){
         console.log("location",window.location);
         const {idPedido} = this.props.match.params;
+        const st = localStorage.getItem('subtotal')
         this.setState({
             idPedido: idPedido,
-            subtotal: localStorage.getItem('subtotal'),
+            subtotal: st,
             total: localStorage.getItem('total'),
             igv:localStorage.getItem('igv')
         })
+        
         if(idPedido!=null){
                 window.Payment = this;
                 window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
@@ -77,15 +79,51 @@ class Payment extends React.Component{
                     this.setState({ usuario:client})
             })
         }
+         /**Preguntar si hay tarjeta guardada */
+         APIFerias.get('/Despliegue/api/pagos/verInfoTarjeta/' + sessionStorage.getItem("idUsuario"))
+         .then(res=>{
+             console.log("infoTarjeta:", res.data);
+             this.setState({
+                 terminacionTarjeta:res.data,
+                 tieneTarjeta:true
+             })
+         }).catch(error=>console.log(error))
         /**Traer data de la tarjeta */
+
         
     }
 
     openCheckout=(e)=>{
+        if(this.state.usarTarjetaExistente && this.state.guardarTarjetaNueva){
+            Swal.fire({
+                type: 'error',
+                title: 'Lo sentimos',
+                text: 'Solo seleccione una opción: Guardar tarjeta o una tarjeta bancaria',
+            });
+        }else{
         if(localStorage.getItem('total')>=3){
             //abrir culqi
-            window.Culqi.open();
-            e.preventDefault();
+            if(!this.state.usarTarjetaExistente){
+                window.Culqi.open();
+                e.preventDefault();
+            }else{
+                let montoI=this.state.total*100;
+                let info={
+                    token:'pk_token_xxxssdfsdfss',
+                    monto:montoI.toString(),
+                    correo:this.state.usuario.correo,
+                    usarTarjetaExistente:this.state.usarTarjetaExistente,
+                    guardarTarjetaNueva:this.state.guardarTarjetaNueva
+                }
+                APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
+                .then(res=>{
+                    console.log("Respuesta conexion culqi:",res.data);
+                    this.realizaPedido();
+                }).catch(error => {
+                    console.log("No hubo conexión con culqi");
+                    this.registroFallido();
+                })
+            }
         }else{
             Swal.fire({
                 type: 'error',
@@ -93,6 +131,7 @@ class Payment extends React.Component{
                 text: 'El monto minimo para pagar con tarjeta es S./ 3.00',
             });
         }
+    }
     }
 
     clickBoleta(){
@@ -167,7 +206,7 @@ class Payment extends React.Component{
     }
 
     registroExitoso(){
-        let montoI=this.state.total*100;
+        let montoI=localStorage.getItem('total')*100;
         let info={
             token:window.Culqi.token.id,
             monto:montoI.toString(),
@@ -177,21 +216,18 @@ class Payment extends React.Component{
         }
         APIFerias.post('/Despliegue/api/pagos/registrarPago/' +  sessionStorage.getItem("idUsuario"), info)
         .then(res=>{
-
             console.log("Respuesta conexion culqi:",res.data);
-
-            //Hacer cambio de estado del pedido
-            // APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
-            // .then(response => {
-            //     console.log("cambio de estado de pedido a reservado");
-
-            // })
+            this.realizaPedido();
         }).catch(error => {
             console.log("No hubo conexión con culqi");
-
+            this.registroFallido();
         })
+    }
+
+    realizaPedido(){
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
+            console.log("res",res)
             Swal.fire({
                 type: 'success',
                 title: 'Tu pedido ha sido procesado correctamente',
@@ -204,7 +240,6 @@ class Payment extends React.Component{
             this.emitirBoleta()
         }
     }
-
     registroFallido(){
         Swal.fire({
             type: 'error',
@@ -220,6 +255,7 @@ class Payment extends React.Component{
         this.setState({
             activar:!v,
         })
+       
     }
      
     guardaTarjeta(){
@@ -338,7 +374,10 @@ class Payment extends React.Component{
                                                 <ListGroup.Item>
                                                     <Form.Check type="checkbox" aria-label="radio 1" label="Tarjeta Bancaria" onClick={this.usarTarjetaGuardada.bind(this)}></Form.Check>
                                                     <p className="d-flex">
-                                                    <span>  Terminación {this.state.terminacionTarjeta}</span>
+                                                    <span>  Tipo {this.state.terminacionTarjeta.tipo_tarjeta}</span>
+                                                    </p>
+                                                    <p className="d-flex">
+                                                    <span>  Terminación {this.state.terminacionTarjeta.ultimos_cuatro}</span>
                                                     </p>
                                                 </ListGroup.Item>
                                                 :null}

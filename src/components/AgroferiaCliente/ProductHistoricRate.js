@@ -1,21 +1,23 @@
 import React from 'react';
 import APIFerias from '../../services/FairsService';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
 
-class ProductHistoric extends React.Component {
+class ProductHistoricRate extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             quantity: this.props.cantidad,
             total: this.props.cantidad*this.props.monto,
+            rating: 0
 
             
         }
         
     this.updateQuantity = this.updateQuantity.bind(this);
     this.removeProduct = this.removeProduct.bind(this);
+    this.changeRating = this.changeRating.bind(this);
     }
 
     componentDidMount() {
@@ -61,6 +63,12 @@ class ProductHistoric extends React.Component {
       })
     }
 
+    changeRating( newRating, name ) {
+        this.setState({
+          rating: newRating
+        });
+      }
+
     render() {
         return(
         <tr className="text-center">
@@ -78,6 +86,9 @@ class ProductHistoric extends React.Component {
 
             <td className="total">S/.{this.props.monto}</td>
             <td className="total">{this.props.estadoDetalle}</td>
+            <td className="stars"> <StarRatings rating={this.state.rating} starRatedColor="blue" 
+                changeRating={this.changeRating} numberOfStars={5} starDimension="25px"
+                starSpacing="3px" name='rating' />  </td>
         </tr>
         );
 
@@ -87,4 +98,4 @@ class ProductHistoric extends React.Component {
 }
 
 
-export default ProductHistoric;
+export default ProductHistoricRate;
