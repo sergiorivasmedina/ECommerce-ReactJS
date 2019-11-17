@@ -68,6 +68,7 @@ export default class StoreList extends React.Component {
             title: '¡Cambio realizado!',
             text: '¡Elimino una tienda favorita!',
         });
+        window.location.reload();
       }).catch(error => {
         console.log("error",error);
         Swal.fire({
@@ -91,6 +92,9 @@ export default class StoreList extends React.Component {
             title: '¡Nueva tienda favorita!',
             text: '¡Añadio una tienda favorita!',
         });
+        
+        window.location.reload();
+        
       }).catch(error => {
         Swal.fire({
             type: 'error',
@@ -99,6 +103,7 @@ export default class StoreList extends React.Component {
         })
       })
     }
+    
   }
   render() {
     let filterStore = this.state.stores.filter(

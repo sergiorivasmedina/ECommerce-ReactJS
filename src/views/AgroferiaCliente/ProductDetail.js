@@ -7,8 +7,9 @@ import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import ProductProfile from '../../components/AgroferiaCliente/ProductProfile';
 import SimilarProducts from '../../components/AgroferiaCliente/SimilarProducts';
 import Swal from 'sweetalert2';
+import { withRouter } from 'react-router-dom';
 
-export default class ProductDetail extends Component {
+class ProductDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -22,7 +23,7 @@ export default class ProductDetail extends Component {
     }
     this.updateQuantity = this.updateQuantity.bind(this);
     this.addproduct = this.addproduct.bind(this);
-
+    this.addproductnow = this.addproductnow.bind(this);
   }
 
 
@@ -33,6 +34,12 @@ export default class ProductDetail extends Component {
       total: evt.target.value * this.state.product.precio
     });
     console.log(this.state.quantity);
+  }
+
+  addproductnow = (event) => {
+    this.addproduct(event);
+    let path = "/canasta";
+    this.props.history.push(path);
   }
 
   addproduct = (event) => {
@@ -65,7 +72,6 @@ export default class ProductDetail extends Component {
         return response;
 
       })
-
   }
 
   componentDidMount() {
@@ -85,7 +91,7 @@ export default class ProductDetail extends Component {
 
     
 
-    APIFerias.get('Despliegue/api/producto/' + sessionStorage.getItem("idProducto"))
+    APIFerias.get('Despliegue/api/productos/descuento/' + sessionStorage.getItem("idProducto"))
       .then(res => {
         const product = res.data;
 
@@ -97,7 +103,7 @@ export default class ProductDetail extends Component {
           total: product.precio*this.state.quantity,
           precio: product.precio,
           precioFixed: product.precio.toFixed(2),
-          discount: 0
+          discount: product.porcDescuento
         });
 
         console.log("PRODUCTO: ",this.state.product);
@@ -155,9 +161,9 @@ export default class ProductDetail extends Component {
                   <p className="pt-2">Total: {this.state.total * (100-this.state.discount)/100} </p>
                 </div>
                 <div className="col-md-12">
-                  <Link to="/canasta">
+                  
                  
-                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2" onClick={this.addproduct}>Comprar ya</button></Link>
+                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2" onClick={this.addproductnow}>Comprar ya</button>
                   <button className="pinkButton btn pt-2 pb-2 px-4" onClick={this.addproduct}>Añadir a la canasta</button>
                 </div>
               </div>
@@ -177,3 +183,5 @@ export default class ProductDetail extends Component {
     )
   }
 }
+
+export default withRouter(ProductDetail);
