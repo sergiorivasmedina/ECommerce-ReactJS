@@ -167,8 +167,9 @@ export default class ProductDetail extends Component {
           </div>
           <div className="row pt-5">
             <h4>Productos relacionados</h4>
+            </div>
             <SimilarProducts filter={this.state.categoria}></SimilarProducts>
-          </div>
+      
           <div className="row pt-5">
             <h4>Opiniones de clientes</h4>
           </div>

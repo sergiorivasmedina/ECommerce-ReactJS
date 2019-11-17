@@ -17,8 +17,8 @@ class Menu extends React.Component {
 
     componentDidMount() {
 
-        if (sessionStorage.getItem("idUsuario")) {
-            var idUSer = sessionStorage.getItem("idUsuario");
+        if (sessionStorage.getItem("idCliente")) {
+            var idUSer = sessionStorage.getItem("idCliente");
 
 
             APIFerias.get('/Despliegue/api/usuario/cliente/' + idUSer)

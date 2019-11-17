@@ -12,21 +12,24 @@ class FairComponent extends React.Component {
 
   handleClick = (event, nombre) => {
     //localStorage.setItem('nombreFeria', this.props.name);
-    console.log("nombre de la feria: ", nombre);
-    console.log("hola carla cachis");
   }
 
 
 
   render() {
     let status;
-
+    let image;
+    if (this.props.imageUrl == null || this.props.imageUrl == "") {
+      image = "../images/AgroferiaCliente/logo_blanco.JPG";
+    } else {
+      image = this.props.imageUrl;
+    }
     return (
       <div className="product fairCard col-md-6">
 
         <div className="row">
           <div className="col-md-5">
-          <Link to={"/tiendas/" + this.props.idFeria}><img className="img-fluid customImage" src={this.props.imageUrl} alt="Colorlib Template" />
+          <Link to={"/tiendas/" + this.props.idFeria}><img className="img-fluid customImage" src={image} alt="Colorlib Template" />
               {status}
               
             </Link>

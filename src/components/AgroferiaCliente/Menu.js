@@ -18,14 +18,11 @@ class Menu extends React.Component {
     }
 
     componentDidMount() {
-
-
-
-
+        console.log(sessionStorage.getItem("idUsuario"));
         if (sessionStorage.getItem("idUsuario")) {
             var idUSer = sessionStorage.getItem("idUsuario");
             var idCliente = sessionStorage.getItem("idCliente");
-            this.setState({ user: idUSer });
+            this.setState({ user: idCliente });
             APIFerias.get('Despliegue/api/pedido/' + idCliente)
                 .then(res => {
                     console.log("menupedido", res.data);
@@ -37,9 +34,10 @@ class Menu extends React.Component {
                         })
                 })
 
-            APIFerias.get('/Despliegue/api/usuario/cliente/' + idUSer)
+            APIFerias.get('/Despliegue/api/usuario/cliente/' + idCliente)
                 .then(res => {
                     const client = res.data;
+                    console.log(client);
                     this.setState({ client: client, nombre: client.nombres, cierre: "Salir" })
                     console.log(this.state.client);
                 })

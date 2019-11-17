@@ -11,7 +11,6 @@ class ProductCard extends React.Component {
             store: ""
         }
         this.routeChange = this.routeChange.bind(this);
-        this.routeChange2 = this.routeChange2.bind(this);
     }
     componentDidMount() {
 
@@ -20,13 +19,7 @@ class ProductCard extends React.Component {
 
 
 
-    routeChange() {
-        window.location.href = "detalleProducto/" + this.props.id;
-      }
-
-
-
-      async routeChange2() {
+      async routeChange() {
         await sessionStorage.setItem("productId", this.props.id);
         let path = "/detalleProducto";
         this.props.history.push(path);
@@ -78,10 +71,12 @@ class ProductCard extends React.Component {
         return (
             <div className="col-lg-3 col-6">
                 <div className="product">
-                <a><Link to={url}><img className="img-fluid customImage" src={image} alt="Colorlib Template" /></Link>
-                        {status}
-                        <div className="overlay"></div>
+                <a className="img-prod"><Link to={url}><img className="img-fluid customImage" src={image} alt="Colorlib Template" /> {status} <div className="overlay"></div></Link>
+                        
+                       
                     </a>
+
+                
                     <div className="text py-3 pb-4 px-3 text-center">
                     <Link to={url}><a><h3>{productName}</h3></a></Link>
                         {tienda}
