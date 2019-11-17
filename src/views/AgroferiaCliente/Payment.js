@@ -38,12 +38,14 @@ class Payment extends React.Component{
     componentWillMount(){
         console.log("location",window.location);
         const {idPedido} = this.props.match.params;
+        const st = localStorage.getItem('subtotal')
         this.setState({
             idPedido: idPedido,
-            subtotal: localStorage.getItem('subtotal'),
+            subtotal: st,
             total: localStorage.getItem('total'),
             igv:localStorage.getItem('igv')
         })
+        
         if(idPedido!=null){
                 window.Payment = this;
                 window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
@@ -86,6 +88,8 @@ class Payment extends React.Component{
                  tieneTarjeta:true
              })
          }).catch(error=>console.log(error))
+        /**Traer data de la tarjeta */
+
         
     }
 
@@ -194,7 +198,7 @@ class Payment extends React.Component{
     }
 
     registroExitoso(){
-        let montoI=this.state.total*100;
+        let montoI=localStorage.getItem('total')*100;
         let info={
             token:window.Culqi.token.id,
             monto:montoI.toString(),
@@ -215,6 +219,7 @@ class Payment extends React.Component{
     realizaPedido(){
         APIFerias.put('/Despliegue/api/pedido/'+ this.state.idPedido +'/realizado')
         .then(res=>{
+            console.log("res",res)
             Swal.fire({
                 type: 'success',
                 title: 'Tu pedido ha sido procesado correctamente',

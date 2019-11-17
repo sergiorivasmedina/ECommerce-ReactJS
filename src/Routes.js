@@ -30,6 +30,7 @@ import Calendario from './views/AgroferiaCliente/Calendar';
 import Historial from './views/AgroferiaCliente/Historic';
 import DetalleHistorial from './views/AgroferiaCliente/HistoricDetail';
 import OrderSummary from './views/AgroferiaCliente/OrderSummary';
+import Mapa from './views/AgroferiaCliente/Map';
 
 
 const routing = (
@@ -59,6 +60,7 @@ const routing = (
       <Route path="/registro" component={Registro}/>
       <Route path="/pago/:idPedido" component={PagoFinal}/>
       <Route path="/calendario" component={Calendario}/>
+      <Route path="/mapa" component={Mapa}/>
       <Route path="/resumen/:idPedido" component={OrderSummary}/>
       <Route path="/detalleHistorial/:idPedido" component={DetalleHistorial}/>
       <Route component={NotFound}/>

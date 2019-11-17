@@ -49,11 +49,11 @@ export default class ProductDetail extends Component {
       estado: -1,
       idProducto: parseInt(id),
       cantidad: parseFloat(this.state.quantity),
-      monto: parseFloat(this.state.product.precio),
+      monto: this.state.total,
       idTienda: this.state.product.idTienda,
       idFeria: localStorage.getItem("idFeria")
     }
-    console.log(prod)
+    console.log("ACA",prod)
     APIFerias.post('/Despliegue/api/pedido/producto', prod)
       .then(response => {
         console.log("Producto añadido")
@@ -90,16 +90,19 @@ export default class ProductDetail extends Component {
     APIFerias.get('Despliegue/api/producto/' + id)
       .then(res => {
         const product = res.data;
+
         this.setState({
           product: product,
           simbolo: product.unidadMedida.simbolo,
           categoria: product.subCategoria.categoria.idCategoria,
           quantity: 1,
-          total: product.precio,
+          total: product.precio*this.state.quantity,
           precio: product.precio,
           precioFixed: product.precio.toFixed(2),
           discount: 0
         });
+
+        console.log("PRODUCTO: ",this.state.product);
         
         console.log(this.state);
         APIFerias.get('Despliegue/api/tienda/perfil/' + this.state.product.idTienda)
