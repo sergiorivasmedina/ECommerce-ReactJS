@@ -35,7 +35,7 @@ class HistoricDetail extends React.Component {
             estado:"COMPLETADO",
             fechaCompra:null,
             estados : {
-                3: "Pendiente",
+                3: "Por atender",
                 4: "Registrado",
                 5: "Por recoger",
                 6: "Despachado",
@@ -147,7 +147,7 @@ class HistoricDetail extends React.Component {
                                             <th>Cantidad</th>
                                             <th>Total</th>
                                             <th>Estado</th>
-                                            <th>Valorar</th>
+                                            <th>Valoración/Reclamo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
