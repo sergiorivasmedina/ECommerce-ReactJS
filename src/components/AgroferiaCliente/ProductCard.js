@@ -11,7 +11,6 @@ class ProductCard extends React.Component {
             store: ""
         }
         this.routeChange = this.routeChange.bind(this);
-        this.routeChange2 = this.routeChange2.bind(this);
     }
     componentDidMount() {
 
@@ -20,13 +19,7 @@ class ProductCard extends React.Component {
 
 
 
-    routeChange() {
-        window.location.href = "detalleProducto/" + this.props.id;
-      }
-
-
-
-      async routeChange2() {
+      async routeChange() {
         await sessionStorage.setItem("productId", this.props.id);
         let path = "/detalleProducto";
         this.props.history.push(path);

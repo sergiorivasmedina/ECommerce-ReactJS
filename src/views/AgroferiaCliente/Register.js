@@ -35,7 +35,9 @@ class Register extends React.Component {
             password: '',
             passwordcorrect: true,
             confirmedpassword: '',
-            isPaswordCorrect: true
+            isPaswordCorrect: true,
+            direccion: '',
+            ciudad: ''
 
         };
 

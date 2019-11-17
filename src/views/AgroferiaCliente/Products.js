@@ -34,7 +34,6 @@ class Stores extends React.Component {
         var element = document.getElementById(type);
         element.classList.toggle("active");    
         this.setState({activeElement: type});
-        console.log("DA");
     }
 
     updateSearch(event) {

@@ -101,7 +101,7 @@ h1, h2, h3, h4, h5,
 	z-index: 3;
 	padding: 0;
 	@include media-breakpoint-down(md) {
-		background: $black!important;
+		background: $white!important;
 		position: relative;
 		top: 0;
 		padding: 10px 15px;

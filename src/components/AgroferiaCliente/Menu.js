@@ -17,7 +17,7 @@ class Menu extends React.Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
 
 
@@ -40,6 +40,7 @@ class Menu extends React.Component {
             APIFerias.get('/Despliegue/api/usuario/cliente/' + idUSer)
                 .then(res => {
                     const client = res.data;
+                    console.log(client);
                     this.setState({ client: client, nombre: client.nombres, cierre: "Salir" })
                     console.log(this.state.client);
                 })
