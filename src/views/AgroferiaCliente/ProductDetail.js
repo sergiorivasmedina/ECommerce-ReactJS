@@ -169,8 +169,11 @@ class ProductDetail extends Component {
                 </div>
                 <div className="col-md-12">
                   
-                 
-                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2" href="/Canasta"  onClick={this.addproduct}>Comprar ya</button>
+                <Link  to={"/Canasta"}>
+
+                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2"  onClick={this.addproduct}>Comprar ya</button>
+                    </Link>
+
                   <button className="pinkButton btn pt-2 pb-2 px-4" onClick={this.addproduct}>Añadir a la canasta</button>
                 </div>
               </div>

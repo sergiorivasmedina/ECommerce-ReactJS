@@ -25,8 +25,8 @@ class ProductBasket extends React.Component {
                 this.setState({
                     nombreProducto: res.data.nombre,
                     imagenProducto: res.data.imagen,
-                    total: this.props.monto,
-                    precio: this.props.monto / this.props.cantidad
+                    total: this.props.monto.toFixed(2),
+                    precio: (this.props.monto / this.props.cantidad).toFixed(2)
 
                 });         
             })
