@@ -5,6 +5,14 @@ import SearchBarMenu from '../../components/AgroferiaCliente/SearchBarMenu';
 import APIFerias from '../../services/FairsService'
 import Autosuggest from 'react-autosuggest';
 
+
+var lista =[]
+APIFerias.get('/Despliegue/api/tiendas/feria/virtual/1')
+            .then(res =>{
+                lista = res.data
+                console.log("lista");
+                console.log(lista);
+            })
 const listaPrueba= [
     {
     name: 'Tienda 1',
@@ -14,20 +22,21 @@ const listaPrueba= [
     name: 'Tienda 2',
     year: 2012
   }]
-const getSuggestionValue = suggestion => suggestion.name;
+const getSuggestionValue = suggestion => suggestion.empresa.nombreComercial;
 const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-  
-    return inputLength === 0 ? [] : listaPrueba.filter(lang =>
-      lang.name.toLowerCase().slice(0, inputLength) === inputValue
+    console.log("lista2");
+    console.log(lista);
+    return inputLength === 0 ? [] : lista.filter(lang =>
+      lang.empresa.nombreComercial.toLowerCase().slice(0, inputLength) === inputValue
     );
   }
 
   const renderSuggestion = suggestion => (
-    <div>
-      {suggestion.name}
-    </div>
+    <span>
+        {suggestion.empresa.nombreComercial}
+    </span>
   )
 
 
