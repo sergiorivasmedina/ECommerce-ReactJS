@@ -44,6 +44,7 @@ class ProductDetail extends Component {
     this.addproduct(event);
     let path = "/canasta";
     this.props.history.push(path);
+    
   }
 
   addproduct = (event) => {
@@ -100,7 +101,6 @@ class ProductDetail extends Component {
     APIFerias.get('Despliegue/api/productos/descuento/' + sessionStorage.getItem("idProducto"))
       .then(res => {
         const product = res.data;
-
         this.setState({
           product: product,
           simbolo: product.unidadMedida.simbolo,
@@ -111,7 +111,7 @@ class ProductDetail extends Component {
           precioFixed: product.precio.toFixed(2),
           discount: product.porcDescuento
         });
-
+        console.log(this.state.precioFixed);
         console.log("PRODUCTO: ",this.state.product);
         
         console.log(this.state);
@@ -136,7 +136,7 @@ class ProductDetail extends Component {
       pricing = <p className="price"><span>S/.{this.state.precioFixed} por {this.state.simbolo}</span></p>;
   }
   else {
-      var discountPrice = (100 - parseFloat(this.state.discount)) * parseFloat(this.state.precio) / 100;
+      var discountPrice = (1 - parseFloat(this.state.discount)) * parseFloat(this.state.precio);
       discountPrice = discountPrice.toFixed(2).toString();
       pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.state.precioFixed}</span><span className="price-sale pink">S/.{discountPrice} por {this.state.simbolo}</span></p>;
   }
@@ -164,7 +164,7 @@ class ProductDetail extends Component {
                   {pricing}
                   
                   <label>Cantidad: </label><input className="quantityInput" type="number" min="1"  value={this.state.quantity} onChange={this.updateQuantity}></input>
-                  <p className="pt-2">Total: {this.state.total * (100-this.state.discount)/100} </p>
+                  <p className="pt-2">Total: {(this.state.total * (1-this.state.discount)).toFixed(2)} </p>
                 </div>
                 <div className="col-md-12">
                   
