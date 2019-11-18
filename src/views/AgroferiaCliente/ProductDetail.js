@@ -180,9 +180,9 @@ class ProductDetail extends Component {
             </div>
             <SimilarProducts filter={this.state.categoria}></SimilarProducts>
       
-          <div className="row pt-5">
+          {/* <div className="row pt-5">
             <h4>Opiniones de clientes</h4>
-          </div>
+          </div> */}
         </div>
         <FooterComponent />
       </div >
