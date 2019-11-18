@@ -20,7 +20,9 @@ class ProductCard extends React.Component {
 
 
       async routeChange() {
-        await sessionStorage.setItem("productId", this.props.id);
+        
+        await sessionStorage.setItem("idProducto", this.props.id);
+        console.log(sessionStorage.getItem("idProducto"));
         let path = "/detalleProducto";
         this.props.history.push(path);
       }
@@ -40,13 +42,13 @@ class ProductCard extends React.Component {
 
         if (this.props.discount == "0") {
 
-            pricing = <p className="price"><span>S/.{this.props.price} x {this.props.unit}</span></p>;
+            pricing = <span className="price">S/.{this.props.price} x {this.props.unit}</span>;
         }
         else {
             var discountPrice = (100 - parseFloat(this.props.discount)) * parseFloat(this.props.price) / 100;
             discountPrice = discountPrice.toString();
             status = <span className="status">{this.props.discount}%</span>;
-            pricing = <p className="price"><span className="mr-2 price-dc">S/.{this.props.price}</span><span className="price-sale">S/.{discountPrice} x {this.props.unit}</span></p>;
+            pricing = <span className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.props.price}</span><span className="price-sale pink">S/.{discountPrice} x {this.props.unit}</span></span>;
         }
 
         APIFerias.get('/Despliegue/api/tienda/perfil/' + this.props.store)
@@ -71,14 +73,14 @@ class ProductCard extends React.Component {
         return (
             <div className="col-lg-3 col-6">
                 <div className="product">
-                <a className="img-prod"><Link to={url}><img className="img-fluid customImage" src={image} alt="Colorlib Template" /> {status} <div className="overlay"></div></Link>
+                <a href="" className="img-prod" onClick={this.routeChange}><img className="img-fluid customImage" src={image} alt="Colorlib Template" /> {status} <div className="overlay"></div>
                         
                        
                     </a>
 
                 
                     <div className="text py-3 pb-4 px-3 text-center">
-                    <Link to={url}><a><h3>{productName}</h3></a></Link>
+                    <a href="" onClick={this.routeChange}><h3>{productName}</h3></a>
                         {tienda}
                         <div className="text-center">
 

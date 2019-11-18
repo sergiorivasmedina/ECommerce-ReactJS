@@ -18,14 +18,12 @@ class Menu extends React.Component {
     }
 
     componentDidMount() {
-        console.log(sessionStorage.getItem("idUsuario"));
         if (sessionStorage.getItem("idUsuario")) {
             var idUSer = sessionStorage.getItem("idUsuario");
             var idCliente = sessionStorage.getItem("idCliente");
             this.setState({ user: idCliente });
-            APIFerias.get('Despliegue/api/pedido/' + idCliente)
+            /*APIFerias.get('Despliegue/api/pedido/' + idCliente)
                 .then(res => {
-                    console.log("menupedido", res.data);
                     //traer el detallePedido del idPedido, el cual es el actual
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
                         .then(response => {
@@ -33,13 +31,11 @@ class Menu extends React.Component {
                             this.setState({ cantprod: response.data.length })
                         })
                 })
-
+*/
             APIFerias.get('/Despliegue/api/usuario/cliente/' + idCliente)
                 .then(res => {
                     const client = res.data;
-                    console.log(client);
                     this.setState({ client: client, nombre: client.nombres, cierre: "Salir" })
-                    console.log(this.state.client);
                 })
         }
 
@@ -60,7 +56,6 @@ class Menu extends React.Component {
         }
         var userActions;
         var basketUrl;
-        console.log(this.state.user);
         if(this.state.user == "") {
             basketUrl = "/login"
             userActions = <ul className="navbar-nav ml-auto row">
@@ -110,7 +105,7 @@ class Menu extends React.Component {
 
                                 <li className="nav-item"><label className="nav-link pinkButton"><Link to="/Ferias" ><span className="gray">FERIAS</span></Link></label></li>
 
-                                <li className="nav-item"><label className={bottomStores}><Link to={"/tiendas/" + localStorage.getItem('idFeria')}><span className="gray">TIENDAS</span></Link></label></li>
+                                <li className="nav-item"><label className={bottomStores}><Link to={"/tiendas"}><span className="gray">TIENDAS</span></Link></label></li>
                                 <li className="nav-item"><label className={bottomProducts}><Link to="/Productos"><span className="gray">PRODUCTOS</span></Link></label></li>
 
 

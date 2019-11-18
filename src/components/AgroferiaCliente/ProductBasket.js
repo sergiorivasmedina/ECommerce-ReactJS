@@ -9,9 +9,7 @@ class ProductBasket extends React.Component {
         super(props);
         this.state = {
             quantity: this.props.cantidad,
-            discount: this.props.discount,
-            total: this.props.cantidad*this.props.monto*(100-this.props.discount)/100
-
+            total: 0
             
         }
         
@@ -19,13 +17,16 @@ class ProductBasket extends React.Component {
     this.removeProduct = this.removeProduct.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
-        APIFerias.get('Despliegue/api/producto/' + this.props.idProducto)
+        APIFerias.get('Despliegue/api/productos/descuento/' + this.props.idProducto)
             .then(res => {
                 this.setState({
                     nombreProducto: res.data.nombre,
-                    imagenProducto: res.data.imagen
+                    imagenProducto: res.data.imagen,
+                    discount: res.data.porcDescuento,
+                    total: this.props.cantidad*this.props.monto*(100-res.data.porcDescuento)/100
+
                 });         
             })
         
@@ -35,7 +36,7 @@ class ProductBasket extends React.Component {
     async updateQuantity(evt) {
         await this.setState({
             quantity: evt.target.value,
-            total: evt.target.value * this.props.monto  * (100-this.props.discount)/100,
+            total: evt.target.value * this.props.monto  * (100-this.state.discount)/100,
         });
         var tot = this.state.total;
 
@@ -63,14 +64,14 @@ class ProductBasket extends React.Component {
 
     render() {
         let pricing;
-        if (this.props.discount == "0") {
+        if (this.state.discount == "0") {
 
             pricing = <p className="price"><span>S/.{this.props.monto.toFixed(2)}</span></p>;
         }
         else {
             var discountPrice = (100 - parseFloat(this.state.discount)) * parseFloat(this.props.monto) / 100;
             discountPrice = discountPrice.toFixed(2).toString();
-            pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.props.monto.toFixed(2)}</span><span className="price-sale">S/.{discountPrice}</span></p>;
+            pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.props.monto.toFixed(2)}</span><span className="price-sale pink">S/.{discountPrice}</span></p>;
         }
         var url = "detalleProducto/" + this.props.idProducto;
         return(

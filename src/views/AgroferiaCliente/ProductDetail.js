@@ -7,8 +7,9 @@ import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import ProductProfile from '../../components/AgroferiaCliente/ProductProfile';
 import SimilarProducts from '../../components/AgroferiaCliente/SimilarProducts';
 import Swal from 'sweetalert2';
+import { withRouter } from 'react-router-dom';
 
-export default class ProductDetail extends Component {
+class ProductDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -24,6 +25,7 @@ export default class ProductDetail extends Component {
     this.addproduct = this.addproduct.bind(this);
     this.renderiza = this.renderiza.bind(this);
 
+    this.addproductnow = this.addproductnow.bind(this);
   }
 
   renderiza(){
@@ -38,8 +40,13 @@ export default class ProductDetail extends Component {
     console.log(this.state.quantity);
   }
 
+  addproductnow = (event) => {
+    this.addproduct(event);
+    let path = "/canasta";
+    this.props.history.push(path);
+  }
+
   addproduct = (event) => {
-    const { id } = this.props.match.params;
     var prod = {
       idPedido: "",
       idTipoMedioPago: 1,
@@ -50,7 +57,7 @@ export default class ProductDetail extends Component {
       igv: 0.18,
       total: this.state.total ,
       estado: -1,
-      idProducto: parseInt(id),
+      idProducto: parseInt(sessionStorage.getItem("idProducto")),
       cantidad: parseFloat(this.state.quantity),
       monto: this.state.total,
       idTienda: this.state.product.idTienda,
@@ -71,7 +78,6 @@ export default class ProductDetail extends Component {
         return response;
 
       })
-
   }
 
   componentDidMount() {
@@ -88,11 +94,10 @@ export default class ProductDetail extends Component {
   
 
   componentWillMount() {
-    const { id } = this.props.match.params;
-    
+
     
 
-    APIFerias.get('Despliegue/api/producto/' + id)
+    APIFerias.get('Despliegue/api/productos/descuento/' + sessionStorage.getItem("idProducto"))
       .then(res => {
         const product = res.data;
 
@@ -104,7 +109,7 @@ export default class ProductDetail extends Component {
           total: product.precio*this.state.quantity,
           precio: product.precio,
           precioFixed: product.precio.toFixed(2),
-          discount: 0
+          discount: product.porcDescuento
         });
 
         console.log("PRODUCTO: ",this.state.product);
@@ -162,9 +167,9 @@ export default class ProductDetail extends Component {
                   <p className="pt-2">Total: {this.state.total * (100-this.state.discount)/100} </p>
                 </div>
                 <div className="col-md-12">
-                  <Link to="/canasta">
+                  
                  
-                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2" onClick={this.addproduct}>Comprar ya</button></Link>
+                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2" onClick={this.addproductnow}>Comprar ya</button>
                   <button className="pinkButton btn pt-2 pb-2 px-4" onClick={this.addproduct}>Añadir a la canasta</button>
                 </div>
               </div>
@@ -184,3 +189,5 @@ export default class ProductDetail extends Component {
     )
   }
 }
+
+export default withRouter(ProductDetail);

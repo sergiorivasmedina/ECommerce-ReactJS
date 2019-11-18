@@ -22,11 +22,15 @@ class Stores extends React.Component {
         window.scrollTo(0, 0);
     }
 
+    componentWillReceiveProps() {
+
+    }
+
     componentWillMount() {
         
-        const {id} = this.props.match.params;
-        localStorage.setItem('idFeria', id);
-        console.log("probando",localStorage.getItem('idFeria'));
+        
+        
+        console.log("probando",sessionStorage.getItem('idFeria'));
         localStorage.setItem('activePage', 2);
     }
 
@@ -52,7 +56,7 @@ class Stores extends React.Component {
                             <SearchBar search={this.state.search} updateSearch={this.updateSearch.bind(this)}></SearchBar>
                         </div>
                         </div>
-                        <StoreList fairId={localStorage.getItem('idFeria')} name="Lista de Tiendas" search={this.state.search}/>
+                        <StoreList fairId={sessionStorage.getItem('idFeria')} name="Lista de Tiendas" search={this.state.search}/>
                     </div>
                     
                 </section>

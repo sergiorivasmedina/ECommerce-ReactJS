@@ -25,7 +25,7 @@ export default class ProductList extends React.Component {
   }
 
   componentDidMount() {
-    APIFerias.get('Despliegue/api/productos/feria_promociones/' + localStorage.getItem('idFeria'))
+    APIFerias.get('Despliegue/api/productos/feria_promociones/' + sessionStorage.getItem('idFeria'))
       .then(res=> {
         const products = res.data;
         this.setState({ products:products });
@@ -54,7 +54,7 @@ export default class ProductList extends React.Component {
           </div>
         </div>
         <div className="row">
-        {this.state.activeProducts.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount="0"
+        {this.state.activeProducts.map(product => <ProductCard key={product.idProducto} id={product.idProducto} productName={product.nombre} price={product.precio} discount="0"
           store={product.idTienda} unit={product.unidadMedida.simbolo} imageUrl={product.imagen} discount={product.porcDescuento*100}/>)}
 </div>
       </div>

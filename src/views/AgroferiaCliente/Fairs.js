@@ -13,7 +13,9 @@ class Fairs extends React.Component {
       client:null,
       nombre:""
     }
+    
   }
+
 
   componentDidMount(){
     window.scrollTo(0, 0);

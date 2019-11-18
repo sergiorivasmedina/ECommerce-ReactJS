@@ -63,11 +63,13 @@ export default class StoreList extends React.Component {
       APIFerias.delete('/Despliegue/api/usuario/tiendasFavoritas/eliminar', {data: storeselect})
       .then(response => {
         console.log("buena", response);
+        window.location.reload();
         Swal.fire({
             type: 'success',
             title: '¡Cambio realizado!',
             text: '¡Elimino una tienda favorita!',
         });
+        
       }).catch(error => {
         console.log("error",error);
         Swal.fire({
@@ -86,11 +88,15 @@ export default class StoreList extends React.Component {
       APIFerias.post('/Despliegue/api/usuario/tiendasFavoritas/agregar', storeselect)
       .then(response => {
         console.log("buena", response);
+        window.location.reload();
         Swal.fire({
             type: 'success',
             title: '¡Nueva tienda favorita!',
             text: '¡Añadio una tienda favorita!',
         });
+        
+        
+        
       }).catch(error => {
         Swal.fire({
             type: 'error',
@@ -99,6 +105,7 @@ export default class StoreList extends React.Component {
         })
       })
     }
+    
   }
   render() {
     let filterStore = this.state.stores.filter(
