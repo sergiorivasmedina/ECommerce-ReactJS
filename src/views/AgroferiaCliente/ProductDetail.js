@@ -22,10 +22,13 @@ export default class ProductDetail extends Component {
     }
     this.updateQuantity = this.updateQuantity.bind(this);
     this.addproduct = this.addproduct.bind(this);
+    this.renderiza = this.renderiza.bind(this);
 
   }
 
-
+  renderiza(){
+    this.forceUpdate()
+  }
 
   updateQuantity(evt) {
     this.setState({
@@ -58,9 +61,11 @@ export default class ProductDetail extends Component {
       .then(response => {
         console.log("Producto añadido")
 
+
         Swal.fire({
           title: 'Producto añadido a la canasta',
-          type:'success'}
+          type:'success',
+          onAfterClose: this.renderiza()}
         )
 
         return response;

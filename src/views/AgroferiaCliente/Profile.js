@@ -24,6 +24,9 @@ class Profile extends React.Component {
             lastname2correct: true,
             dni: '',
             dnicorrect: true,
+            foto:null,
+            direccion: '',
+            ciudad:'',
             phone: '',
             phonecorrect: true,
             mail: '',
@@ -47,6 +50,8 @@ class Profile extends React.Component {
         this.handleLastNames1 = this.handleLastNames1.bind(this);
         this.handleLastNames2 = this.handleLastNames2.bind(this);
         this.handleDni = this.handleDni.bind(this);
+        this.handleDireccion = this.handleDireccion.bind(this);
+        this.handleCiudad = this.handleCiudad.bind(this);
         this.handlePhone = this.handlePhone.bind(this);
         this.handleMail = this.handleMail.bind(this);
         this.handleUser = this.handleUser.bind(this);
@@ -79,6 +84,14 @@ class Profile extends React.Component {
 
     handleCity(event) {
         this.setState({ city: event.target.value });
+    }
+    
+    handleDireccion(event) {
+        this.setState({ direccion: event.target.value });
+    };
+
+    handleCiudad(event) {
+        this.setState({ ciudad: event.target.value });
     };
 
     handleMail(event) {
@@ -124,6 +137,9 @@ class Profile extends React.Component {
             lastname2correct,
             dni,
             dnicorrect,
+            direccion,
+            ciudad,
+            foto,
             phone,
             phonecorrect,
             mail,
@@ -245,11 +261,15 @@ class Profile extends React.Component {
                 idUsuario: idUsuario,
                 idRol: '4',
                 username: user,
-                password: password,
-                direccion: address,
-                ciudad: city,
                 fechaRegistro: '2019-10-03',
-                dni: dni
+                dni: dni,
+                foto: foto,
+                direccion: direccion,
+                ciudad: ciudad,
+                object: null,
+                idClienteCulqui: "---",
+                saldo: 0
+
             };
             //llamamos el metodo post del api
             APIFerias.post('/Despliegue/api/usuario/cliente/modificar', dataAPI)
@@ -259,7 +279,7 @@ class Profile extends React.Component {
                         type: 'success',
                         title: 'Enhorabuena ' + names,
                         text: 'Usuario modificado correctamente',
-                        onClose: window.location = '/'
+                        onAfterClose: window.location = '/'
                     })
                 }).catch(error => {
                     console.log(dataAPI);
@@ -291,6 +311,7 @@ class Profile extends React.Component {
             APIFerias.get('/Despliegue/api/usuario/cliente/' + idUSer)
                 .then(res => {
                     const client = res.data;
+                    console.log("cliente",client)
                     this.setState({
                         client: client,
                         names: client.nombres,
@@ -306,7 +327,9 @@ class Profile extends React.Component {
                         idCliente: client.idCliente,
                         idPersona: client.idPersona,
                         idUsuario: client.idUsuario,
-                        foto: client.foto
+                        foto: client.foto,
+                        direccion: client.direccion,
+                        ciudad: client.ciudad
                     })
                 })
         }
@@ -398,16 +421,15 @@ class Profile extends React.Component {
                                 <Form.Label column sm="2">Dirección</Form.Label>
                                 <Col sm="10"><Form.Control required type="address" value={this.state.address} onChange={this.handleAddress} />
                                     {this.state.addressCorrect ? '' : 'Dirección inválida'}
-
                                 </Col>
                             </Form.Group>
-                            <Form.Group as={Row} controlId="formBasicCity">
+
+                            <Form.Group as={Row} controlId="formciudad">
                                 <Form.Label column sm="2">Ciudad</Form.Label>
-                                <Col sm="10"><Form.Control required type="city" value={this.state.city} onChange={this.handleCity} />
-                                    {this.state.cityCorrect ? '' : 'Ciudad inválida'}
-
+                                <Col sm="10"><Form.Control required type="city" value={this.state.ciudad} onChange={this.handleCiudad} />
                                 </Col>
                             </Form.Group>
+
 
                             <Form.Group as={Row} controlId="formBasicUser">
                                 <Form.Label column sm="2">Usuario*</Form.Label>
