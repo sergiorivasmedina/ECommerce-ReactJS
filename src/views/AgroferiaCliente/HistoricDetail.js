@@ -7,6 +7,7 @@ import APIFerias from '../../services/FairsService';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import Swal from 'sweetalert2';
+import {Button,Col} from 'react-bootstrap';
 
 
 
@@ -115,6 +116,11 @@ class HistoricDetail extends React.Component {
                             <div className="col-md-6">
                                 <h4 className="heading"> Detalle del pedido</h4>
                             </div>
+                            <Col md={{ span: 3, offset: 3 }}>
+                            <a href="/consultas-sugerencias">
+                                <Button>Reclamo</Button>
+                            </a>
+                            </Col>
                             <div className="col-md-12">
                                 <table className="table">
                                     <thead className="thead-primary">

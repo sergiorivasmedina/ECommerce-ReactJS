@@ -50,7 +50,7 @@ export default class SimilarProducts extends React.Component {
     return (
       <div>
         <div className="row">
-        {this.state.activeProducts.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount={product.porcDescuento*100}
+        {this.state.activeProducts.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount={(product.porcDescuento*100).toFixed(2)}
           store={product.store} unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
         </div>
       </div>

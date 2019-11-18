@@ -55,7 +55,7 @@ export default class ProductList extends React.Component {
         </div>
         <div className="row">
         {this.state.activeProducts.map(product => <ProductCard key={product.idProducto} id={product.idProducto} productName={product.nombre} price={product.precio} discount="0"
-          store={product.idTienda} unit={product.unidadMedida.simbolo} imageUrl={product.imagen} discount={product.porcDescuento*100}/>)}
+          store={product.idTienda} unit={product.unidadMedida.simbolo} imageUrl={product.imagen} discount={(product.porcDescuento*100).toFixed(2)}/>)}
 </div>
       </div>
     )

@@ -40,13 +40,13 @@ class ProductCard extends React.Component {
             image = this.props.imageUrl;
         }
 
-        if (this.props.discount == "0") {
+        if (this.props.discount == "0" || this.props.discount == "0.00") {
 
             pricing = <span className="price">S/.{this.props.price} x {this.props.unit}</span>;
         }
         else {
             var discountPrice = (100 - parseFloat(this.props.discount)) * parseFloat(this.props.price) / 100;
-            discountPrice = discountPrice.toString();
+            discountPrice = discountPrice.toFixed(2);
             status = <span className="status">{this.props.discount}%</span>;
             pricing = <span className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.props.price}</span><span className="price-sale pink">S/.{discountPrice} x {this.props.unit}</span></span>;
         }
