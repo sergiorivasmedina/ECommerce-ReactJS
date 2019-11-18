@@ -53,7 +53,7 @@ class ProductDetail extends Component {
       idTipoMedioPago: 1,
       idCupon: 1,
       idCliente: parseInt(this.state.idUsuario),
-      fecha: "2019-10-25",
+      fecha: "2019-11-18",
       subtotal: this.state.total/ (1.18),
       igv: 0.18,
       total: this.state.total ,
@@ -64,7 +64,7 @@ class ProductDetail extends Component {
       idTienda: this.state.product.idTienda,
       idFeria: localStorage.getItem("idFeria")
     }
-    console.log("ACA",prod)
+    
     APIFerias.post('/Despliegue/api/pedido/producto', prod)
       .then(response => {
         console.log("Producto añadido")
