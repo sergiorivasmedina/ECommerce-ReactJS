@@ -39,11 +39,13 @@ class Payment extends React.Component{
         console.log("location",window.location);
         const {idPedido} = this.props.match.params;
         const st = localStorage.getItem('subtotal')
+        const tot = localStorage.getItem('total')
+        const totigv = localStorage.getItem('igv')
         this.setState({
             idPedido: idPedido,
             subtotal: st,
-            total: localStorage.getItem('total'),
-            igv:localStorage.getItem('igv')
+            total: tot,
+            igv:totigv
         })
         
         if(idPedido!=null){

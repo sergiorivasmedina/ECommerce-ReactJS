@@ -35,7 +35,7 @@ class ProductDetail extends Component {
   updateQuantity(evt) {
     this.setState({
       quantity: evt.target.value,
-      total: evt.target.value * this.state.product.precio
+      total: evt.target.value * this.state.product.precio * (1-this.state.discount)
     });
     console.log(this.state.quantity);
   }
@@ -106,7 +106,7 @@ class ProductDetail extends Component {
           simbolo: product.unidadMedida.simbolo,
           categoria: product.subCategoria.categoria.idCategoria,
           quantity: 1,
-          total: product.precio*this.state.quantity,
+          total: product.precio* (1-product.porcDescuento),
           precio: product.precio,
           precioFixed: product.precio.toFixed(2),
           discount: product.porcDescuento
@@ -136,6 +136,7 @@ class ProductDetail extends Component {
       pricing = <p className="price"><span>S/.{this.state.precioFixed} por {this.state.simbolo}</span></p>;
   }
   else {
+    console.log("DES",this.state.discount)
       var discountPrice = (1 - parseFloat(this.state.discount)) * parseFloat(this.state.precio);
       discountPrice = discountPrice.toFixed(2).toString();
       pricing = <p className="price"><span className="customLineThrough mr-2 price-dc">S/.{this.state.precioFixed}</span><span className="price-sale pink">S/.{discountPrice} por {this.state.simbolo}</span></p>;
@@ -164,12 +165,12 @@ class ProductDetail extends Component {
                   {pricing}
                   
                   <label>Cantidad: </label><input className="quantityInput" type="number" min="1"  value={this.state.quantity} onChange={this.updateQuantity}></input>
-                  <p className="pt-2">Total: {(this.state.total * (1-this.state.discount)).toFixed(2)} </p>
+                  <p className="pt-2">Total: {(this.state.total.toFixed(2))} </p>
                 </div>
                 <div className="col-md-12">
                   
                  
-                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2" onClick={this.addproductnow}>Comprar ya</button>
+                    <button className="pinkButton btn pt-2 pb-2 px-4 mr-2" href="/Canasta"  onClick={this.addproduct}>Comprar ya</button>
                   <button className="pinkButton btn pt-2 pb-2 px-4" onClick={this.addproduct}>Añadir a la canasta</button>
                 </div>
               </div>

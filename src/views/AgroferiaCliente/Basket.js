@@ -20,7 +20,6 @@ class Basket extends React.Component {
             idUsuario: null,
             idCliente: null,
             idPedido: null,
-            discount:0, // se debera cargar en el didmount
 
             num:[],
             detalles:[],
@@ -32,7 +31,6 @@ class Basket extends React.Component {
             subtotal:0,
             igv:0,
             total:0,
-            descuento:0
         };
         this.updateMontos = this.updateMontos.bind(this);
         this.handleBasket = this.handleBasket.bind(this);
@@ -105,6 +103,7 @@ class Basket extends React.Component {
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
                         .then(response => {
                             const detalless = response.data;
+                            console.log("segundo get", detalless)
                             this.state.idPedido = res.data.idPedido;
                             this.setState({ detalles:detalless })
                             var arrayAux=this.state.detalles;
@@ -120,14 +119,13 @@ class Basket extends React.Component {
                             for (i = 0; i < this.state.detalles.length; i++) {
                                 console.log("prueba",this.state.detalles)
                                 this.setState({ 
-                                    precios: this.state.precios.concat([this.state.detalles[i].monto]),
+                                    precios: this.state.precios.concat([this.state.detalles[i].monto / this.state.detalles[i].cantidad]),
                                     cantidades: this.state.cantidades.concat([this.state.detalles[i].cantidad]),
-                                    totales: this.state.totales.concat([this.state.detalles[i].monto* (100-this.state.discount)/100*this.state.detalles[i].cantidad]),//modificar el discount cuando venga de back
+                                    totales: this.state.totales.concat([this.state.detalles[i].monto]),//modificar el discount cuando venga de back
                                     num:this.state.precios.concat([i]),
-                                    descuentos: this.state.precios.concat([this.state.detalles[i].descuento])
                                 })
                                 this.setState({
-                                    total: this.state.total+ this.state.detalles[i].cantidad*this.state.detalles[i].monto *(100-this.state.discount)/100 //modificar el discount cuando venga de back
+                                    total: this.state.total+ this.state.detalles[i].monto //modificar el discount cuando venga de back
                                     
                                 })
 
@@ -182,7 +180,7 @@ class Basket extends React.Component {
                                     </thead>
                                     <tbody>
                                     
-                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} discount="0"/>)}
+                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} />)}
                                     </tbody>
                                 </table>
                             </div>
