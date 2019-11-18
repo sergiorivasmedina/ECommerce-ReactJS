@@ -74,7 +74,7 @@ class Menu extends React.Component {
             var idUSer = sessionStorage.getItem("idUsuario");
             var idCliente = sessionStorage.getItem("idCliente");
             this.setState({ user: idCliente });
-            /*APIFerias.get('Despliegue/api/pedido/' + idCliente)
+            APIFerias.get('Despliegue/api/pedido/' + idCliente)
                 .then(res => {
                     //traer el detallePedido del idPedido, el cual es el actual
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
@@ -83,7 +83,7 @@ class Menu extends React.Component {
                             this.setState({ cantprod: response.data.length })
                         })
                 })
-*/
+
             APIFerias.get('/Despliegue/api/usuario/cliente/' + idCliente)
                 .then(res => {
                     const client = res.data;
