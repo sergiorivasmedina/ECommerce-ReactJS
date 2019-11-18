@@ -61,7 +61,7 @@ class OrderSummary extends React.Component{
                         orden:parseInt(idPedido),
                         fechaCompra: moment(new Date(res.data.pedido.fecha)).format('DD/MM/YYYY'),
                         estado: res.data.pedido.estado,
-                        total: res.data.pedido.total,
+                        total: res.data.pedido.total.toFixed(2),
                         detalles: res.data.lstDetallePedido
                     });
 
