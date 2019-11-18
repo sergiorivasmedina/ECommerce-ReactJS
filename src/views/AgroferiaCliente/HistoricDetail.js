@@ -36,14 +36,24 @@ class HistoricDetail extends React.Component {
             fechaCompra:null,
             estados : {
                 3: "Por atender",
-                4: "Registrado",
+                4: "Procesado",
                 5: "Por recoger",
                 6: "Despachado",
                 7: "No recogido",
-                8: "Cancelado",
+                8: "Rechazado",
                 9: "Rechazado",
 
-              }
+            },
+            estadosDetalle : {
+                3: "Por atender",
+                4: "Confirmado",
+                5: "Por recoger",
+                6: "Despachado",
+                7: "No recogido",
+                8: "Rechazado",
+                9: "Rechazado",
+
+            }
         };
 
     }
@@ -147,12 +157,12 @@ class HistoricDetail extends React.Component {
                                             <th>Cantidad</th>
                                             <th>Total</th>
                                             <th>Estado</th>
-                                            <th>Valoración/Reclamo</th>
+                                            <th>Valoración</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     
-                                    {this.state.detalles.map(detalle => <ProductHistoricRate  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} estadoDetalle={this.state.estados[detalle.estado]}/>)}
+                                    {this.state.detalles.map(detalle => <ProductHistoricRate  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} estadoDetalle={this.state.estadosDetalle[detalle.estado]}/>)}
                                     </tbody>
                                 </table>
                             </div>

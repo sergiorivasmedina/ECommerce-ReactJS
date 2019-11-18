@@ -52,8 +52,6 @@ class Basket extends React.Component {
             cantidades: newcantidades,
             totales: newtotales,
         })
-        console.log("cant",this.state.cantidades)
-        console.log("tot",this.state.totales)
         
         var i;
 
@@ -85,9 +83,6 @@ class Basket extends React.Component {
         localStorage.setItem("subtotal",this.state.subtotal);
         localStorage.setItem('total',this.state.total);
         localStorage.setItem('igv',this.state.igv);
-        console.log("idPedido Basket: ", this.state.idPedido);
-        console.log('total',this.state.total);
-        console.log('subtotal',this.state.subtotal);
         // APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
         // .then(response => {
         //     console.log("cambio de estado de pedido a reservado");
@@ -101,7 +96,6 @@ class Basket extends React.Component {
         localStorage.setItem('activePage', 0);
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
-            console.log("idCliente: ",this.state.idCliente);
 
             //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
             APIFerias.get('Despliegue/api/pedido/' + this.state.idCliente)
@@ -136,7 +130,6 @@ class Basket extends React.Component {
                                     total: this.state.total+ this.state.detalles[i].cantidad*this.state.detalles[i].monto *(100-this.state.discount)/100 //modificar el discount cuando venga de back
                                     
                                 })
-                                console.log("luego",this.state.total)
 
                                 
                             
@@ -198,7 +191,7 @@ class Basket extends React.Component {
                         <div className="row">
                             <div className="col-md-9">
                                 <p>Entrega (recojo en tienda): Gratis</p>
-                                <p>Fecha de recojo: Domingo 17/11/2019</p>
+                                <p>Fecha de recojo: Domingo 24/11/2019</p>
                             </div>
                             <div className="col-md-3 text-right">
                                 <p>Subtotal: S/.{this.state.subtotal}</p>
