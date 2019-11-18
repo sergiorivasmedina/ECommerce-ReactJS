@@ -171,7 +171,7 @@ class Menu extends React.Component {
         }
         const { value, suggestions } = this.state;
         const inputProps = {
-            placeholder: 'Type...',
+            placeholder: 'Buscar...',
             value,
             name:"buscador",
             autoComplete: "abcd",
