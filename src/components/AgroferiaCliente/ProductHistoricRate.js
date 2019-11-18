@@ -127,12 +127,12 @@ class ProductHistoricRate extends React.Component {
 
             <td className="total">S/.{this.props.monto}</td>
             <td className="total">{this.props.estadoDetalle}</td>
-            <td> <Link onClick ={this.rate} > <MdSentimentSatisfied color= "deeppink" size="50" /> </Link>
-             <Link onClick ={this.complain} > <MdSentimentDissatisfied color= "deeppink" size="50" /> </Link> </td>
+            {/* <td> <Link onClick ={this.rate} > <MdSentimentSatisfied color= "deeppink" size="50" /> </Link>
+             <Link onClick ={this.complain} > <MdSentimentDissatisfied color= "deeppink" size="50" /> </Link> </td> */}
 
-            {/* <td className="stars"> <StarRatings rating={this.state.rating} starRatedColor="blue" 
+            <td className="stars"> <StarRatings rating={this.state.rating} starRatedColor="blue" 
                 changeRating={this.changeRating} numberOfStars={5} starDimension="25px"
-                starSpacing="3px" name='rating' />  </td> */}
+                starSpacing="3px" name='rating' />  </td>
         </tr>
         );
 
