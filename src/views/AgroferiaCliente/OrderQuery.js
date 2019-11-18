@@ -42,6 +42,7 @@ class OrderQuery extends React.Component{
             type: 'success',
             title: 'Gracias por realizar su ' + this.state.motivo,
             text: 'Casero '+ this.state.cliente.nombres +' '+ this.state.cliente.apellidoPaterno+'. Nos comunicaremos con usted lo más rápido posible',
+            onClose: window.location='/historial'
         });
     }
 
