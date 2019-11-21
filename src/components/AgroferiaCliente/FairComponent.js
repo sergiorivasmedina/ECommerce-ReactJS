@@ -23,6 +23,7 @@ class FairComponent extends React.Component {
 
   async routeChange() {
     await sessionStorage.setItem("idFeria", this.props.idFeria);
+    console.log("this.props.idFeria",this.props.idFeria);
     let path = "/tiendas";
     this.props.history.push(path);
   }

@@ -41,7 +41,7 @@ class Fairs extends React.Component {
   }
 
   render() {
-    var urlIn = "/tiendas/" + localStorage.getItem("idFeria");
+    var urlIn = "/tiendas/" + sessionStorage.getItem("idFeria");
     return (
       <div className="Fairs">
         <MenuFairComponent />

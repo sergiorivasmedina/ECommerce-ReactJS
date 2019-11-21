@@ -62,7 +62,7 @@ class ProductDetail extends Component {
       cantidad: parseFloat(this.state.quantity),
       monto: this.state.total,
       idTienda: this.state.product.idTienda,
-      idFeria: localStorage.getItem("idFeria")
+      idFeria: sessionStorage.getItem("idFeria")
     }
     
     APIFerias.post('/Despliegue/api/pedido/producto', prod)
