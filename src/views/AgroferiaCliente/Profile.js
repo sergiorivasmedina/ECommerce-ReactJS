@@ -57,32 +57,99 @@ class Profile extends React.Component {
 
     };
 
-    handleNames(event) {
-        this.setState({ names: event.target.value });
+    async handleNames(event) {
+        await this.setState({ names: event.target.value });
+        if (this.state.names.length < 2 || this.state.names.length > 50){
+            this.setState({
+                namescorrect: false
+            });
+        } else {
+            this.setState({
+                namescorrect: true
+            });
+        }
     };
 
-    handleLastNames1(event) {
-        this.setState({ lastname1: event.target.value });
+    async handleLastNames1(event) {
+        await this.setState({ lastname1: event.target.value });
+        if (this.state.lastname1.length < 2 || this.state.lastname1.length > 50){
+            this.setState({
+                lastname1correct: false
+            });
+        } else {
+            this.setState({
+                lastname1correct: true
+            });
+        }
     };
 
-    handleLastNames2(event) {
-        this.setState({ lastname2: event.target.value });
+    async handleLastNames2(event) {
+        await this.setState({ lastname2: event.target.value });
+        if (this.state.lastname2.length < 2 || this.state.lastname2.length > 50){
+            this.setState({
+                lastname2correct: false
+            });
+        } else {
+            this.setState({
+                lastname2correct: true
+            });
+        }
     };
 
-    handleDni(event) {
-        this.setState({ dni: event.target.value });
+    async handleDni(event) {
+        await this.setState({ dni: event.target.value });
+        if (this.state.dni == "" || this.state.dni.length!=8){
+            this.setState({
+                dnicorrect: false
+            });
+        } else {
+            this.setState({
+                dnicorrect: true
+            });
+        }
     };
 
-    handleAddress(event) {
+    async handleAddress(event) {
         this.setState({ address: event.target.value });
+        await this.setState({ address: event.target.value });
+        if (this.state.address.length < 2 || this.state.address.length > 50){
+            this.setState({
+                addressCorrect: false
+            });
+        } else {
+            this.setState({
+                addressCorrect: true
+            });
+        }
     };
 
-    handleCity(event) {
-        this.setState({ city: event.target.value });
+    async handleCity(event) {
+        await this.setState({ city: event.target.value });
+        if (this.state.city.length < 2 || this.state.city.length > 50) {
+            this.setState({
+                cityCorrect: false
+            });
+        } else {
+            this.setState({
+                cityCorrect: true
+            });
+        }
     };
 
-    handleMail(event) {
-        this.setState({ mail: event.target.value });
+    async handleMail(event) {
+        await this.setState({ mail: event.target.value });
+        
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (this.state.mail.length < 5 || this.state.mail.length > 50 || !(re.test(this.state.mail.toLowerCase()))){
+            this.setState({
+                mailcorrect: false
+            });
+        } else {
+            this.setState({
+                mailcorrect: true
+            });
+        }
     };
 
     handleUser(event) {
@@ -93,16 +160,34 @@ class Profile extends React.Component {
         this.setState({ password: event.target.value });
     };
 
-    handleConfirmedPassword(event) {
-        this.setState({ confirmedpassword: event.target.value });
+    async handleConfirmedPassword(event) {
+        await this.setState({ confirmedpassword: event.target.value });
+        if (this.state.password != this.state.confirmedpassword){
+            this.setState({
+                isPaswordCorrect: false
+            });
+        } else {
+            this.setState({
+                isPaswordCorrect: true
+            });
+        }
     };
 
     handleGender(event) {
         this.setState({ gender: event.target.value });
     };
 
-    handlePhone(event) {
-        this.setState({ phone: event.target.value });
+    async handlePhone(event) {
+        await this.setState({ phone: event.target.value });
+        if (this.state.phone.length < 5 || this.state.phone.length > 15){
+            this.setState({
+                phonecorrect: false
+            });
+        } else {
+            this.setState({
+                phonecorrect: true
+            });
+        }
     };
 
 
@@ -155,21 +240,21 @@ class Profile extends React.Component {
             passwordcorrect: true
 
         });
-        if (names == "") {
+        if (names.length < 2 || names.length > 50) {
             this.setState({
                 namescorrect: false
             });
             allcorrect = false;
         }
 
-        if (lastname1 == "") {
+        if (lastname1.length < 2 || lastname1.length > 50) {
             this.setState({
                 lastname1correct: false
             });
             allcorrect = false;
         }
 
-        if (lastname2 == "") {
+        if (lastname2.length < 2 || lastname2.length > 50) {
             this.setState({
                 lastname2correct: false
             });
@@ -182,22 +267,15 @@ class Profile extends React.Component {
             });
             allcorrect = false;
         }
-        /*
-        if (address == "") {
-            this.setState({
-                addressCorrect: false
-            });
-            allcorrect = false;
-        }
 
-        if (city == "") {
+        if (city.length < 2 || city.length > 50) {
             this.setState({
                 cityCorrect: false
             });
             allcorrect = false;
         }
-        */
-        if (phone == "" || dni.length < 6) {
+        
+        if (phone.length < 5 || phone.length > 15) {
             this.setState({
                 phonecorrect: false
             });
@@ -206,14 +284,19 @@ class Profile extends React.Component {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
-        if (mail == "" || !(re.test(mail.toLowerCase()))) {
+        if (mail.length < 5 || mail.length > 50 || !(re.test(mail.toLowerCase()))) {
             this.setState({
                 mailcorrect: false
             });
             allcorrect = false;
         }
 
-
+        if (address.length < 2 || address.length > 50) {
+            this.setState({
+                addressCorrect: false
+            });
+            allcorrect=false;
+        }
 
 
         if (allcorrect) {
@@ -347,22 +430,22 @@ class Profile extends React.Component {
                             <Form.Group as={Row} controlId="formname">
                                 <Form.Label column sm="2">Nombres*</Form.Label>
                                 <Col sm="10">
-                                    <Form.Control required type="name" value={this.state.names} onChange={this.handleNames} />
-                                    <span>
-                                        {this.state.namescorrect ? '' : 'Campo Obligatorio'}
+                                    <Form.Control required type="name" value={this.state.names} onChange={this.handleNames} className={this.state.namescorrect ? '' : 'is-invalid'}/>
+                                    <span className="invalid-feedback">
+                                        {this.state.namescorrect ? '' : 'El nombre debe tener entre 2 y 50 caracteres'}
                                     </span>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formlastname1">
                                 <Form.Label column sm="2">Apellidos* </Form.Label>
-                                <Col sm="5"><Form.Control required type="Last name1" value={this.state.lastname1} onChange={this.handleLastNames1} />
-                                    <span>
-                                        {this.state.lastname1correct ? '' : 'Campo Obligatorio'}
+                                <Col sm="5"><Form.Control required type="Last name1" className={this.state.lastname1correct ? '' : 'is-invalid'} value={this.state.lastname1} onChange={this.handleLastNames1} />
+                                    <span className="invalid-feedback">
+                                        {this.state.lastname1correct ? '' : 'El apellido paterno debe tener entre 2 y 50 caracteres'}
                                     </span>
                                 </Col>
-                                <Col sm="5"><Form.Control required type="Last name2" value={this.state.lastname2} onChange={this.handleLastNames2} />
-                                    <span>
-                                        {this.state.lastname2correct ? '' : 'Campo Obligatorio'}
+                                <Col sm="5"><Form.Control required type="Last name2" value={this.state.lastname2} onChange={this.handleLastNames2} className={this.state.lastname2correct ? '' : 'is-invalid'}/>
+                                    <span className="invalid-feedback">
+                                        {this.state.lastname2correct ? '' : 'El apellido materno debe tener entre 2 y 50 caracteres'}
                                     </span>
                                 </Col>
                             </Form.Group>
@@ -371,24 +454,29 @@ class Profile extends React.Component {
 
                             <Form.Group as={Row} controlId="formBasicdni">
                                 <Form.Label column sm="2">DNI*</Form.Label>
-                                <Col sm="5"><Form.Control required type="number" value={this.state.dni} onChange={this.handleDni} />
-                                    {this.state.dnicorrect ? '' : 'DNI iválido'}
-
+                                <Col sm="5"><Form.Control required type="number" value={this.state.dni} onChange={this.handleDni} className={this.state.dnicorrect ? '' : 'is-invalid'} />
+                                <span className="invalid-feedback">
+                                    {this.state.dnicorrect ? '' : 'El DNI debe tener 8 dígitos'}
+                                </span>
                                 </Col>
                             </Form.Group>
 
 
                             <Form.Group as={Row} controlId="formBasictelef">
                                 <Form.Label column sm="2">Teléfono*</Form.Label>
-                                <Col sm="5"><Form.Control required type="number" value={this.state.phone} onChange={this.handlePhone} />
-                                    {this.state.phonecorrect ? '' : 'Teléfono inválido'}
+                                <Col sm="5"><Form.Control required type="number" value={this.state.phone} onChange={this.handlePhone} className={this.state.phonecorrect ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                     {this.state.phonecorrect ? '' : 'El teléfono debe tener entre 5 y 15 dígitos'}
+                                </span>
 
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formBasicEmail2">
                                 <Form.Label column sm="2">Correo*</Form.Label>
-                                <Col sm="10"><Form.Control required type="email" value={this.state.mail} onChange={this.handleMail} />
-                                    {this.state.mailcorrect ? '' : 'Correo inválido'}
+                                <Col sm="10"><Form.Control required type="email" value={this.state.mail} onChange={this.handleMail} className={this.state.mailcorrect ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                    {this.state.mailcorrect ? '' : 'Debe ingresar un correo válido'}
+                                </span>
 
                                 </Col>
                             </Form.Group>
@@ -396,16 +484,19 @@ class Profile extends React.Component {
 
                             <Form.Group as={Row} controlId="formBasicAddress">
                                 <Form.Label column sm="2">Dirección</Form.Label>
-                                <Col sm="10"><Form.Control required type="address" value={this.state.address} onChange={this.handleAddress} />
-                                    {this.state.addressCorrect ? '' : 'Dirección inválida'}
+                                <Col sm="10"><Form.Control required type="address" value={this.state.address} onChange={this.handleAddress} className={this.state.addressCorrect ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                    {this.state.addressCorrect ? '' : 'La dirección debe tener entre 2 y 50 caracteres'}
+                                </span>
 
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formBasicCity">
                                 <Form.Label column sm="2">Ciudad</Form.Label>
-                                <Col sm="10"><Form.Control required type="city" value={this.state.city} onChange={this.handleCity} />
-                                    {this.state.cityCorrect ? '' : 'Ciudad inválida'}
-
+                                <Col sm="10"><Form.Control required type="city" value={this.state.city} onChange={this.handleCity} className={this.state.cityCorrect ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                    {this.state.cityCorrect ? '' : 'La ciudad debe tener entre 2 y 50 caracteres'}
+                                </span>
                                 </Col>
                             </Form.Group>
 
