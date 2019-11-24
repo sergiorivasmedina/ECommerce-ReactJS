@@ -8,6 +8,8 @@ import ProductProfile from '../../components/AgroferiaCliente/ProductProfile';
 import SimilarProducts from '../../components/AgroferiaCliente/SimilarProducts';
 import Swal from 'sweetalert2';
 import { withRouter } from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
+
 
 class ProductDetail extends Component {
   constructor(props) {
@@ -19,7 +21,9 @@ class ProductDetail extends Component {
       categoria: null,
       total: 0,
       idUsuario: null,
-      store: ""
+      store: "",
+      rating:0,
+      cantPersonas:0
     }
     this.updateQuantity = this.updateQuantity.bind(this);
     this.addproduct = this.addproduct.bind(this);
@@ -62,6 +66,7 @@ class ProductDetail extends Component {
       subtotal: this.state.total / (1.18),
       igv: 0.18,
       total: this.state.total,
+      rating:2,
       estado: -1,
       idProducto: parseInt(sessionStorage.getItem("idProducto")),
       cantidad: parseFloat(this.state.quantity),
@@ -107,6 +112,7 @@ class ProductDetail extends Component {
     APIFerias.get('Despliegue/api/productos/descuento/' + sessionStorage.getItem("idProducto"))
       .then(res => {
         const product = res.data;
+        console.log("es eso",res.data)
         this.setState({
           product: product,
           simbolo: product.unidadMedida.simbolo,
@@ -115,8 +121,14 @@ class ProductDetail extends Component {
           total: product.precio * (1 - product.porcDescuento),
           precio: product.precio,
           precioFixed: product.precio.toFixed(2),
-          discount: product.porcDescuento
+          discount: product.porcDescuento,
+          cantPersonas: 0,
         });
+        if (product.valoracionPromedio > 0){
+        this.setState({
+          rating: product.valoracionPromedio,
+          cantPersonas: product.cantPersonas
+        });}
         console.log(this.state.precioFixed);
         console.log("PRODUCTO: ", this.state.product);
 
@@ -165,13 +177,16 @@ class ProductDetail extends Component {
                 <div className="col-md-8">
                   <p>De: {this.state.store}</p>
                   <p>Descripción: {this.state.product.descripcion}</p>
+                  <p><StarRatings rating={this.state.rating} starRatedColor="deeppink" 
+                changeRating={this.changeRating} numberOfStars={5} starDimension="25px"
+                starSpacing="3px" name='rating' /> &nbsp; {this.state.rating.toFixed(2)}  &nbsp; ({this.state.cantPersonas} valoraciones) </p>
                 </div>
 
                 <div className="col-md-4">
                   {pricing}
 
                   <label>Cantidad: </label><input className="quantityInput" type="number" min="1" value={this.state.quantity} onChange={this.updateQuantity}></input>
-                  <p className="pt-2">Total: {(this.state.total.toFixed(2))} </p>
+                  <p className="pt-2">Total: S/. {(this.state.total.toFixed(2))} </p>
                 </div>
                 <div className="col-md-12">
 

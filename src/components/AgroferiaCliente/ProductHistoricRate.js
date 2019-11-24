@@ -2,8 +2,7 @@ import React from 'react';
 import APIFerias from '../../services/FairsService';
 import Swal from 'sweetalert2';
 import StarRatings from 'react-star-ratings';
-import { Link } from 'react-router-dom';
-import { MdSentimentSatisfied, MdSentimentDissatisfied } from "react-icons/md";
+
 
 
 
@@ -13,11 +12,17 @@ class ProductHistoricRate extends React.Component {
         super(props);
         this.state = {
             quantity: this.props.cantidad,
-            total: this.props.cantidad*this.props.monto,
-            rating: 0
-
-            
+            total: this.props.cantidad*this.props.monto,  
+                     
         }
+        if (this.props.valoracion > 0){
+            this.state = {
+                rating: this.props.valoracion           
+            }
+        }
+
+        
+
         
     this.updateQuantity = this.updateQuantity.bind(this);
     this.removeProduct = this.removeProduct.bind(this);
@@ -65,11 +70,15 @@ class ProductHistoricRate extends React.Component {
 
         APIFerias.get('Despliegue/api/producto/' + this.props.idProducto)
             .then(res => {
+                console.log("DATA",res.data)
                 this.setState({
                     nombreProducto: res.data.nombre,
                     imagenProducto: res.data.imagen
                 });         
             })
+
+
+            
         
         
     }
@@ -83,6 +92,7 @@ class ProductHistoricRate extends React.Component {
         console.log("1:",this.props.idDetalle,this.state.quantity,this.state.total)
 
         await this.props.triggerParentUpdate(evt,this.props.idDetalle,this.state.quantity,this.state.total)
+
     }
 
     removeProduct(evt) {
@@ -108,6 +118,11 @@ class ProductHistoricRate extends React.Component {
         this.setState({
           rating: newRating
         });
+        APIFerias.put('/Despliegue/api/pedidos/detalle/'+this.props.idDetallePedido+'/valoracion/'+newRating)
+        .then(res=>{
+            console.log("cambio!",res)
+            
+        })
       }
 
     render() {
@@ -120,8 +135,8 @@ class ProductHistoricRate extends React.Component {
                 <h3>{this.state.nombreProducto}</h3>
             </td>
 
-            <td className="price">S/.{(this.props.monto / this.state.quantity)}</td>
-            <td className="price">{this.state.quantity}</td>
+            <td className="price">S/.{(this.props.monto / this.props.cantidad)}</td>
+            <td className="price">{this.props.cantidad}</td>
 
             
 
@@ -130,7 +145,7 @@ class ProductHistoricRate extends React.Component {
             {/* <td> <Link onClick ={this.rate} > <MdSentimentSatisfied color= "deeppink" size="50" /> </Link>
              <Link onClick ={this.complain} > <MdSentimentDissatisfied color= "deeppink" size="50" /> </Link> </td> */}
 
-            <td className="stars"> <StarRatings rating={this.state.rating} starRatedColor="blue" 
+            <td className="stars"> <StarRatings rating={this.state.rating} starRatedColor="deeppink" 
                 changeRating={this.changeRating} numberOfStars={5} starDimension="25px"
                 starSpacing="3px" name='rating' />  </td>
         </tr>
