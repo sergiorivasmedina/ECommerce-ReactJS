@@ -37,6 +37,7 @@ class Register extends React.Component {
             confirmedpassword: '',
             isPaswordCorrect: true,
             direccion: '',
+            isDireccionCorrect: true,
             ciudad: ''
 
         };
@@ -48,55 +49,133 @@ class Register extends React.Component {
         this.handlePhone = this.handlePhone.bind(this);
         this.handleMail = this.handleMail.bind(this);
         this.handleUser = this.handleUser.bind(this);
+        this.handleDireccion = this.handleDireccion.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.handleConfirmedPassword = this.handleConfirmedPassword.bind(this);
 
     };
 
-    handleNames(event) {
-        this.setState({ names: event.target.value });
+    async handleNames(event) {
+        await this.setState({ names: event.target.value });
+        if (this.state.names.length < 2 || this.state.names.length > 50){
+            this.setState({
+                namescorrect: false
+            });
+        } else {
+            this.setState({
+                namescorrect: true
+            });
+        }
     };
 
-    handleLastNames1(event) {
-        this.setState({ lastname1: event.target.value });
+    async handleLastNames1(event) {
+        await this.setState({ lastname1: event.target.value });
+        if (this.state.lastname1.length < 2 || this.state.lastname1.length > 50){
+            this.setState({
+                lastname1correct: false
+            });
+        } else {
+            this.setState({
+                lastname1correct: true
+            });
+        }
     };
 
-    handleLastNames2(event) {
-        this.setState({ lastname2: event.target.value });
+    async handleLastNames2(event) {
+        await this.setState({ lastname2: event.target.value });
+        if (this.state.lastname2.length < 2 || this.state.lastname2.length > 50){
+            this.setState({
+                lastname2correct: false
+            });
+        } else {
+            this.setState({
+                lastname2correct: true
+            });
+        }
     };
 
-    handleDni(event) {
-        this.setState({ dni: event.target.value });
+    async handleDni(event) {
+        await this.setState({ dni: event.target.value });
+        if (this.state.dni == "" || this.state.dni.length!=8){
+            this.setState({
+                dnicorrect: false
+            });
+        } else {
+            this.setState({
+                dnicorrect: true
+            });
+        }
     };
 
-    handleMail(event) {
-        this.setState({ mail: event.target.value });
+    async handleMail(event) {
+        await this.setState({ mail: event.target.value });
+        
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (this.state.mail.length < 5 || this.state.mail.length > 50 || !(re.test(this.state.mail.toLowerCase()))){
+            this.setState({
+                mailcorrect: false
+            });
+        } else {
+            this.setState({
+                mailcorrect: true
+            });
+        }
     };
+
+    async handleDireccion(event) {
+        await this.setState({ direccion: event.target.value });
+        if (this.state.direccion.length < 2 || this.state.direccion.length > 50){
+            this.setState({
+                isDireccionCorrect: false
+            });
+        } else {
+            this.setState({
+                isDireccionCorrect: true
+            });
+        }
+    };
+
 
     handleUser(event) {
         this.setState({ user: event.target.value });
     };
 
     handlePassword(event) {
-        this.setState({ password: event.target.value });        
+        this.setState({ password: event.target.value });    
+          
     };
 
-    handleConfirmedPassword(event) {
-        this.setState({ confirmedpassword: event.target.value });
+    async handleConfirmedPassword(event) {
+        await this.setState({ confirmedpassword: event.target.value });
+        if (this.state.password != this.state.confirmedpassword){
+            this.setState({
+                isPaswordCorrect: false
+            });
+        } else {
+            this.setState({
+                isPaswordCorrect: true
+            });
+        }
     };
 
     handleGender(event) {
         this.setState({ gender: event.target.value });
     };
 
-    handlePhone(event) {
-        this.setState({ phone: event.target.value });
+    async handlePhone(event) {
+        await this.setState({ phone: event.target.value });
+        if (this.state.phone.length < 5 || this.state.phone.length > 15){
+            this.setState({
+                phonecorrect: false
+            });
+        } else {
+            this.setState({
+                phonecorrect: true
+            });
+        }
     };
   
-
-
-
-
 
     handleRegistro = (event) => {
         console.log(this.state);
@@ -117,6 +196,8 @@ class Register extends React.Component {
         usercorrect,
         password,
         passwordcorrect,
+        direccion,
+        isDireccionCorrect,
         confirmedpassword,
         isPaswordCorrect } = this.state;
         // perform all neccassary validations
@@ -131,24 +212,25 @@ class Register extends React.Component {
             phonecorrect:true,
             mailcorrect:true,
             usercorrect:true,
-            passwordcorrect:true
+            passwordcorrect:true,
+            isDireccionCorrect: true
 
         });
-        if (names == ""){
+        if (names.length < 2 || names.length > 50){
             this.setState({
                 namescorrect: false
             });
             allcorrect=false;
         }
 
-        if (lastname1 == ""){
+        if (lastname1.length < 2 || lastname1.length > 50){
             this.setState({
                 lastname1correct: false
             });
             allcorrect=false;
         }
 
-        if (lastname2 == ""){
+        if (lastname2.length < 2 || lastname2.length > 50){
             this.setState({
                 lastname2correct: false
             });
@@ -162,7 +244,7 @@ class Register extends React.Component {
             allcorrect=false;
         }
 
-        if (phone == "" || dni.length < 6){
+        if (phone.length < 5 || phone.length > 15){
             this.setState({
                 phonecorrect: false
             });
@@ -171,9 +253,16 @@ class Register extends React.Component {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                  
   
-        if (mail == "" || !(re.test(mail.toLowerCase()))){
+        if (mail.length < 5 || mail.length > 50 || !(re.test(mail.toLowerCase()))){
             this.setState({
                 mailcorrect: false
+            });
+            allcorrect=false;
+        }
+
+        if (direccion.length < 2 || direccion.length > 50) {
+            this.setState({
+                isDireccionCorrect: false
             });
             allcorrect=false;
         }
@@ -198,7 +287,8 @@ class Register extends React.Component {
                 phonecorrect:true,
                 mailcorrect:true,
                 usercorrect:true,
-                passwordcorrect:true
+                passwordcorrect:true,
+                direccioncorrect:true
     
             });
 
@@ -222,7 +312,7 @@ class Register extends React.Component {
                 object: null,
                 saldo: 0.0,
                 requiereCambiarContrasena: 0,
-                direccion:'',
+                direccion:direccion,
                 ciudad:''
             };
             //llamamos el metodo post del api
@@ -284,22 +374,22 @@ class Register extends React.Component {
                             <Form.Group as={Row} controlId="formname">
                                 <Form.Label column sm="2">Nombres*</Form.Label>
                                 <Col sm="10">
-                                    <Form.Control required type="name" onChange={this.handleNames} />
-                                    <span>
-                                        {this.state.namescorrect ? '' : 'Campo Obligatorio'}
+                                    <Form.Control required type="name" onChange={this.handleNames} className={this.state.namescorrect ? '' : 'is-invalid'} />
+                                    <span className="invalid-feedback">
+                                        {this.state.namescorrect ? '' : 'El nombre debe tener entre 2 y 50 caracteres'}
                                     </span>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formlastname1">
                                 <Form.Label column sm="2">Apellidos* </Form.Label>
-                                <Col sm="5"><Form.Control required type="Last name1" onChange={this.handleLastNames1} />
-                                <span>
-                                        {this.state.lastname1correct ? '' : 'Campo Obligatorio'}
+                                <Col sm="5"><Form.Control required type="Last name1" onChange={this.handleLastNames1} className={this.state.lastname1correct ? '' : 'is-invalid'} />
+                                <span className="invalid-feedback">
+                                        {this.state.lastname1correct ? '' : 'El apellido paterno debe tener entre 2 y 50 caracteres'}
                                     </span>
                                     </Col>
-                                <Col sm="5"><Form.Control required type="Last name2" onChange={this.handleLastNames2} />
-                                <span>
-                                        {this.state.lastname2correct ? '' : 'Campo Obligatorio'}
+                                <Col sm="5"><Form.Control required type="Last name2" onChange={this.handleLastNames2} className={this.state.lastname2correct ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                        {this.state.lastname2correct ? '' : 'El apellido materno debe tener entre 2 y 50 caracteres'}
                                     </span>
                                     </Col>
                             </Form.Group>
@@ -308,8 +398,10 @@ class Register extends React.Component {
 
                             <Form.Group as={Row} controlId="formBasicdni">
                                 <Form.Label column sm="2">DNI*</Form.Label>
-                                <Col sm="5"><Form.Control required type="number" onChange={this.handleDni} />
-                                {this.state.dnicorrect ? '' : 'DNI iválido'}
+                                <Col sm="5"><Form.Control required type="number" onChange={this.handleDni} className={this.state.dnicorrect ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                    {this.state.dnicorrect ? '' : 'El DNI debe tener 8 dígitos'}
+                                </span>
 
                                 </Col>
                             </Form.Group>
@@ -317,19 +409,31 @@ class Register extends React.Component {
 
                             <Form.Group as={Row} controlId="formBasictelef">
                                 <Form.Label column sm="2">Teléfono*</Form.Label>
-                                <Col sm="5"><Form.Control required type="number"  onChange={this.handlePhone} />
-                                {this.state.phonecorrect ? '' : 'Teléfono inválido'}
+                                <Col sm="5"><Form.Control required type="number"  onChange={this.handlePhone} className={this.state.phonecorrect ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                    {this.state.phonecorrect ? '' : 'El teléfono debe tener entre 5 y 15 dígitos'}
+                                </span>
 
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formBasicEmail2">
                                 <Form.Label column sm="2">Correo*</Form.Label>
-                                <Col sm="10"><Form.Control required type="email" onChange={this.handleMail} />
-                                {this.state.mailcorrect ? '' : 'Correo inválido'}
+                                <Col sm="10"><Form.Control required type="email" onChange={this.handleMail} className={this.state.mailcorrect ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                    {this.state.mailcorrect ? '' : 'Debe ingresar un correo válido'}
+                                </span>
 
                                 </Col>
                             </Form.Group>
+                            <Form.Group as={Row} controlId="formBasicDireccion">
+                                <Form.Label column sm="2">Dirección*</Form.Label>
+                                <Col sm="10"><Form.Control required type="direccion" onChange={this.handleDireccion} className={this.state.isDireccionCorrect ? '' : 'is-invalid'}/>
+                                <span className="invalid-feedback">
+                                    {this.state.isDireccionCorrect ? '' : 'La dirección debe tener entre 2 y 50 caracteres'}
+                                </span>
 
+                                </Col>
+                            </Form.Group>
                            
                             <Form.Group className="text-center"><h1>.....</h1></Form.Group>
 
@@ -346,9 +450,9 @@ class Register extends React.Component {
                             <Form.Group as={Row} controlId="FormconfirmPassword" >
                                 <Form.Label column sm="2">Confirmar Contraseña*</Form.Label>
                                 <Col sm="10">
-                                    <Form.Control required type="password" onChange={this.handleConfirmedPassword} />
+                                    <Form.Control required type="password" onChange={this.handleConfirmedPassword} className={this.state.isPaswordCorrect ? '' : 'is-invalid'} />
 
-                                    <span>
+                                    <span className="invalid-feedback">
                                         {this.state.isPaswordCorrect ? '' : 'Las contraseñas no coinciden'}
                                     </span>
                                 </Col>
