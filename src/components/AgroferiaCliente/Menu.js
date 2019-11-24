@@ -4,11 +4,11 @@ import { Row, Col } from 'react-bootstrap';
 import SearchBarMenu from '../../components/AgroferiaCliente/SearchBarMenu';
 import APIFerias from '../../services/FairsService'
 import Autosuggest from 'react-autosuggest';
-
+import { withRouter } from 'react-router-dom';
 
 var listContTiendas = []
 var lista = []
-APIFerias.get('/Despliegue/api/tiendas/feria/virtual/1')
+APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + sessionStorage.getItem("idFeria"))
     .then(res => {
         listContTiendas = res.data
         console.log("loong");
@@ -27,6 +27,8 @@ APIFerias.get('Despliegue/api/productos/feria_promociones/1')
         for (let i = 0; i < listContProductos.length; i++) {
             lista.push({ id: listContProductos[i].idProducto, nombre: listContProductos[i].solicitudProducto.nombre, foto: listContProductos[i].solicitudProducto.imagen, tipo:" - Producto" })
         }
+        console.log("listaProds");
+        console.log(lista);
     })
 
 const getSuggestionValue = suggestion => suggestion.nombre;
@@ -43,23 +45,10 @@ const imagenSuggest ={
     height:'40px',
     width:'40px' 
 }
-
+var pathGen="";
 var urlP = "detalleProducto/1";
 var urlT = "detalleTienda/1";
-const renderSuggestion = suggestion => (
-    <Link to={(suggestion.tipo==" - Tienda") ? "detalleTienda/" + suggestion.id :  "detalleProducto/" + suggestion.id}><div className="row">
-        <div className="col-md-3 img-fluid text-center d-flex align-self-stretch ">
-        <img style={imagenSuggest} src={suggestion.foto}></img>
-        </div>
-        <div className="col-md-9 text-center d-flex align-self-stretch ">
-        <span>
-            {suggestion.nombre} {suggestion.tipo}
-        </span>
-        </div>
-        
-    </div></Link>
-
-)
+var idP ="";
 
 
 class Menu extends React.Component {
@@ -78,8 +67,29 @@ class Menu extends React.Component {
             tienda: null,
             fairs: null,
             suggestions: [],
-            value: ''
+            value: '',
+            tipoB:"",
+            pathB:"",
+            idB:""
         };
+        this.routeChange = this.routeChange.bind(this);
+    }
+
+
+    async routeChange() {
+        console.log("IDDDP");
+        console.log(idP);
+        {(pathGen=="/detalleTienda") ? await sessionStorage.setItem("idTienda", idP) :  await sessionStorage.setItem("idProducto", idP);}
+        await sessionStorage.setItem("idProducto", idP);
+        console.log(sessionStorage.getItem("idProducto"));
+        let pathP = "/detalleProducto";
+        let pathT = "/detalleTienda";
+        console.log("PATH");
+        console.log(this.state.pathB);
+        this.state.pathB=pathGen;
+        console.log("PATH2");
+        console.log(pathGen);
+        this.props.history.push(this.state.pathB);
     }
 
     onChange = (event, { newValue }) => {
@@ -140,6 +150,23 @@ class Menu extends React.Component {
     render() {
         var bottomProducts = "nav-link";
         var bottomStores = "nav-link";
+
+        const renderSuggestion = suggestion => (
+            <div className="row">
+                <div className="col-md-3 img-fluid text-center d-flex align-self-stretch ">
+                <img style={imagenSuggest} onClick={this.routeChange} src={suggestion.foto}></img>
+                </div>
+                <div className="col-md-9 text-center d-flex align-self-stretch ">
+                <span onClick={this.routeChange} >
+                    {suggestion.nombre} {suggestion.tipo}
+                </span>
+                </div>
+                <span>
+                    {(suggestion.tipo==" - Tienda") ? pathGen="/detalleTienda" :  pathGen="/detalleProducto"}{idP = suggestion.id}
+                </span>
+            </div>
+            
+        )
 
         if (localStorage.getItem('activePage') == 2) {
             bottomStores = "nav-link pinkBottom";
@@ -239,4 +266,4 @@ class Menu extends React.Component {
 
 }
 
-export default Menu;
+export default withRouter(Menu);
