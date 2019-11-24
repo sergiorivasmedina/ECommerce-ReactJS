@@ -321,7 +321,7 @@ class Profile extends React.Component {
     render() {
         return (
             <div>
-                <Menu></Menu>
+                <Menu fairId={sessionStorage.getItem('idFeria')}></Menu>
 
                 <div className="d-flex justify-content-center">
                     <div className="w-50 p-3 ">

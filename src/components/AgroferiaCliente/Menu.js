@@ -6,39 +6,19 @@ import APIFerias from '../../services/FairsService'
 import Autosuggest from 'react-autosuggest';
 import { withRouter } from 'react-router-dom';
 
+console.log("IDDDP");
+console.log(sessionStorage.getItem("idFeria"));
 var listContTiendas = []
 var lista = []
-APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + sessionStorage.getItem("idFeria"))
-    .then(res => {
-        listContTiendas = res.data
-        console.log("loong");
-        console.log(listContTiendas.length);
-        for (let i = 0; i < listContTiendas.length; i++) {
-            lista.push({ id: listContTiendas[i].idTienda, nombre: listContTiendas[i].empresa.nombreComercial, foto: listContTiendas[i].foto, tipo:" - Tienda" })
-        }
-        console.log("lista");
-        console.log(lista);
-        console.log("session storage feria");
-        console.log(sessionStorage.getItem("idFeria"));
-    })
+
 
 var listContProductos = []
-APIFerias.get('Despliegue/api/productos/feria_promociones/' + + sessionStorage.getItem("idFeria"))
-    .then(res => {
-        listContProductos = res.data;
-        for (let i = 0; i < listContProductos.length; i++) {
-            lista.push({ id: listContProductos[i].idProducto, nombre: listContProductos[i].solicitudProducto.nombre, foto: listContProductos[i].solicitudProducto.imagen, tipo:" - Producto" })
-        }
-        console.log("listaProds");
-        console.log(lista);
-    })
+
 
 const getSuggestionValue = suggestion => suggestion.nombre;
 const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    console.log("listaaa");
-    console.log(lista);
     return inputLength === 0 ? [] : lista.filter(lang =>
         lang.nombre.toLowerCase().includes(inputValue)
     );
@@ -61,6 +41,8 @@ var idP ="";
 class Menu extends React.Component {
     constructor(props) {
         super(props);
+        console.log("PROPPS IDFERIA");
+        console.log(this.props.fairId);
         this.state = {
             value: 'AGROFERIAS CAMPESINAS',
             client: null,
@@ -81,19 +63,12 @@ class Menu extends React.Component {
         };
         this.routeChange = this.routeChange.bind(this);
     }
-
+    
 
     async routeChange() {
-        console.log("IDDDP");
-        console.log(idP);
         {(pathGen=="/detalleTienda") ? await sessionStorage.setItem("idTienda", idP) :  await sessionStorage.setItem("idProducto", idP);}
         await sessionStorage.setItem("idProducto", idP);
-        console.log(sessionStorage.getItem("idProducto"));
-        console.log("PATH");
-        console.log(this.state.pathB);
         this.state.pathB=pathGen;
-        console.log("PATH2");
-        console.log(pathGen);
         this.props.history.push(this.state.pathB);
     }
 
@@ -124,23 +99,23 @@ class Menu extends React.Component {
                     this.setState({ client: client, nombre: client.nombres, cierre: "Salir" })
                 })
         }
-        //todas las tiendas
-        APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + this.state.id)
+        APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + this.props.fairId)
+        .then(res => {
+            listContTiendas = res.data
+            lista=[];
+            for (let i = 0; i < listContTiendas.length; i++) {
+                lista.push({ id: listContTiendas[i].idTienda, nombre: listContTiendas[i].empresa.nombreComercial, foto: listContTiendas[i].foto, tipo:" - Tienda" })
+            }
+        })
+        APIFerias.get('Despliegue/api/productos/feria_promociones/' + this.props.fairId)
             .then(res => {
-                const lista = res.data;
-                this.setState({ listT: lista })
-                console.log(this.state.list);
+                listContProductos = res.data;
+                for (let i = 0; i < listContProductos.length; i++) {
+                    lista.push({ id: listContProductos[i].idProducto, nombre: listContProductos[i].solicitudProducto.nombre, foto: listContProductos[i].solicitudProducto.imagen, tipo:" - Producto" })
+                }
             })
+        }
 
-        //todas los productos
-        APIFerias.get('Despliegue/api/productos/feria_promociones/' + this.state.id)
-            .then(res => {
-                const products = res.data;
-                this.setState({ listP: products });
-
-            })
-
-    }
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
             suggestions: getSuggestions(value)

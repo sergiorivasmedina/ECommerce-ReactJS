@@ -87,7 +87,7 @@ class OrderSummary extends React.Component{
     render(){
         return(
             <div>
-                <Menu />
+                <Menu fairId={sessionStorage.getItem('idFeria')}/>
                 <FairHeading title="Resumen de compra" imageUrl="../images/agroferia_tienda1.jpg" />
 
                 <section className="pt-5">

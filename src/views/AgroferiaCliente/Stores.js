@@ -44,7 +44,7 @@ class Stores extends React.Component {
     render() {
         return (
             <div className="Stores">
-                <Menu />
+                <Menu fairId={sessionStorage.getItem('idFeria')}/>
                 <FairHeading title="Conoce nuestras tiendas" imageUrl="../images/agroferia_tienda1.jpg"/>
                 <section className="pt-5">
                     <div className="container">

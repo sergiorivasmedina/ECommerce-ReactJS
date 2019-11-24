@@ -63,7 +63,7 @@ class OrderQuery extends React.Component{
     render(){
         return(
             <div className="Stores">
-                <Menu/>
+                <Menu fairId={sessionStorage.getItem('idFeria')}/>
                 <FairHeading title="Consultas y Sugerencias" imageUrl="../images/agroferia_tienda1.jpg" />
                 <section className="ftco-section">
                 <div className="container">
