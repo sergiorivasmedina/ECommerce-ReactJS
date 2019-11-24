@@ -20,7 +20,6 @@ class Basket extends React.Component {
             idUsuario: null,
             idCliente: null,
             idPedido: null,
-            discount:0, // se debera cargar en el didmount
 
             num:[],
             detalles:[],
@@ -32,7 +31,6 @@ class Basket extends React.Component {
             subtotal:0,
             igv:0,
             total:0,
-            descuento:0
         };
         this.updateMontos = this.updateMontos.bind(this);
         this.handleBasket = this.handleBasket.bind(this);
@@ -52,8 +50,6 @@ class Basket extends React.Component {
             cantidades: newcantidades,
             totales: newtotales,
         })
-        console.log("cant",this.state.cantidades)
-        console.log("tot",this.state.totales)
         
         var i;
 
@@ -83,11 +79,8 @@ class Basket extends React.Component {
 
     handleBasket(){
         localStorage.setItem("subtotal",this.state.subtotal);
-        localStorage.setItem('total',this.state.total);
+        localStorage.setItem('total',this.state.total.toFixed(2));
         localStorage.setItem('igv',this.state.igv);
-        console.log("idPedido Basket: ", this.state.idPedido);
-        console.log('total',this.state.total);
-        console.log('subtotal',this.state.subtotal);
         // APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
         // .then(response => {
         //     console.log("cambio de estado de pedido a reservado");
@@ -101,7 +94,6 @@ class Basket extends React.Component {
         localStorage.setItem('activePage', 0);
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
-            console.log("idCliente: ",this.state.idCliente);
 
             //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
             APIFerias.get('Despliegue/api/pedido/' + this.state.idCliente)
@@ -111,6 +103,7 @@ class Basket extends React.Component {
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
                         .then(response => {
                             const detalless = response.data;
+                            console.log("segundo get", detalless)
                             this.state.idPedido = res.data.idPedido;
                             this.setState({ detalles:detalless })
                             var arrayAux=this.state.detalles;
@@ -126,17 +119,15 @@ class Basket extends React.Component {
                             for (i = 0; i < this.state.detalles.length; i++) {
                                 console.log("prueba",this.state.detalles)
                                 this.setState({ 
-                                    precios: this.state.precios.concat([this.state.detalles[i].monto]),
+                                    precios: this.state.precios.concat([this.state.detalles[i].monto / this.state.detalles[i].cantidad]),
                                     cantidades: this.state.cantidades.concat([this.state.detalles[i].cantidad]),
-                                    totales: this.state.totales.concat([this.state.detalles[i].monto* (100-this.state.discount)/100*this.state.detalles[i].cantidad]),//modificar el discount cuando venga de back
+                                    totales: this.state.totales.concat([this.state.detalles[i].monto]),//modificar el discount cuando venga de back
                                     num:this.state.precios.concat([i]),
-                                    descuentos: this.state.precios.concat([this.state.detalles[i].descuento])
                                 })
                                 this.setState({
-                                    total: this.state.total+ this.state.detalles[i].cantidad*this.state.detalles[i].monto *(100-this.state.discount)/100 //modificar el discount cuando venga de back
+                                    total: this.state.total+ this.state.detalles[i].monto //modificar el discount cuando venga de back
                                     
                                 })
-                                console.log("luego",this.state.total)
 
                                 
                             
@@ -189,7 +180,7 @@ class Basket extends React.Component {
                                     </thead>
                                     <tbody>
                                     
-                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} discount="0"/>)}
+                                    {this.state.detalles.map(detalle => <ProductBasket  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} />)}
                                     </tbody>
                                 </table>
                             </div>
@@ -198,7 +189,7 @@ class Basket extends React.Component {
                         <div className="row">
                             <div className="col-md-9">
                                 <p>Entrega (recojo en tienda): Gratis</p>
-                                <p>Fecha de recojo: Domingo 17/11/2019</p>
+                                <p>Fecha de recojo: Domingo 24/11/2019</p>
                             </div>
                             <div className="col-md-3 text-right">
                                 <p>Subtotal: S/.{this.state.subtotal}</p>

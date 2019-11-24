@@ -4,7 +4,6 @@ class ShopProfile extends React.Component {
 
     constructor(props){
         super(props);
-        console.log(this.props.imageUrl);
         this.state = {
             photo: this.props.imageUrl
         }

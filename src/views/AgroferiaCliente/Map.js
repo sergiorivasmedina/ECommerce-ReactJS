@@ -25,7 +25,7 @@ export default class Map extends Component {
             tiendaModal: {},
             imagen: null,
             televisor: JSON.parse(localStorage.getItem("localTelevisor")),
-            idFeriaSeleccionada: localStorage.getItem("idFeria")
+            idFeriaSeleccionada: sessionStorage.getItem("idFeria")
         };
         this.anchoImagen = 1000;
         this.altoImagen = 350;

@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class FairComponent extends React.Component {
+  constructor(props){
+    super(props);
+    this.routeChange = this.routeChange.bind(this);
+  }
 
   componentDidMount() {
     console.log(this.props.idFeria);
@@ -14,7 +19,14 @@ class FairComponent extends React.Component {
     //localStorage.setItem('nombreFeria', this.props.name);
   }
 
+   
 
+  async routeChange() {
+    await sessionStorage.setItem("idFeria", this.props.idFeria);
+    console.log("this.props.idFeria",this.props.idFeria);
+    let path = "/tiendas";
+    this.props.history.push(path);
+  }
 
   render() {
     let status;
@@ -38,7 +50,7 @@ class FairComponent extends React.Component {
 
             <h5 className="cardTitle">{this.props.name}</h5>
             <p className="pt-4"><i className="customIcon icon-room"></i> <span>{this.props.address}</span></p>
-            <Link to={"/tiendas/" + this.props.idFeria}><button className="width100 pinkButton btn pt-1 pb-1 px-4" onClick={this.addproduct}>Ingresar a feria</button></Link>
+            <button className="width100 pinkButton btn pt-1 pb-1 px-4" onClick={this.routeChange}>Ingresar a feria</button>
           </div>
         </div>
       </div>
@@ -48,4 +60,4 @@ class FairComponent extends React.Component {
 
 }
 
-export default FairComponent;
+export default withRouter(FairComponent);

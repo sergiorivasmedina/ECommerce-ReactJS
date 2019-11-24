@@ -55,7 +55,7 @@ class Stores extends React.Component {
                         <div className="col-md-12 mb-5 text-center" id="productList">
                             <ul className="product-category">
                                 <li><a href="#productList" id="Todos" className="active" onClick={() => this.filterCategory("Todos")}>Todos</a></li>
-                                {this.state.categories.map(category => <li><a href="#productList" id={category.idCategoria} onClick={() => this.filterCategory(category.idCategoria)}>{category.nombre}</a></li>)}
+                                {this.state.categories.map(category => <li key={category.idCategoria}><a href="#productList" id={category.idCategoria} onClick={() => this.filterCategory(category.idCategoria)}>{category.nombre}</a></li>)}
                        
                             </ul>
                         </div>

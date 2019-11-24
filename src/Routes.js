@@ -31,6 +31,7 @@ import Historial from './views/AgroferiaCliente/Historic';
 import DetalleHistorial from './views/AgroferiaCliente/HistoricDetail';
 import OrderSummary from './views/AgroferiaCliente/OrderSummary';
 import Mapa from './views/AgroferiaCliente/Map';
+import OrderQuery from './views/AgroferiaCliente/OrderQuery';
 
 
 const routing = (
@@ -49,12 +50,12 @@ const routing = (
       <Route path="/template" component={Template} />
       <Route path="/store" component={Store} />
       <Route path="/ferias" component={Ferias} />
-      <Route path="/tiendas/:id" component={Tiendas} />
+      <Route path="/tiendas" component={Tiendas} />
       <Route path="/productos" component={Productos} />
       <Route path="/canasta" component={Canasta} />
       <Route path="/perfil" component={Perfil} />
-      <Route path="/detalleTienda/:id" component={DetalleTienda} />
-      <Route path="/detalleProducto/:id" component={DetalleProducto} />
+      <Route path="/detalleTienda" component={DetalleTienda} />
+      <Route path="/detalleProducto" component={DetalleProducto} />
       <Route path="/login" component={Login}/>
       <Route path="/historial" component={Historial}/>
       <Route path="/registro" component={Registro}/>
@@ -63,6 +64,7 @@ const routing = (
       <Route path="/mapa" component={Mapa}/>
       <Route path="/resumen/:idPedido" component={OrderSummary}/>
       <Route path="/detalleHistorial/:idPedido" component={DetalleHistorial}/>
+      <Route path="/consultas-sugerencias" component={OrderQuery}/>
       <Route component={NotFound}/>
     </Switch>
     </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ShopProfile from '../../components/AgroferiaCliente/ShopProfile'
 import ProducerCard from '../../components/AgroferiaCliente/ProducerCard'
 import ProductCard from '../../components/AgroferiaCliente/ProductCard'
@@ -10,7 +10,7 @@ import APIFerias from '../../services/FairsService'
 import {Link} from 'react-router-dom';
 import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 
-export default class StoreDetail extends Component {
+export default class StoreDetail extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -28,14 +28,10 @@ export default class StoreDetail extends Component {
     window.scrollTo(0, 0);
   }
   componentWillMount(){
-    const {id} = this.props.match.params;
-    console.log(id);
 
-  
-    APIFerias.get('Despliegue/api/tienda/perfil/' + id)
+    APIFerias.get('Despliegue/api/tienda/perfil/' + sessionStorage.getItem("idTienda"))
       .then(res=> {
         const profile = res.data;
-        console.log(profile);
         this.setState({ 
           name: profile.empresa.nombreComercial,
           description: profile.descripcion,
@@ -43,7 +39,6 @@ export default class StoreDetail extends Component {
           email: profile.empresa.email,
           photo: profile.foto
          })
-         console.log(this.state.photo);
          APIFerias.get('Despliegue/api/usuario/productor/empresa/' + profile.empresa.idEmpresa)
          .then(res=>{
            console.log(res.data);
@@ -58,12 +53,10 @@ export default class StoreDetail extends Component {
         })
       } 
 
-      APIFerias.get('Despliegue/api/productos/tienda/' + id)
+      APIFerias.get('Despliegue/api/productos/tienda/' + sessionStorage.getItem("idTienda") + '/cliente')
       .then(res=> {
         const products = res.data;
-        console.log(products);
         this.setState({ products:products })
-        console.log(products);
       })
 
       
@@ -75,7 +68,7 @@ export default class StoreDetail extends Component {
       <div>
         <Menu />
           <div className="container">
-          <Link to={"/tiendas/" + localStorage.getItem('idFeria')}>
+          <Link to={"/tiendas"}>
               <ReturnButton previousPage="Tiendas"></ReturnButton></Link>
               
                 <ShopProfile
@@ -88,12 +81,12 @@ export default class StoreDetail extends Component {
         
               
               <div className="row">
-              {this.state.producers.map(producer =><ProducerCard producerName={producer.nombres + " " + producer.apellidoPaterno}
+              {this.state.producers.map(producer =><ProducerCard key={producer.idProductor} producerName={producer.nombres + " " + producer.apellidoPaterno}
               producerDescription={"@"+ producer.username} imageUrl="../images/producer_logo.jpg" producer={producer} coment={producer.observaciones}></ProducerCard> )}
               </div>
               <h4>Descubre nuestros productos</h4>
               <div className="row">
-              {this.state.products.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount="0" store="" unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
+              {this.state.products.map(product => <ProductCard key={product.idProducto} id={product.idProducto} productName={product.nombre} price={product.precio} discount="0" store="" unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
               </div>
             </div>
             <FooterComponent />

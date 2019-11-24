@@ -2,6 +2,10 @@ import React from 'react';
 import APIFerias from '../../services/FairsService';
 import Swal from 'sweetalert2';
 import StarRatings from 'react-star-ratings';
+import { Link } from 'react-router-dom';
+import { MdSentimentSatisfied, MdSentimentDissatisfied } from "react-icons/md";
+
+
 
 class ProductHistoricRate extends React.Component {
 
@@ -18,6 +22,43 @@ class ProductHistoricRate extends React.Component {
     this.updateQuantity = this.updateQuantity.bind(this);
     this.removeProduct = this.removeProduct.bind(this);
     this.changeRating = this.changeRating.bind(this);
+    this.rate = this.rate.bind(this);
+    this.complain = this.complain.bind(this);
+    }
+
+    rate(){
+        Swal.fire({
+            title: 'Por favor, valora el producto',
+            html: '<StarRatings rating={this.state.rating} starRatedColor="blue" changeRating={this.changeRating} numberOfStars={5} starDimension="25px" starSpacing="3px" name="rating" />'
+        })
+    }
+
+    complain(){
+        const { value: queja } = Swal.fire({
+            title: '¿Qué salió mal?',
+            input: 'text',
+            showCancelButton: true,
+            inputValidator: (value) => {
+              if (!value) {
+                return 'You need to write something!'
+              }
+            },
+            inputPlaceholder: 'Ingrese su reclamo'
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Reclamo enviado',
+                    type: 'success'
+                }
+                )
+                console.log(result.value)
+
+                
+            }
+
+
+        })
+
     }
 
     componentDidMount() {
@@ -86,6 +127,9 @@ class ProductHistoricRate extends React.Component {
 
             <td className="total">S/.{this.props.monto}</td>
             <td className="total">{this.props.estadoDetalle}</td>
+            {/* <td> <Link onClick ={this.rate} > <MdSentimentSatisfied color= "deeppink" size="50" /> </Link>
+             <Link onClick ={this.complain} > <MdSentimentDissatisfied color= "deeppink" size="50" /> </Link> </td> */}
+
             <td className="stars"> <StarRatings rating={this.state.rating} starRatedColor="blue" 
                 changeRating={this.changeRating} numberOfStars={5} starDimension="25px"
                 starSpacing="3px" name='rating' />  </td>

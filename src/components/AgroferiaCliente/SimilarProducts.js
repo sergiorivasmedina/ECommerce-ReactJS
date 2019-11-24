@@ -17,6 +17,13 @@ export default class SimilarProducts extends React.Component {
     this.filter(props.filter);
   }
 
+  async routeChange() {
+    await sessionStorage.setItem("idProducto", this.props.id);
+    let path = "/detalleProducto";
+    this.props.history.push(path);
+  }
+
+
   filter(filterValue) {
     if (filterValue != "Todos") {
       var activeProducts = this.state.products.filter(function(p){
@@ -29,7 +36,7 @@ export default class SimilarProducts extends React.Component {
   }
 
   componentDidMount() {
-    APIFerias.get('Despliegue/api/productos/feria_promociones/' + localStorage.getItem('idFeria'))
+    APIFerias.get('Despliegue/api/productos/feria_promociones/' + sessionStorage.getItem('idFeria'))
       .then(res=> {
         const products = res.data;
         this.setState({ products:products });
@@ -43,7 +50,7 @@ export default class SimilarProducts extends React.Component {
     return (
       <div>
         <div className="row">
-        {this.state.activeProducts.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount={product.porcDescuento*100}
+        {this.state.activeProducts.map(product => <ProductCard id={product.idProducto} productName={product.nombre} price={product.precio} discount={(product.porcDescuento*100).toFixed(2)}
           store={product.store} unit={product.unidadMedida.simbolo} imageUrl={product.imagen}/>)}
         </div>
       </div>

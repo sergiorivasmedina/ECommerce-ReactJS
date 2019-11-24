@@ -39,11 +39,13 @@ class Payment extends React.Component{
         console.log("location",window.location);
         const {idPedido} = this.props.match.params;
         const st = localStorage.getItem('subtotal')
+        const tot = localStorage.getItem('total')
+        const totigv = localStorage.getItem('igv')
         this.setState({
             idPedido: idPedido,
             subtotal: st,
-            total: localStorage.getItem('total'),
-            igv:localStorage.getItem('igv')
+            total: tot,
+            igv:totigv
         })
         
         if(idPedido!=null){
@@ -307,13 +309,13 @@ class Payment extends React.Component{
                                 <div className="col-md-6">
                                     <div className="form-group">
                                     <label for="towncity">Direccion</label>
-                                <input type="text" className="form-control" placeholder=""/>
+                                <input type="text" className="form-control" placeholder={this.state.usuario.direccion}/>
                                 </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="postcodezip">Ciudad</label>
-                                <input type="text" className="form-control" placeholder=""/>
+                                <input type="text" className="form-control" placeholder={this.state.usuario.ciudad}/>
                                 </div>
                                 </div>
                                 <div className="w-100"></div>
