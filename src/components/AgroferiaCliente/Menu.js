@@ -36,7 +36,7 @@ const getSuggestions = value => {
     console.log("listaaa");
     console.log(lista);
     return inputLength === 0 ? [] : lista.filter(lang =>
-        lang.nombre.toLowerCase().slice(0, inputLength) === inputValue
+        lang.nombre.toLowerCase().includes(inputValue)
     );
 }
 const imagenSuggest ={
@@ -46,11 +46,12 @@ const imagenSuggest ={
 const letraSuggest ={
     fontsize: "12px"
 }
-
+var urlP = "detalleProducto/1";
+var urlT = "detalleTienda/1";
 const renderSuggestion = suggestion => (
-    <div className="row">
+    <Link to={(suggestion.tipo==" - Tienda") ? "detalleTienda/" + suggestion.id :  "detalleProducto/" + suggestion.id}><div className="row">
         <div className="col-md-3 img-fluid text-center d-flex align-self-stretch ">
-            <img style={imagenSuggest} src={suggestion.foto}></img>
+        <img style={imagenSuggest} src={suggestion.foto}></img>
         </div>
         <div className="col-md-9 text-center d-flex align-self-stretch ">
         <span style={letraSuggest}>
@@ -58,7 +59,7 @@ const renderSuggestion = suggestion => (
         </span>
         </div>
         
-    </div>
+    </div></Link>
 
 )
 
