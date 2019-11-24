@@ -40,12 +40,10 @@ const getSuggestions = value => {
     );
 }
 const imagenSuggest ={
-    height:'50px',
-    width:'50px' 
+    height:'40px',
+    width:'40px' 
 }
-const letraSuggest ={
-    fontsize: "12px"
-}
+
 var urlP = "detalleProducto/1";
 var urlT = "detalleTienda/1";
 const renderSuggestion = suggestion => (
@@ -54,7 +52,7 @@ const renderSuggestion = suggestion => (
         <img style={imagenSuggest} src={suggestion.foto}></img>
         </div>
         <div className="col-md-9 text-center d-flex align-self-stretch ">
-        <span style={letraSuggest}>
+        <span>
             {suggestion.nombre} {suggestion.tipo}
         </span>
         </div>
