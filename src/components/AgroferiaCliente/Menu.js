@@ -18,10 +18,12 @@ APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + sessionStorage.getItem(
         }
         console.log("lista");
         console.log(lista);
+        console.log("session storage feria");
+        console.log(sessionStorage.getItem("idFeria"));
     })
 
 var listContProductos = []
-APIFerias.get('Despliegue/api/productos/feria_promociones/1')
+APIFerias.get('Despliegue/api/productos/feria_promociones/' + + sessionStorage.getItem("idFeria"))
     .then(res => {
         listContProductos = res.data;
         for (let i = 0; i < listContProductos.length; i++) {
@@ -45,6 +47,11 @@ const imagenSuggest ={
     height:'40px',
     width:'40px' 
 }
+
+const RouteSuggest={
+    display: "none"
+}
+
 var pathGen="";
 var urlP = "detalleProducto/1";
 var urlT = "detalleTienda/1";
@@ -82,8 +89,6 @@ class Menu extends React.Component {
         {(pathGen=="/detalleTienda") ? await sessionStorage.setItem("idTienda", idP) :  await sessionStorage.setItem("idProducto", idP);}
         await sessionStorage.setItem("idProducto", idP);
         console.log(sessionStorage.getItem("idProducto"));
-        let pathP = "/detalleProducto";
-        let pathT = "/detalleTienda";
         console.log("PATH");
         console.log(this.state.pathB);
         this.state.pathB=pathGen;
@@ -161,7 +166,7 @@ class Menu extends React.Component {
                     {suggestion.nombre} {suggestion.tipo}
                 </span>
                 </div>
-                <span>
+                <span style={RouteSuggest}>
                     {(suggestion.tipo==" - Tienda") ? pathGen="/detalleTienda" :  pathGen="/detalleProducto"}{idP = suggestion.id}
                 </span>
             </div>
