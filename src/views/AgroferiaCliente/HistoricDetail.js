@@ -116,11 +116,11 @@ class HistoricDetail extends React.Component {
                             <div className="col-md-6">
                                 <h4 className="heading"> Detalle del pedido</h4>
                             </div>
-                            <Col md={{ span: 3, offset: 3 }}>
-                            <a href="/consultas-sugerencias">
-                                <Button>Reclamo</Button>
-                            </a>
-                            </Col>
+                                <Col md={{ span: 3, offset: 3 }}>
+                                <a href="/consultas-sugerencias">
+                                    <Button>Problema con mi pedido</Button>
+                                </a>
+                                </Col>
                             <div className="col-md-12">
                                 <table className="table">
                                     <thead className="thead-primary">
