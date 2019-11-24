@@ -6,38 +6,61 @@ import APIFerias from '../../services/FairsService'
 import Autosuggest from 'react-autosuggest';
 
 
-var lista =[]
+var listContTiendas = []
+var lista = []
 APIFerias.get('/Despliegue/api/tiendas/feria/virtual/1')
-            .then(res =>{
-                lista = res.data
-                console.log("lista");
-                console.log(lista);
-            })
-const listaPrueba= [
-    {
-    name: 'Tienda 1',
-    year: 1972
-  },
-  {
-    name: 'Tienda 2',
-    year: 2012
-  }]
-const getSuggestionValue = suggestion => suggestion.empresa.nombreComercial;
+    .then(res => {
+        listContTiendas = res.data
+        console.log("loong");
+        console.log(listContTiendas.length);
+        for (let i = 0; i < listContTiendas.length; i++) {
+            lista.push({ id: listContTiendas[i].idTienda, nombre: listContTiendas[i].empresa.nombreComercial, foto: listContTiendas[i].foto, tipo:" - Tienda" })
+        }
+        console.log("lista");
+        console.log(lista);
+    })
+
+var listContProductos = []
+APIFerias.get('Despliegue/api/productos/feria_promociones/1')
+    .then(res => {
+        listContProductos = res.data;
+        for (let i = 0; i < listContProductos.length; i++) {
+            lista.push({ id: listContProductos[i].idProducto, nombre: listContProductos[i].solicitudProducto.nombre, foto: listContProductos[i].solicitudProducto.imagen, tipo:" - Producto" })
+        }
+    })
+
+const getSuggestionValue = suggestion => suggestion.nombre;
 const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    console.log("lista2");
+    console.log("listaaa");
     console.log(lista);
     return inputLength === 0 ? [] : lista.filter(lang =>
-      lang.empresa.nombreComercial.toLowerCase().slice(0, inputLength) === inputValue
+        lang.nombre.toLowerCase().slice(0, inputLength) === inputValue
     );
-  }
+}
+const imagenSuggest ={
+    height:'50px',
+    width:'50px' 
+}
+const letraSuggest ={
+    fontsize: "12px"
+}
 
-  const renderSuggestion = suggestion => (
-    <span>
-        {suggestion.empresa.nombreComercial}
-    </span>
-  )
+const renderSuggestion = suggestion => (
+    <div className="row">
+        <div className="col-md-3 img-fluid text-center d-flex align-self-stretch ">
+            <img style={imagenSuggest} src={suggestion.foto}></img>
+        </div>
+        <div className="col-md-9 text-center d-flex align-self-stretch ">
+        <span style={letraSuggest}>
+            {suggestion.nombre} {suggestion.tipo}
+        </span>
+        </div>
+        
+    </div>
+
+)
 
 
 class Menu extends React.Component {
@@ -55,28 +78,16 @@ class Menu extends React.Component {
             listP: [],
             tienda: null,
             fairs: null,
-            listaPrueba: [
-                {
-                name: 'Tienda 1',
-                year: 1972
-              },
-              {
-                name: 'Tienda 2',
-                year: 2012
-              }],
             suggestions: [],
-            value:''
+            value: ''
         };
-
-        
-
     }
-   
+
     onChange = (event, { newValue }) => {
         this.setState({
-          value: newValue
+            value: newValue
         });
-      };
+    };
 
     componentDidMount() {
         console.log(sessionStorage.getItem("idUsuario"));
@@ -122,15 +133,15 @@ class Menu extends React.Component {
     }
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
-          suggestions: getSuggestions(value)
+            suggestions: getSuggestions(value)
         });
-      }
-      onSuggestionsClearRequested = () => {
+    }
+    onSuggestionsClearRequested = () => {
         this.setState({
-          suggestions: []
+            suggestions: []
         });
-      }
-    
+    }
+
     render() {
         var bottomProducts = "nav-link";
         var bottomStores = "nav-link";
@@ -173,10 +184,10 @@ class Menu extends React.Component {
         const inputProps = {
             placeholder: 'Buscar...',
             value,
-            name:"buscador",
+            name: "buscador",
             autoComplete: "abcd",
             onChange: this.onChange
-          };
+        };
         return (
             <nav className="navbar navbar-expand-lg ftco-navbar-light customBorder" id="ftco-navbar">
                 <div className="container pt-3">
@@ -190,7 +201,7 @@ class Menu extends React.Component {
                                 <img className="img-fluid customLogo" src="https://static.wixstatic.com/media/ca3438_d19b292fe67d48a9850302656b8968cb~mv2.jpg/v1/fill/w_190,h_190,al_c,q_80,usm_0.66_1.00_0.01/Untitled.jpg" alt="Colorlib Template" />
                             </div>
                             <div className="col-md-8">
-                                <Autosuggest  
+                                <Autosuggest
                                     inputProps={inputProps}
                                     suggestions={suggestions}
                                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
