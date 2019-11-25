@@ -217,7 +217,8 @@ h5 {
     position: absolute;
     top: 51px;
     width: 280px;
-    height: 300px;
+    min-height: 80px;
+    max-height: 200px;
     overflow-y: scroll;
     border: 1px solid #aaa;
     background-color: #fff;

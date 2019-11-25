@@ -66,7 +66,7 @@ export default class StoreDetail extends React.Component {
   render() {
     return (
       <div>
-        <Menu />
+        <Menu fairId={sessionStorage.getItem('idFeria')}/>
           <div className="container">
           <Link to={"/tiendas"}>
               <ReturnButton previousPage="Tiendas"></ReturnButton></Link>

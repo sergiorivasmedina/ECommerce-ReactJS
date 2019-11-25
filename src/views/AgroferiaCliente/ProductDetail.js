@@ -161,7 +161,7 @@ class ProductDetail extends Component {
     }
     return (
       <div>
-        <Menu />
+        <Menu fairId={sessionStorage.getItem('idFeria')}/>
         <div className="container">
           <Link to="/productos">
             <ReturnButton previousPage="Productos"></ReturnButton></Link>

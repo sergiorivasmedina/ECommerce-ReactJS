@@ -278,7 +278,7 @@ class Payment extends React.Component{
         
         return(
         <div className="Stores">
-            <Menu />
+            <Menu fairId={sessionStorage.getItem('idFeria')}/>
             <FairHeading title="Pago" imageUrl="../images/agroferia_tienda1.jpg" />
             <section className="ftco-section">
                 <div className="container">
