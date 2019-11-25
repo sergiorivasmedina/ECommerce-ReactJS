@@ -26,8 +26,8 @@ class Basket extends React.Component {
             precios:[],
             cantidades:[],
             descuentos:[],
+            idis:[],
             totales:[],
-
             subtotal:0,
             igv:0,
             total:0,
@@ -74,18 +74,33 @@ class Basket extends React.Component {
                 
                 
             })
+
+            
       
-    }
+    } 
 
     handleBasket(){
         localStorage.setItem("subtotal",this.state.subtotal);
         localStorage.setItem('total',this.state.total.toFixed(2));
         localStorage.setItem('igv',this.state.igv);
-        // APIFerias.put('/Despliegue/api/pedido/' + this.state.idPedido + '/reservado')
-        // .then(response => {
-        //     console.log("cambio de estado de pedido a reservado");
+        
+        var i = 0;
+        var lista = [];
+        for (i = 0; i < this.state.idis.length; i++) {
+            const aux = {}
+            aux['idDetallePedido'] = this.state.idis[i];
+            aux['cantidad'] = this.state.cantidades[i];
+            aux['monto'] = this.state.totales[i];
+            lista.push(aux)
+        }
+        APIFerias.put('/Despliegue/api/pedidos/detalle/cantidad/'+this.state.idPedido,lista)
+        .then(res=>{
+            console.log("actualizado",res)
+            
+        })
 
-        // })
+
+
     }
 
 
@@ -117,12 +132,14 @@ class Basket extends React.Component {
                             });
                             var i;
                             for (i = 0; i < this.state.detalles.length; i++) {
-                                console.log("prueba",this.state.detalles)
+                                console.log("esto",this.state.detalles)
                                 this.setState({ 
                                     precios: this.state.precios.concat([this.state.detalles[i].monto / this.state.detalles[i].cantidad]),
                                     cantidades: this.state.cantidades.concat([this.state.detalles[i].cantidad]),
                                     totales: this.state.totales.concat([this.state.detalles[i].monto]),//modificar el discount cuando venga de back
                                     num:this.state.precios.concat([i]),
+                                    idis:this.state.idis.concat([this.state.detalles[i].idDetallePedido])
+                
                                 })
                                 this.setState({
                                     total: this.state.total+ this.state.detalles[i].monto //modificar el discount cuando venga de back
@@ -138,15 +155,12 @@ class Basket extends React.Component {
                             })
 
 
-
+                            console.log("cantidades: ", this.state.cantidades, "Totales: ", this.state.totales,"idis: ", this.state.idis);
                             });
+                            
                 });
                 
-
-
-
         }
-
     }
 
     componentWillUpdate(){
