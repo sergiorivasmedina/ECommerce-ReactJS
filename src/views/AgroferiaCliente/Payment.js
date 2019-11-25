@@ -8,6 +8,7 @@ import APIFerias from '../../services/FairsService';
 import $ from 'jquery';
 import {Form,Button, ListGroup} from 'react-bootstrap';
 import FairHeading from '../../components/Vegefoods/FairHeading';
+import { withRouter } from 'react-router-dom';
 
 
 
@@ -42,13 +43,13 @@ class Payment extends React.Component{
         const tot = localStorage.getItem('total')
         const totigv = localStorage.getItem('igv')
         this.setState({
-            idPedido: idPedido,
+            idPedido: sessionStorage.getItem("idPedido"),
             subtotal: st,
             total: tot,
             igv:totigv
         })
         
-        if(idPedido!=null){
+        if(sessionStorage.getItem("idPedido")!=null){
                 window.Payment = this;
                 window.Culqi.publicKey = 'pk_test_dPmYFGxhKYaCH0Bm';
                 window.Culqi.init();
@@ -236,7 +237,8 @@ class Payment extends React.Component{
                 text: 'Gracias por tu compra',
             });
         })
-        this.props.history.push("/resumen/" + this.state.idPedido);
+        sessionStorage.setItem("idPedidoResumen", this.state.idPedido);
+        this.props.history.push("/resumen");
         /*Emitir Boleta */
         if(this.state.boleta){
             this.emitirBoleta()
@@ -404,4 +406,4 @@ class Payment extends React.Component{
     }
 }
 
-export default Payment;
+export default withRouter(Payment);
