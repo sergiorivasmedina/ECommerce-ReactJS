@@ -7,8 +7,7 @@ import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import APIFerias from '../../services/FairsService';
 import {Link} from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-
+import { withRouter } from 'react-router-dom';
 
 
 class Basket extends React.Component {
@@ -34,8 +33,18 @@ class Basket extends React.Component {
         };
         this.updateMontos = this.updateMontos.bind(this);
         this.handleBasket = this.handleBasket.bind(this);
+        this.routeChange = this.routeChange.bind(this);
 
     }
+
+    async routeChange() {
+        
+        await sessionStorage.setItem("idPedido", this.state.idPedido);
+        console.log(sessionStorage.getItem("idPedido"));
+        let path = "/pago";
+        this.props.history.push(path);
+      }
+
 
     async updateMontos(evt,id,cantidad,total) {
         console.log("2:",id,cantidad,total)
@@ -198,10 +207,10 @@ class Basket extends React.Component {
                                 <p>Total: S/{this.state.total.toFixed(2)}</p>
                             </div>
                             <div className="col-md-12 mb-5">
-                                <Link  to={"/pago/" + this.state.idPedido} >
+                                <a href="" onClick={this.routeChange}>
                                     <button disabled={this.state.idPedido == null} class="btn btn-primary py-3 px-4 pl-2 pr-2" onClick={this.handleBasket}
                                     >Continuar <i></i></button>
-                                </Link>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -215,4 +224,4 @@ class Basket extends React.Component {
 
 }
 
-export default Basket;
+export default withRouter(Basket);
