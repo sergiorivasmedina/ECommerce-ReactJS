@@ -72,6 +72,7 @@ class HistoricDetail extends React.Component {
             //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
             APIFerias.get('Despliegue/api/pedidos/generico/' + idPedido)
                 .then(res=> {
+                    console.log("a",res.data)
                     this.setState({
                         orden:parseInt(idPedido),
                         fechaCompra: moment(new Date(res.data.pedido.fecha)).format('DD/MM/YYYY'),
@@ -108,7 +109,7 @@ class HistoricDetail extends React.Component {
     render() {
         return (
             <div className="Stores">
-                <Menu />
+                <Menu fairId={sessionStorage.getItem('idFeria')}/>
                 <Heading title="detalle del pedido" imageUrl="../images/agroferia_tienda1.jpg" />
                 <section className="pt-5">
                     <div className="container">
@@ -116,11 +117,11 @@ class HistoricDetail extends React.Component {
                             <div className="col-md-6">
                                 <h4 className="heading"> Detalle del pedido</h4>
                             </div>
-                            <Col md={{ span: 3, offset: 3 }}>
-                            <a href="/consultas-sugerencias">
-                                <Button>Reclamo</Button>
-                            </a>
-                            </Col>
+                                <Col md={{ span: 3, offset: 3 }}>
+                                <a href="/consultas-sugerencias">
+                                    <Button>Problema con mi pedido</Button>
+                                </a>
+                                </Col>
                             <div className="col-md-12">
                                 <table className="table">
                                     <thead className="thead-primary">
@@ -168,7 +169,7 @@ class HistoricDetail extends React.Component {
                                     </thead>
                                     <tbody>
                                     
-                                    {this.state.detalles.map(detalle => <ProductHistoricRate  triggerParentUpdate={this.updateMontos} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} estadoDetalle={this.state.estadosDetalle[detalle.estado]}/>)}
+                                    {this.state.detalles.map(detalle => <ProductHistoricRate  triggerParentUpdate={this.updateMontos} idDetallePedido={detalle.idDetallePedido} idDetalle={detalle.index} idProducto={detalle.idProducto} cantidad={detalle.cantidad} monto={detalle.monto} valoracion={detalle.valoracion} estadoDetalle={this.state.estadosDetalle[detalle.estado]}/>)}
                                     </tbody>
                                 </table>
                             </div>

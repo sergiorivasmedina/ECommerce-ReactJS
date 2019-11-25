@@ -4,37 +4,21 @@ import { Row, Col } from 'react-bootstrap';
 import SearchBarMenu from '../../components/AgroferiaCliente/SearchBarMenu';
 import APIFerias from '../../services/FairsService'
 import Autosuggest from 'react-autosuggest';
+import { withRouter } from 'react-router-dom';
 
-
+console.log("IDDDP");
+console.log(sessionStorage.getItem("idFeria"));
 var listContTiendas = []
 var lista = []
-APIFerias.get('/Despliegue/api/tiendas/feria/virtual/1')
-    .then(res => {
-        listContTiendas = res.data
-        console.log("loong");
-        console.log(listContTiendas.length);
-        for (let i = 0; i < listContTiendas.length; i++) {
-            lista.push({ id: listContTiendas[i].idTienda, nombre: listContTiendas[i].empresa.nombreComercial, foto: listContTiendas[i].foto, tipo:" - Tienda" })
-        }
-        console.log("lista");
-        console.log(lista);
-    })
+
 
 var listContProductos = []
-APIFerias.get('Despliegue/api/productos/feria_promociones/1')
-    .then(res => {
-        listContProductos = res.data;
-        for (let i = 0; i < listContProductos.length; i++) {
-            lista.push({ id: listContProductos[i].idProducto, nombre: listContProductos[i].solicitudProducto.nombre, foto: listContProductos[i].solicitudProducto.imagen, tipo:" - Producto" })
-        }
-    })
+
 
 const getSuggestionValue = suggestion => suggestion.nombre;
 const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    console.log("listaaa");
-    console.log(lista);
     return inputLength === 0 ? [] : lista.filter(lang =>
         lang.nombre.toLowerCase().includes(inputValue)
     );
@@ -44,27 +28,21 @@ const imagenSuggest ={
     width:'40px' 
 }
 
+const RouteSuggest={
+    display: "none"
+}
+
+var pathGen="";
 var urlP = "detalleProducto/1";
 var urlT = "detalleTienda/1";
-const renderSuggestion = suggestion => (
-    <Link to={(suggestion.tipo==" - Tienda") ? "detalleTienda/" + suggestion.id :  "detalleProducto/" + suggestion.id}><div className="row">
-        <div className="col-md-3 img-fluid text-center d-flex align-self-stretch ">
-        <img style={imagenSuggest} src={suggestion.foto}></img>
-        </div>
-        <div className="col-md-9 text-center d-flex align-self-stretch ">
-        <span>
-            {suggestion.nombre} {suggestion.tipo}
-        </span>
-        </div>
-        
-    </div></Link>
-
-)
+var idP ="";
 
 
 class Menu extends React.Component {
     constructor(props) {
         super(props);
+        console.log("PROPPS IDFERIA");
+        console.log(this.props.fairId);
         this.state = {
             value: 'AGROFERIAS CAMPESINAS',
             client: null,
@@ -78,8 +56,20 @@ class Menu extends React.Component {
             tienda: null,
             fairs: null,
             suggestions: [],
-            value: ''
+            value: '',
+            tipoB:"",
+            pathB:"",
+            idB:""
         };
+        this.routeChange = this.routeChange.bind(this);
+    }
+    
+
+    async routeChange() {
+        {(pathGen=="/detalleTienda") ? await sessionStorage.setItem("idTienda", idP) :  await sessionStorage.setItem("idProducto", idP);}
+        await sessionStorage.setItem("idProducto", idP);
+        this.state.pathB=pathGen;
+        this.props.history.push(this.state.pathB);
     }
 
     onChange = (event, { newValue }) => {
@@ -109,23 +99,23 @@ class Menu extends React.Component {
                     this.setState({ client: client, nombre: client.nombres, cierre: "Salir" })
                 })
         }
-        //todas las tiendas
-        APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + this.state.id)
+        APIFerias.get('/Despliegue/api/tiendas/feria/virtual/' + this.props.fairId)
+        .then(res => {
+            listContTiendas = res.data
+            lista=[];
+            for (let i = 0; i < listContTiendas.length; i++) {
+                lista.push({ id: listContTiendas[i].idTienda, nombre: listContTiendas[i].empresa.nombreComercial, foto: listContTiendas[i].foto, tipo:" - Tienda" })
+            }
+        })
+        APIFerias.get('Despliegue/api/productos/feria_promociones/' + this.props.fairId)
             .then(res => {
-                const lista = res.data;
-                this.setState({ listT: lista })
-                console.log(this.state.list);
+                listContProductos = res.data;
+                for (let i = 0; i < listContProductos.length; i++) {
+                    lista.push({ id: listContProductos[i].idProducto, nombre: listContProductos[i].solicitudProducto.nombre, foto: listContProductos[i].solicitudProducto.imagen, tipo:" - Producto" })
+                }
             })
+        }
 
-        //todas los productos
-        APIFerias.get('Despliegue/api/productos/feria_promociones/' + this.state.id)
-            .then(res => {
-                const products = res.data;
-                this.setState({ listP: products });
-
-            })
-
-    }
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
             suggestions: getSuggestions(value)
@@ -140,6 +130,23 @@ class Menu extends React.Component {
     render() {
         var bottomProducts = "nav-link";
         var bottomStores = "nav-link";
+
+        const renderSuggestion = suggestion => (
+            <div className="row">
+                <div className="col-md-3 img-fluid text-center d-flex align-self-stretch ">
+                <img style={imagenSuggest} onClick={this.routeChange} src={suggestion.foto}></img>
+                </div>
+                <div className="col-md-9 text-center d-flex align-self-stretch ">
+                <span onClick={this.routeChange} >
+                    {suggestion.nombre} {suggestion.tipo}
+                </span>
+                </div>
+                <span style={RouteSuggest}>
+                    {(suggestion.tipo==" - Tienda") ? pathGen="/detalleTienda" :  pathGen="/detalleProducto"}{idP = suggestion.id}
+                </span>
+            </div>
+            
+        )
 
         if (localStorage.getItem('activePage') == 2) {
             bottomStores = "nav-link pinkBottom";
@@ -239,4 +246,4 @@ class Menu extends React.Component {
 
 }
 
-export default Menu;
+export default withRouter(Menu);
