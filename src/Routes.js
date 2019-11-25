@@ -59,11 +59,11 @@ const routing = (
       <Route path="/login" component={Login}/>
       <Route path="/historial" component={Historial}/>
       <Route path="/registro" component={Registro}/>
-      <Route path="/pago/:idPedido" component={PagoFinal}/>
+      <Route path="/pago" component={PagoFinal}/>
       <Route path="/calendario" component={Calendario}/>
       <Route path="/mapa" component={Mapa}/>
-      <Route path="/resumen/:idPedido" component={OrderSummary}/>
-      <Route path="/detalleHistorial/:idPedido" component={DetalleHistorial}/>
+      <Route path="/resumen" component={OrderSummary}/>
+      <Route path="/detalleHistorial" component={DetalleHistorial}/>
       <Route path="/consultas-sugerencias" component={OrderQuery}/>
       <Route component={NotFound}/>
     </Switch>
