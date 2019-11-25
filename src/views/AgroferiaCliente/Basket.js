@@ -7,7 +7,7 @@ import FooterComponent from '../../components/AgroferiaCliente/FooterComponent';
 import APIFerias from '../../services/FairsService';
 import {Link} from 'react-router-dom';
 import Swal from 'sweetalert2';
-
+import moment from 'moment';
 
 
 
@@ -31,6 +31,8 @@ class Basket extends React.Component {
             subtotal:0,
             igv:0,
             total:0,
+
+            fechaFeria: null
         };
         this.updateMontos = this.updateMontos.bind(this);
         this.handleBasket = this.handleBasket.bind(this);
@@ -141,6 +143,14 @@ class Basket extends React.Component {
 
                             });
                 });
+
+                APIFerias.get('Despliegue/api/bff/gestor/feria/'+ sessionStorage.getItem('idFeria') +'/eventos/proximo/inicio')
+                    .then(res => {
+                        console.log("Fecha de inicio de feria: ",res.data);
+                        this.setState({
+                            fechaFeria: moment(new Date(res.data.fechaApertura)).format('DD/MM/YYYY')
+                        })
+                    })
                 
 
 
@@ -189,7 +199,7 @@ class Basket extends React.Component {
                         <div className="row">
                             <div className="col-md-9">
                                 <p>Entrega (recojo en tienda): Gratis</p>
-                                <p>Fecha de recojo: Domingo 24/11/2019</p>
+                                <p>Fecha de recojo: {this.state.fechaFeria}</p>
                             </div>
                             <div className="col-md-3 text-right">
                                 <p>Subtotal: S/.{this.state.subtotal}</p>
