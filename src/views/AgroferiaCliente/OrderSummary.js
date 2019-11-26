@@ -37,7 +37,7 @@ class OrderSummary extends React.Component{
                 5: "Por recoger",
                 6: "Despachado",
                 7: "No recogido",
-                8: "Cancelado",
+                8: "Rechazado",
                 9: "Rechazado",
 
               }
