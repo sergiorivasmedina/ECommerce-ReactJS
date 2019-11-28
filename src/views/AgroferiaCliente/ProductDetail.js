@@ -23,7 +23,8 @@ class ProductDetail extends Component {
       idUsuario: null,
       store: "",
       rating:0,
-      cantPersonas:0
+      cantPersonas:0,
+      stock:0
     }
     this.updateQuantity = this.updateQuantity.bind(this);
     this.addproduct = this.addproduct.bind(this);
@@ -115,6 +116,7 @@ class ProductDetail extends Component {
         console.log("es eso",res.data)
         this.setState({
           product: product,
+          stock: product.stock,
           simbolo: product.unidadMedida.simbolo,
           categoria: product.subCategoria.categoria.idCategoria,
           quantity: 1,
@@ -185,7 +187,7 @@ class ProductDetail extends Component {
                 <div className="col-md-4">
                   {pricing}
 
-                  <label>Cantidad: </label><input className="quantityInput" type="number" min="1" value={this.state.quantity} onChange={this.updateQuantity}></input>
+                  <label>Cantidad: </label><input className="quantityInput" type="number" min="1" max={this.state.stock} value={this.state.quantity} onChange={this.updateQuantity}></input>
                   <p className="pt-2">Total: S/. {(this.state.total.toFixed(2))} </p>
                 </div>
                 <div className="col-md-12">

@@ -86,6 +86,7 @@ class Basket extends React.Component {
                           title: 'Stock insuficiente!',
                           type: 'error'
                       })
+                      
                   }
 
         }
