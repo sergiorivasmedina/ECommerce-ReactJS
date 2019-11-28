@@ -184,6 +184,7 @@ class ProductDetail extends Component {
                 </div>
 
                 <div className="col-md-4">
+                  <p>Stock Disponible: {this.state.stock}</p>
                   {pricing}
 
                   <label>Cantidad: </label><input className="quantityInput" type="number" min="1" max={this.state.stock} value={this.state.quantity} onChange={this.updateQuantity}></input>
