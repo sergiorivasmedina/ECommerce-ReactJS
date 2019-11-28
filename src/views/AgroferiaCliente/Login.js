@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import Swal from 'sweetalert2';
 import APIFerias from '../../services/FairsService'
 import { Link } from 'react-router-dom';
+import ReturnButton from '../../components/AgroferiaCliente/ReturnButton';
 
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -126,6 +127,11 @@ class Login extends React.Component {
         return (
             <div>
                 <MenuFairComponent></MenuFairComponent>
+                <div className="container">
+                    <Link to="/">
+                        <ReturnButton previousPage="Ferias"></ReturnButton>
+                    </Link>
+                </div>
 
                 <div class="d-flex justify-content-center" style={{ backgroundImage: "url(images/login2.png)" }}>
                     <div className="p-3 colorCardLogin">
