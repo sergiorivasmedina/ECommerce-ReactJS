@@ -79,6 +79,14 @@ class Basket extends React.Component {
 
             })
 
+            console.log("compara",this.state.cantidades[i] , this.state.stocks[i] )
+            //comparar con stock
+            if (this.state.cantidades[i] > this.state.stocks[i] ){
+                      Swal.fire({
+                          title: 'Stock insuficiente!',
+                          type: 'error'
+                      })
+                  }
 
         }
 
@@ -89,7 +97,19 @@ class Basket extends React.Component {
 
         })
 
-
+        console.log("cantidades: ", this.state.cantidades, "Totales: ", this.state.totales, "idis: ", this.state.idis, "stocks", this.state.stocks);
+         
+        
+        // var j;
+        //  for (j = 0; 0 < this.state.cantidades.length;j++){
+             
+            //  if (this.state.cantidades[j] > this.state.stocks[j] ){
+            //      Swal.fire({
+            //          title: 'Stock insuficiente!',
+            //          type: 'error'
+            //      })
+            //  }
+        //  }
 
     }
 
@@ -156,7 +176,10 @@ class Basket extends React.Component {
                             this.setState({
                                 detalles: arrayAux
                             });
+
+
                             var i;
+                            var stoks = [];
                             for (i = 0; i < this.state.detalles.length; i++) {
                                 console.log("esto", this.state.detalles)
                                 this.setState({
@@ -173,19 +196,29 @@ class Basket extends React.Component {
                                 })
 
                                 APIFerias.get('Despliegue/api/producto/' + this.state.detalles[i].idProducto )
-                                .then(rees => {
-                                    console.log("rRrr", rees.data.stock)
+                                .then(rees => { //aca jalo el stock
+                                    var stoo =  rees.data.stock
+                                    console.log("stooo", rees.data.stock)
                                     this.setState({
                                         stocks: this.state.stocks.concat([rees.data.stock])
                                     })
 
                                 //
                                 })
+                                
 
 
                                 
                             }
-                            console.log("sto",this.state.stocks)
+
+                            // var arrayAux2 = this.state.detalles;
+                            //     arrayAux2 = arrayAux2.map(function (e, index) {
+                            //         e.stockProducto=stoks[index]
+                            //         return e
+                            //     });
+                            //     this.setState({
+                            //         detalles: arrayAux2
+                            //     });
 
                             
                             this.setState({
@@ -194,7 +227,6 @@ class Basket extends React.Component {
                             })
 
 
-                            console.log("cantidades: ", this.state.cantidades, "Totales: ", this.state.totales, "idis: ", this.state.idis);
                         });
 
                 });
