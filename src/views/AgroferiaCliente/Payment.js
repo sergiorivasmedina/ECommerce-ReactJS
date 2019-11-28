@@ -292,45 +292,45 @@ class Payment extends React.Component{
                                     <div className="col-md-12">
                                         <div className="form-group">
                                             <label for="lastname">Documento de Identidad</label>
-                                            <input type="text" className="form-control" placeholder={this.state.usuario.dni}/>
+                                            <input disabled type="text" className="form-control" placeholder={this.state.usuario.dni}/>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="firstname">Nombres</label>
-                                            <input type="text" className="form-control" placeholder={this.state.usuario.nombres}/>
+                                            <input disabled type="text" className="form-control" placeholder={this.state.usuario.nombres}/>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="firstname">Apellidos</label>
-                                            <input type="text" className="form-control" placeholder={this.state.usuario.apellidoPaterno} />
+                                            <input disabled type="text" className="form-control" placeholder={this.state.usuario.apellidoPaterno} />
                                         </div>
                                     </div>
                                 <div className="w-100"></div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                     <label for="towncity">Direccion</label>
-                                <input type="text" className="form-control" placeholder={this.state.usuario.direccion}/>
+                                <input disabled type="text" className="form-control" placeholder={this.state.usuario.direccion}/>
                                 </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="postcodezip">Ciudad</label>
-                                <input type="text" className="form-control" placeholder={this.state.usuario.ciudad}/>
+                                <input disabled type="text" className="form-control" placeholder={this.state.usuario.ciudad}/>
                                 </div>
                                 </div>
                                 <div className="w-100"></div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="phone">Telefono</label>
-                                            <input type="text" className="form-control" placeholder={this.state.usuario.telefono}/>
+                                            <input disabled type="text" className="form-control" placeholder={this.state.usuario.telefono}/>
                                         </div>
                                     </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="emailaddress">Correo electrónico</label>
-                                    <input type="text" className="form-control" placeholder={this.state.usuario.correo}/>
+                                    <input disabled type="text" className="form-control" placeholder={this.state.usuario.correo}/>
                                     </div>
                                 </div>
                             <div className="w-100"></div>
@@ -345,19 +345,19 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.{localStorage.getItem('subtotal')}</span>
+                                                <span>S/ {localStorage.getItem('subtotal')}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>IGV</span>
-                                                <span>S/.{this.state.igv}</span>
+                                                <span>S/ {this.state.igv}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>Despacho</span>
-                                                <span>S/.{this.state.descuento}</span>
+                                                <span>S/ 0.00</span>
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
-                                                <span>S/.{localStorage.getItem('total')}</span>
+                                                <span>S/ {localStorage.getItem('total')}</span>
                                             </p>
                                             </div>
                             </div>

@@ -78,6 +78,18 @@ class Menu extends React.Component {
         });
     };
 
+    componentWillUpdate(){
+        var idCliente = sessionStorage.getItem("idCliente"); 
+            APIFerias.get('Despliegue/api/pedido/' + idCliente)
+                .then(res => {
+                    APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
+                        .then(response => {
+                            localStorage.setItem('cantidad',response.data.length)
+                        }
+                        )
+        })
+      }
+
     componentDidMount() {
         if (sessionStorage.getItem("idUsuario")) {
             var idUSer = sessionStorage.getItem("idUsuario");
@@ -90,7 +102,9 @@ class Menu extends React.Component {
                         .then(response => {
                             const detalless = response.data;
                             this.setState({ cantprod: response.data.length })
-                        })
+                            localStorage.setItem('cantidad',response.data.length)
+                        }
+                        )
                 })
 
             APIFerias.get('/Despliegue/api/usuario/cliente/' + idCliente)
@@ -227,7 +241,7 @@ class Menu extends React.Component {
                                 {/* ACTIVAR PARA SIGUIENTE SPRINT <li className="nav-item"><label className="nav-link"><Link to="/Map">MAPS</Link></label></li>
                             <li className="nav-item"><label className="nav-link"><Link to="/Calendar">CALENDARIO</Link></label></li> */}
 
-                                <li className="nav-item cta cta-colored"><label className="nav-link"><Link to={basketUrl}><span className="icons icon-shopping_basket pink"></span><span>[{this.state.cantprod}]</span></Link></label></li>
+                                <li className="nav-item cta cta-colored"><label className="nav-link"><Link to={basketUrl}><span className="icons icon-shopping_basket pink"></span><span>[{localStorage.getItem('cantidad')}]</span></Link></label></li>
 
 
 

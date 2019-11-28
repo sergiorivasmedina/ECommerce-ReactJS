@@ -74,24 +74,23 @@ class ProductDetail extends Component {
       idTienda: this.state.product.idTienda,
       idFeria: sessionStorage.getItem("idFeria")
     }
-
     APIFerias.post('/Despliegue/api/pedido/producto', prod)
       .then(response => {
         console.log("Producto añadido")
-
-
         Swal.fire({
           title: 'Producto añadido a la canasta',
           type: 'success',
-          onAfterClose: this.renderiza()
+          onAfterClose: this.renderiza(),
+          
         }
         )
-
+        window.location.reload(true);
         return response;
 
       })
   }
 
+  
   componentDidMount() {
     window.scrollTo(0, 0);
     if (sessionStorage.getItem("idCliente")) {
@@ -133,7 +132,8 @@ class ProductDetail extends Component {
         console.log("PRODUCTO: ", this.state.product);
 
         console.log(this.state);
-        APIFerias.get('Despliegue/api/tienda/perfil/' + this.state.product.idTienda)
+        localStorage.setItem('idTienda_p',this.state.product.idTienda);
+        APIFerias.get('Despliegue/api/tienda/perfil/' + localStorage.getItem('idTienda_p'))
           .then(res => {
             const store = res.data;
             this.setState({ store: store.empresa.nombreComercial });
