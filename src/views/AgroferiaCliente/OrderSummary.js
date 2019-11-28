@@ -48,6 +48,7 @@ class OrderSummary extends React.Component{
     componentDidMount() {
         window.scrollTo(0, 0);
         localStorage.setItem('cantidad',0);
+        
         if (sessionStorage.getItem("idCliente")) {
             this.state.idCliente = sessionStorage.getItem("idCliente");
             console.log("idCliente: ",this.state.idCliente);
@@ -84,11 +85,13 @@ class OrderSummary extends React.Component{
         while (s.length < size) s = "0" + s;
         return s;
     }
-
+    update(){
+        
+    }
     render(){
         return(
             <div>
-                <Menu fairId={sessionStorage.getItem('idFeria')}/>
+                <Menu fairId={sessionStorage.getItem('idFeria')} />
                 <FairHeading title="Resumen de compra" imageUrl="../images/agroferia_tienda1.jpg" />
 
                 <section className="pt-5">

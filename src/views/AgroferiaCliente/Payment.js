@@ -235,11 +235,14 @@ class Payment extends React.Component{
                 type: 'success',
                 title: 'Tu pedido ha sido procesado correctamente',
                 text: 'Gracias por tu compra',
+                timer:50000,
+                onAfterClose: window.location='/resumen',
             });
         })
         sessionStorage.setItem("idPedidoResumen", this.state.idPedido);
         localStorage.setItem('cantidad',0);
-        this.props.history.push("/resumen");
+        //this.props.history.push("/resumen");
+        
         /*Emitir Boleta */
         if(this.state.boleta){
             this.emitirBoleta()
@@ -251,7 +254,6 @@ class Payment extends React.Component{
             title: 'Lo sentimos, su pedido no ha podido ser procesado',
             text: 'Le pedimos que lo intente nuevamente',
             onAfterClose: window.location='/canasta',
-            timer: 1500
         });
     }
 
