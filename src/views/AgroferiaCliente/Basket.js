@@ -27,6 +27,7 @@ class Basket extends React.Component {
             cantidades: [],
             descuentos: [],
             idis: [],
+            stocks: [],
             totales: [],
             subtotal: 0,
             igv: 0,
@@ -78,6 +79,15 @@ class Basket extends React.Component {
 
             })
 
+            console.log("compara",this.state.cantidades[i] , this.state.stocks[i] )
+            //comparar con stock
+            if (this.state.cantidades[i] > this.state.stocks[i] ){
+                      Swal.fire({
+                          title: 'Stock insuficiente!',
+                          type: 'error'
+                      })
+                      
+                  }
 
         }
 
@@ -88,7 +98,19 @@ class Basket extends React.Component {
 
         })
 
-
+        console.log("cantidades: ", this.state.cantidades, "Totales: ", this.state.totales, "idis: ", this.state.idis, "stocks", this.state.stocks);
+         
+        
+        // var j;
+        //  for (j = 0; 0 < this.state.cantidades.length;j++){
+             
+            //  if (this.state.cantidades[j] > this.state.stocks[j] ){
+            //      Swal.fire({
+            //          title: 'Stock insuficiente!',
+            //          type: 'error'
+            //      })
+            //  }
+        //  }
 
     }
 
@@ -140,8 +162,10 @@ class Basket extends React.Component {
                     //traer el detallePedido del idPedido, el cual es el actual
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
                         .then(response => {
+
                             const detalless = response.data;
                             console.log("segundo get", detalless)
+
                             this.state.idPedido = res.data.idPedido;
                             this.setState({ detalles: detalless })
                             var arrayAux = this.state.detalles;
@@ -153,7 +177,10 @@ class Basket extends React.Component {
                             this.setState({
                                 detalles: arrayAux
                             });
+
+
                             var i;
+                            var stoks = [];
                             for (i = 0; i < this.state.detalles.length; i++) {
                                 console.log("esto", this.state.detalles)
                                 this.setState({
@@ -169,16 +196,38 @@ class Basket extends React.Component {
 
                                 })
 
+                                APIFerias.get('Despliegue/api/producto/' + this.state.detalles[i].idProducto )
+                                .then(rees => { //aca jalo el stock
+                                    var stoo =  rees.data.stock
+                                    console.log("stooo", rees.data.stock)
+                                    this.setState({
+                                        stocks: this.state.stocks.concat([rees.data.stock])
+                                    })
+
+                                //
+                                })
+                                
 
 
+                                
                             }
+
+                            // var arrayAux2 = this.state.detalles;
+                            //     arrayAux2 = arrayAux2.map(function (e, index) {
+                            //         e.stockProducto=stoks[index]
+                            //         return e
+                            //     });
+                            //     this.setState({
+                            //         detalles: arrayAux2
+                            //     });
+
+                            
                             this.setState({
                                 subtotal: (this.state.total / 1.18).toFixed(2),
                                 igv: (this.state.total - this.state.total / 1.18).toFixed(2)
                             })
 
 
-                            console.log("cantidades: ", this.state.cantidades, "Totales: ", this.state.totales, "idis: ", this.state.idis);
                         });
 
                 });
