@@ -30,6 +30,7 @@ class Basket extends React.Component {
 
             subtotal:0,
             igv:0,
+            saldo: 0,
             total:0,
 
             fechaFeria: null
@@ -161,6 +162,13 @@ class Basket extends React.Component {
                             fechaFeria: moment(new Date(res.data.fechaApertura)).format('DD/MM/YYYY')
                         })
                     })
+
+                APIFerias.get('Despliegue/api/usuario/cliente/' + this.state.idCliente).then(res => {
+                    console.log("INFO CLIENTE", res.data);
+                    this.setState({
+                        saldo: res.data.saldo.toFixed(2)
+                    })
+                })
                 
 
 
@@ -212,8 +220,9 @@ class Basket extends React.Component {
                                 <p>Fecha de recojo: {this.state.fechaFeria}</p>
                             </div>
                             <div className="col-md-3 text-right">
-                                <p>Subtotal: S/.{this.state.subtotal}</p>
-                                <p>IGV: S/.{this.state.igv}</p>
+                                <p>Subtotal: S/ {this.state.subtotal}</p>
+                                <p>IGV: S/ {this.state.igv}</p>
+                                <p>Saldo YAPA: -S/ {this.state.saldo}</p>
                                 <hr></hr>
                                 <p>Total: S/{this.state.total.toFixed(2)}</p>
                             </div>
