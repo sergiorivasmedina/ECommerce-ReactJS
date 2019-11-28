@@ -27,6 +27,7 @@ class Basket extends React.Component {
             cantidades: [],
             descuentos: [],
             idis: [],
+            stocks: [],
             totales: [],
             subtotal: 0,
             igv: 0,
@@ -140,8 +141,10 @@ class Basket extends React.Component {
                     //traer el detallePedido del idPedido, el cual es el actual
                     APIFerias.get('Despliegue/api/pedido/' + res.data.idPedido + '/detalle')
                         .then(response => {
+
                             const detalless = response.data;
                             console.log("segundo get", detalless)
+
                             this.state.idPedido = res.data.idPedido;
                             this.setState({ detalles: detalless })
                             var arrayAux = this.state.detalles;
@@ -169,9 +172,22 @@ class Basket extends React.Component {
 
                                 })
 
+                                APIFerias.get('Despliegue/api/producto/' + this.state.detalles[i].idProducto )
+                                .then(rees => {
+                                    console.log("rRrr", rees.data.stock)
+                                    this.setState({
+                                        stocks: this.state.stocks.concat([rees.data.stock])
+                                    })
+
+                                //
+                                })
 
 
+                                
                             }
+                            console.log("sto",this.state.stocks)
+
+                            
                             this.setState({
                                 subtotal: (this.state.total / 1.18).toFixed(2),
                                 igv: (this.state.total - this.state.total / 1.18).toFixed(2)
