@@ -222,7 +222,7 @@ class Basket extends React.Component {
                             <div className="col-md-3 text-right">
                                 <p>Subtotal: S/ {this.state.subtotal}</p>
                                 <p>IGV: S/ {this.state.igv}</p>
-                                <p>Saldo YAPA: -S/ {this.state.saldo}</p>
+                                <p>Saldo YAPA: S/ -{this.state.saldo}</p>
                                 <hr></hr>
                                 <p>Total: S/{this.state.total.toFixed(2)}</p>
                             </div>
