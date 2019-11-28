@@ -49,7 +49,7 @@ class FairComponent extends React.Component {
                 Swal.fire({
                   type: 'success',
                   title: '¡Ha cambiado de feria!',
-                  text: '¡Se ha vaciado su canasta',
+                  text: 'Se ha vaciado su canasta',
               });
               }
                 
