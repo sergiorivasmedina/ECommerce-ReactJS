@@ -238,10 +238,14 @@ class Payment extends React.Component{
                 type: 'success',
                 title: 'Tu pedido ha sido procesado correctamente',
                 text: 'Gracias por tu compra',
+                timer:50000,
+                onAfterClose: window.location='/resumen',
             });
         })
         sessionStorage.setItem("idPedidoResumen", this.state.idPedido);
-        this.props.history.push("/resumen");
+        localStorage.setItem('cantidad',0);
+        //this.props.history.push("/resumen");
+        
         /*Emitir Boleta */
         if(this.state.boleta){
             this.emitirBoleta()
@@ -253,7 +257,6 @@ class Payment extends React.Component{
             title: 'Lo sentimos, su pedido no ha podido ser procesado',
             text: 'Le pedimos que lo intente nuevamente',
             onAfterClose: window.location='/canasta',
-            timer: 1500
         });
     }
 
@@ -295,45 +298,45 @@ class Payment extends React.Component{
                                     <div className="col-md-12">
                                         <div className="form-group">
                                             <label for="lastname">Documento de Identidad</label>
-                                            <input type="text" className="form-control" placeholder={this.state.usuario.dni}/>
+                                            <input disabled type="text" className="form-control" placeholder={this.state.usuario.dni}/>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="firstname">Nombres</label>
-                                            <input type="text" className="form-control" placeholder={this.state.usuario.nombres}/>
+                                            <input disabled type="text" className="form-control" placeholder={this.state.usuario.nombres}/>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="firstname">Apellidos</label>
-                                            <input type="text" className="form-control" placeholder={this.state.usuario.apellidoPaterno} />
+                                            <input disabled type="text" className="form-control" placeholder={this.state.usuario.apellidoPaterno} />
                                         </div>
                                     </div>
                                 <div className="w-100"></div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                     <label for="towncity">Direccion</label>
-                                <input type="text" className="form-control" placeholder={this.state.usuario.direccion}/>
+                                <input disabled type="text" className="form-control" placeholder={this.state.usuario.direccion}/>
                                 </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="postcodezip">Ciudad</label>
-                                <input type="text" className="form-control" placeholder={this.state.usuario.ciudad}/>
+                                <input disabled type="text" className="form-control" placeholder={this.state.usuario.ciudad}/>
                                 </div>
                                 </div>
                                 <div className="w-100"></div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="phone">Telefono</label>
-                                            <input type="text" className="form-control" placeholder={this.state.usuario.telefono}/>
+                                            <input disabled type="text" className="form-control" placeholder={this.state.usuario.telefono}/>
                                         </div>
                                     </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="emailaddress">Correo electrónico</label>
-                                    <input type="text" className="form-control" placeholder={this.state.usuario.correo}/>
+                                    <input disabled type="text" className="form-control" placeholder={this.state.usuario.correo}/>
                                     </div>
                                 </div>
                             <div className="w-100"></div>
@@ -348,15 +351,15 @@ class Payment extends React.Component{
                                     <h3 className="billing-heading mb-4">Total de la canasta</h3>
                                     <p className="d-flex">
                                                 <span>Subtotal</span>
-                                                <span>S/.{localStorage.getItem('subtotal')}</span>
+                                                <span>S/ {localStorage.getItem('subtotal')}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>IGV</span>
-                                                <span>S/.{this.state.igv}</span>
+                                                <span>S/ {this.state.igv}</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>Despacho</span>
-                                                <span>S/.{this.state.descuento}</span>
+                                                <span>S/ 0.00</span>
                                             </p>
                                             <p className="d-flex">
                                                 <span>Saldo YAPA</span>
@@ -364,7 +367,7 @@ class Payment extends React.Component{
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
-                                                <span>S/.{localStorage.getItem('total')}</span>
+                                                <span>S/ {localStorage.getItem('total')}</span>
                                             </p>
                                             </div>
                             </div>
