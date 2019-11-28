@@ -66,7 +66,7 @@ export default class StoreDetail extends React.Component {
   render() {
     return (
       <div>
-        <Menu />
+        <Menu fairId={sessionStorage.getItem('idFeria')}/>
           <div className="container">
           <Link to={"/tiendas"}>
               <ReturnButton previousPage="Tiendas"></ReturnButton></Link>
@@ -82,7 +82,7 @@ export default class StoreDetail extends React.Component {
               
               <div className="row">
               {this.state.producers.map(producer =><ProducerCard key={producer.idProductor} producerName={producer.nombres + " " + producer.apellidoPaterno}
-              producerDescription={"@"+ producer.username} imageUrl="../images/producer_logo.jpg" producer={producer} coment={producer.observaciones}></ProducerCard> )}
+              producerDescription={"@"+ producer.username} imageUrl={producer.foto} producer={producer} coment={producer.observaciones}></ProducerCard> )}
               </div>
               <h4>Descubre nuestros productos</h4>
               <div className="row">

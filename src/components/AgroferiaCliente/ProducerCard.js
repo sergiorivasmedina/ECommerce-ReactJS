@@ -30,12 +30,12 @@ class ProducerCard extends React.Component {
         return (
             <div className="col-lg-3 col-6">
                 <div className="product p-3 pl-5 pr-5">
-                    <a href="#"><img className="img-fluid" src={this.props.imageUrl} alt="Colorlib Template" onClick={this.openModal.bind(this)}/></a>
+                    <a href="#"><img className="img-fluid" src={this.props.imageUrl==null || this.props.imageUrl == "" ?"../images/producer_logo.jpg":this.props.imageUrl} alt="Colorlib Template" onClick={this.openModal.bind(this)}/></a>
                         <div className="overlay"></div>
                     
                     <div className="text pt-3 text-center">
                         <h3><a href="#" onClick={this.openModal.bind(this)}>{this.props.producerName}</a>
-                        <ModalProducer coment={this.props.coment} image={this.props.imageUrl} name={producerName} status={this.state.status} closeModal={this.closeModal.bind(this)}></ModalProducer>
+                        <ModalProducer coment={this.props.coment} image={this.props.imageUrl==null || this.props.imageUrl == ""?"../images/producer_logo.jpg":this.props.imageUrl} name={producerName} status={this.state.status} closeModal={this.closeModal.bind(this)}></ModalProducer>
                         </h3>
                     </div>
                     <div className="text text-center">

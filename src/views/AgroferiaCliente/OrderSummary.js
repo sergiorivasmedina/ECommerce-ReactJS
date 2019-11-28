@@ -37,7 +37,7 @@ class OrderSummary extends React.Component{
                 5: "Por recoger",
                 6: "Despachado",
                 7: "No recogido",
-                8: "Cancelado",
+                8: "Rechazado",
                 9: "Rechazado",
 
               }
@@ -51,14 +51,14 @@ class OrderSummary extends React.Component{
             this.state.idCliente = sessionStorage.getItem("idCliente");
             console.log("idCliente: ",this.state.idCliente);
 
-            const {idPedido} = this.props.match.params;
+            const {idPedido} = sessionStorage.getItem("idPedidoResumen");
             //traer el pedido actual del idCliente correspondiente para obtener el idPedido que usaremos luego
-            APIFerias.get('Despliegue/api/pedidos/generico/' + idPedido)
+            APIFerias.get('Despliegue/api/pedidos/generico/' + sessionStorage.getItem("idPedidoResumen"))
                 .then(res=> {
                     console.log("HOLA",res.data)
 
                     this.setState({
-                        orden:parseInt(idPedido),
+                        orden:parseInt(sessionStorage.getItem("idPedidoResumen")),
                         fechaCompra: moment(new Date(res.data.pedido.fecha)).format('DD/MM/YYYY'),
                         estado: res.data.pedido.estado,
                         total: res.data.pedido.total.toFixed(2),
@@ -87,7 +87,7 @@ class OrderSummary extends React.Component{
     render(){
         return(
             <div>
-                <Menu />
+                <Menu fairId={sessionStorage.getItem('idFeria')}/>
                 <FairHeading title="Resumen de compra" imageUrl="../images/agroferia_tienda1.jpg" />
 
                 <section className="pt-5">

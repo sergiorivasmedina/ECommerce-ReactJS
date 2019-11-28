@@ -223,14 +223,14 @@ class Register extends React.Component {
             allcorrect=false;
         }
 
-        if (lastname1.length < 2 || lastname1.length > 50){
+        if (lastname1.length < 2 || lastname1.length > 50) {
             this.setState({
                 lastname1correct: false
             });
             allcorrect=false;
         }
 
-        if (lastname2.length < 2 || lastname2.length > 50){
+        if (lastname2.length < 2 || lastname2.length > 50) {
             this.setState({
                 lastname2correct: false
             });

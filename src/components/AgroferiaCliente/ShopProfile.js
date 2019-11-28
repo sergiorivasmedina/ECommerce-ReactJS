@@ -16,7 +16,7 @@ class ShopProfile extends React.Component {
         return (
             <div className="row pt-5 pb-5">
                 <div className="col-lg-3 col-md-4">
-                    <img className="img-fluid" src={this.props.imageUrl}
+                    <img className="img-fluid" src={this.props.imageUrl==null?"../images/noimage.png":this.props.imageUrl}
                         alt="Colorlib Template"></img>
                 </div>
                 <div className="col-lg-9 col-md-8 text-left">

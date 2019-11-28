@@ -102,7 +102,7 @@ export default class ProductDetail extends Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Menu fairId={sessionStorage.getItem('idFeria')}/>
                 <div className="col-md-12 heading-section text-center ">
                 <h6>&nbsp; </h6>
 

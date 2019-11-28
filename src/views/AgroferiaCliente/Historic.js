@@ -53,7 +53,7 @@ class Basket extends React.Component {
         
         return (
             <div className="Stores">
-                <Menu />
+                <Menu fairId={sessionStorage.getItem('idFeria')}/>
                 <FairHeading title="Revisa tus pedidos pasados" imageUrl="../images/agroferia_tienda1.jpg"/>
                 <section className="pt-5">
                     <div className="container">

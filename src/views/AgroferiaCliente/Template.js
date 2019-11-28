@@ -11,7 +11,7 @@ class Template extends React.Component {
     render() {
         return (
             <div className="Template">
-                <Menu/>
+                <Menu fairId={sessionStorage.getItem('idFeria')}/>
                 <Heading title="Template View" imageUrl="images/bg_1.jpg" />
 
                 <section className="ftco-section">
