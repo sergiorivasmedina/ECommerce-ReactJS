@@ -238,6 +238,7 @@ class Payment extends React.Component{
             });
         })
         sessionStorage.setItem("idPedidoResumen", this.state.idPedido);
+        localStorage.setItem('cantidad',0);
         this.props.history.push("/resumen");
         /*Emitir Boleta */
         if(this.state.boleta){

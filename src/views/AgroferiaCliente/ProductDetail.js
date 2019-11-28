@@ -80,11 +80,10 @@ class ProductDetail extends Component {
         Swal.fire({
           title: 'Producto añadido a la canasta',
           type: 'success',
-          onAfterClose: this.renderiza(),
-          
+          allowEnterKey : false,
+          onClose: window.location.reload(true)
         }
         )
-        window.location.reload(true);
         return response;
 
       })
