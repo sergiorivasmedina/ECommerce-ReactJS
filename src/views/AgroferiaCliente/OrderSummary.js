@@ -21,7 +21,7 @@ class OrderSummary extends React.Component{
             precios:[],
             cantidades:[],
             totales:[],
-
+            saldo:0,
             subtotal:0,
             igv:0,
             total:0,
@@ -64,6 +64,18 @@ class OrderSummary extends React.Component{
                         total: res.data.pedido.total.toFixed(2),
                         detalles: res.data.lstDetallePedido
                     });
+
+                    var cambio = {
+                        idCliente: sessionStorage.getItem("idCliente"),
+                        cambio:(-1) * localStorage.getItem("saldo")
+                      };
+                      console.log("cambio", cambio)
+                      APIFerias.post('/Despliegue/api/usuario/cliente/aumentarSaldo', cambio)
+                      .then(response => {
+                        console.log("buena", response);
+                                              });
+
+
 
                     console.log("Fecha de compra: ", this.state.fechaCompra);
                     //traer el detallePedido del idPedido, el cual es el actual

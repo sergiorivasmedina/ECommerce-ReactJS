@@ -26,6 +26,7 @@ class Payment extends React.Component{
           igv:0,
           total:0,
           descuento:0,
+          saldo: 0,
           boleta:false,
           usarTarjetaExistente:false,/**Procesa culqi con la tarjeta guardad previamente */
           guardarTarjetaNueva:false,/**Guarda tarjeta, si existe una previa la chanca */
@@ -42,11 +43,13 @@ class Payment extends React.Component{
         const st = localStorage.getItem('subtotal')
         const tot = localStorage.getItem('total')
         const totigv = localStorage.getItem('igv')
+        const saldoo = localStorage.getItem('saldo')
         this.setState({
             idPedido: sessionStorage.getItem("idPedido"),
             subtotal: st,
             total: tot,
-            igv:totigv
+            igv:totigv,
+            saldo: saldoo
         })
         
         if(sessionStorage.getItem("idPedido")!=null){
@@ -354,6 +357,10 @@ class Payment extends React.Component{
                                             <p className="d-flex">
                                                 <span>Despacho</span>
                                                 <span>S/.{this.state.descuento}</span>
+                                            </p>
+                                            <p className="d-flex">
+                                                <span>Saldo YAPA</span>
+                                                <span>S/ -{this.state.saldo}</span>
                                             </p>
                                             <p className="d-flex total-price">
                                                 <span>Total</span>
